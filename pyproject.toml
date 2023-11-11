@@ -10,6 +10,12 @@ python = ">=3.11,<3.13"
 pandas = "^2.1.2"
 notebook = "^7.0.6"
 fire = "^0.5.0"
+pathlib = "^1.0.1"
+nbqa = "^1.7.0"
+pylint = "^3.0.2"
+black = "^23.11.0"
+pydantic = "^2.4.2"
+nbformat = "^5.9.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.3"
@@ -24,7 +30,58 @@ sphinx = "^7.2.6"
 mypy = "^1.6.1"
 pytest-snapshot = "^0.9.0"
 sphinx-rtd-theme = "^1.3.0"
+flake8-pyproject = "^1.2.3"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest]
+# Fire library throws this warning
+filterwarnings = [
+	"ignore:.*pipes.* is deprecated and slated for removal:DeprecationWarning",
+]
+    
+[tool.isort]
+profile = "wemake"
+
+[tool.flake8]
+ignore = [
+	'D101',  # D101 Missing docstring in public class
+	'D102',  # D102 Missing docstring in public method
+	'D103',  # D103 Missing docstring in public function
+	'D107',  # D107 Missing docstring in __init__
+	'I003',  # I003 isort expected 1 blank line in imports, found 0
+	'DAR101',  # DAR101 Missing parameter(s) in Docstring: - repeated_bases_regex
+	'DAR201',  # DAR201 Missing "Returns" in Docstring: - return
+	'S311',  # S311 Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+	'WPS348',  # WPS348 Found a line that starts with a dot
+	'WPS226',  # WPS226 Found string literal over-use: count > 3
+	'WPS305',  # WPS305 Found `f` string
+]
+per-file-ignores = [
+	# S101 Use of assert detected.
+	# S403 Consider possible security implications associated with pickle module.
+	'tests/*: S101, S403',
+	# WPS202 Found too many module members
+    'tests/**/conftest.py: WPS202',
+	# D100 Missing docstring in public module
+	# WPS421 Found wrong function call: print
+	# WPS428 Found statement that has no effect
+	# WPS432 Found magic number: 13
+	""" 
+	tmp/**:
+		D100,
+		WPS421,
+		WPS428,
+		WPS432,
+		I004
+	""",
+]
+exclude = [
+	'docs',
+	'.venv',
+	'.git',
+	'data',
+	'tmp',
+]

@@ -1,0 +1,23 @@
+new: |
+  mkdir {project_name}
+  cd {project_name}
+  bluprint build dirs
+  bluprint build poetry
+  bluprint build data
+  bluprint build readme
+
+dirs: |
+  mkdir conf
+  mkdir data
+  mkdir notebooks
+  mkdir {package_name}
+
+poetry: |
+  poetry config --local virtualenvs.in-project true
+  poetry init --name={package_name} --python={python_version} --no-interaction
+
+data: |
+  echo -e "name,value\na,1\nb,2\n" > data/table1.csv
+
+readme: |
+  echo -e "#{project_name}\n Fill in description." > README.md

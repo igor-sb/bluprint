@@ -41,14 +41,14 @@ project
 │   └── config.yaml
 ├── notebooks
 │   └── example.ipynb
-├── src
+├── project
 │   └── module_example.py
 ├── pyproject.toml
-├── README.md
-└── Makefile
+└── README.md
+
 ```
 
-Steps:
+Steps for creating a new project `bluprint create {project_name}`:
 
 * Check path for executables:
 	- `poetry`
@@ -68,7 +68,12 @@ Steps:
 * Create simple example notebook `notebooks/example.ipynb`
 * Create `src/module_example.py`
 * Create `README.md` with `#{project_name}\n Description placeholder.`
-* Makefile not really needed in v1?
+* Add notebook execution to .github/workflows:
+
+Adding features on top of the base blueprint:
+
+* 
+
 
 
 

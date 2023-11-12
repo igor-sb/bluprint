@@ -1,0 +1,7 @@
+templates:
+  data:
+    raw:
+      - "table1.csv"
+    transformed:
+      - "table2.csv"
+

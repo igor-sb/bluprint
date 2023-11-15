@@ -1,23 +1,31 @@
 # Project Bluprint
 
+## Motivation
+
+Bluprint solves problems encounted in data science exploratory work:
+
+1. Setup a template for data science exploratory projects
+1. Using YAML-based config files
+1. Move and immediately use Python code outside of Jupyter Notebooks
+1. Run notebooks as a workflow
+
 ## v1
-
-Folder structure:
-
-- notebooks
-- src
-
-.gitignore
-pyproject.toml
-poetry.lock
-Makefile
-LICENSE
-README.md
 
 Run a notebook in CI/CD:
 
 ```
 poetry run jupyter nbconvert --execute --to notebook --inplace test.ipynb
+```
+
+We can create an alias for this, e.g.:
+
+```
+bluprint run notebook test
+```
+
+Run a pipeline of notebooks (pipeline name should match yaml definition):
+
+```
 ```
 
 
@@ -34,15 +42,14 @@ would create this folder and file structure:
 
 ```
 project
-├── .github
-│   └── workflows
-│       └── notebooks.yaml
 ├── conf
-│   └── config.yaml
+│   ├── config.yaml
+│   └── workflow.yaml
 ├── notebooks
 │   └── example.ipynb
 ├── project
 │   └── module_example.py
+├── .gitignore
 ├── pyproject.toml
 └── README.md
 
@@ -74,17 +81,15 @@ Adding features on top of the base blueprint:
 
 * 
 
+### Workflows
 
+Usage: `bluprint run workflow a_and_b`
 
+YAML definition in workflows.yaml:
 
-
-## v2
-
-In second version, implement these CI/CD:
-
-* test: run all ipynb files within notebooks and all subfolders using workflows
-* lint
-	- lint `src/**/*.py` using flake8 (autopep8, unify, isort)
-    - lint `notebooks/**/*.py` using nbqa (isort, flake8)
-
-Makefile should implement:
+```
+a_and_b:
+  - preprocess
+  - summarize
+  - plot
+```

@@ -1,0 +1,4 @@
+a_and_b:
+  - preprocess
+  - summarize
+  - plot

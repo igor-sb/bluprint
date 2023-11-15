@@ -1,7 +1,0 @@
-data_path
-
-data:
-  a_and_b:
-    raw: "${data_path}/a_and_b/a_and_b_raw.csv"
-    summary: "${data_path}a_and_b_summarized.csv"
-    transformed: "a_and_b_transformed.csv"

@@ -44,6 +44,7 @@ would create this folder and file structure:
 project
 ├── conf
 │   ├── config.yaml
+│   ├── data.yaml
 │   └── workflow.yaml
 ├── notebooks
 │   └── example.ipynb
@@ -54,6 +55,16 @@ project
 └── README.md
 
 ```
+
+- data.yaml: file paths / locations
+	- once loaded into `data`, access full paths using `data.group.raw` which
+	  uses OmegaConf OmegaDict
+- config.yaml: config other than paths, e.g. random seeds
+
+- workflow.yaml: list of notebooks to run in sequence
+
+
+
 
 Steps for creating a new project `bluprint create {project_name}`:
 

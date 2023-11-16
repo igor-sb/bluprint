@@ -1,0 +1,5 @@
+groups:
+  g1:
+    opt11: 1
+    opt12: 'a'
+  opt2: 'b'

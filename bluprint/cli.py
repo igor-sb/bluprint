@@ -11,10 +11,10 @@ from bluprint.demo import create_demo_readme_md, create_demo_py_module
 def latest_python_version() -> str:
     check_if_executable_is_installed('pyenv')
     python_version = subprocess.run(
-        '{pyenv} | {grep} | {tail}'.format(
-            pyenv='pyenv install -l',
-            grep=r'grep -E "\s[0-9]+\.[0-9]+\.[0-9]+$"',
-            tail='tail -n 1',
+        '{list_versions} | {select_stable} | {get_last}'.format(
+            list_versions='pyenv install -l',
+            select_stable=r'grep -E "\s[0-9]+\.[0-9]+\.[0-9]+$"',
+            get_last='tail -n 1',
         ),
         capture_output=True,
         shell=True,  # noqa: S602

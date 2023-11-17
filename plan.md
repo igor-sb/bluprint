@@ -42,13 +42,14 @@ would create this folder and file structure:
 
 ```
 project
-├── conf
+├── .venv/
+├── conf/
 │   ├── config.yaml
 │   ├── data.yaml
 │   └── workflow.yaml
-├── notebooks
+├── notebooks/
 │   └── example.ipynb
-├── project
+├── project/
 │   └── module_example.py
 ├── .gitignore
 ├── pyproject.toml

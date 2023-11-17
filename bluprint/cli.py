@@ -6,7 +6,8 @@ import subprocess
 import fire
 
 from bluprint.binary import Executable, check_if_executable_is_installed
-from bluprint.demo import create_demo_readme_md, create_demo_py_module
+from bluprint.demo import create_demo_py_module, create_demo_readme_md
+
 
 def latest_python_version() -> str:
     check_if_executable_is_installed('pyenv')

@@ -1,8 +1,8 @@
 """Placeholder file contents for new projects."""
 
-import shutil
-import pathlib
 import importlib
+import pathlib
+import shutil
 
 
 def create_demo_readme_md(project_name: str) -> None:
@@ -20,5 +20,5 @@ def copy_demo_files(project_name: str) -> None:
     )
     shutil.copytree(
         src=demo_path / 'project',
-        dst=project_path / f'{project_name}',
+        dst=project_path / project_name,
     )

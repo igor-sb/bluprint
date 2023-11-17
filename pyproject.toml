@@ -91,4 +91,5 @@ exclude = [
 	'.git',
 	'data',
 	'tmp',
+	'demo/project'
 ]

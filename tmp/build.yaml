@@ -7,13 +7,13 @@ new: |
   bluprint build readme
 
 dirs: |
+  mkdir .venv
   mkdir conf
   mkdir data
   mkdir notebooks
   mkdir {package_name}
 
 poetry: |
-  poetry config --local virtualenvs.in-project true
   poetry init --name={package_name} --python={python_version} --no-interaction
 
 data: |

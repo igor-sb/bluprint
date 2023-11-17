@@ -6,7 +6,7 @@ import subprocess
 import fire
 
 from bluprint.binary import Executable, check_if_executable_is_installed
-from bluprint.placeholder import create_readme_md, create_example_module
+from bluprint.demo import create_demo_readme_md, create_demo_py_module
 
 def latest_python_version() -> str:
     check_if_executable_is_installed('pyenv')
@@ -38,8 +38,6 @@ def initalize_poetry(project_name: str, python_version: str) -> None:
     ])
 
 
-
-
 def create_gitignore(project_name: str) -> None:
     with open(f'{project_name}/.gitignore', 'w') as gitignore:
         gitignore.write('**/__pycache__/\n.venv')
@@ -52,8 +50,8 @@ def main(project_name: str, python_version: str | None) -> None:
     if not python_version:
         python_version = latest_python_version()
     initalize_poetry(project_name, python_version)
-    create_readme_md(project_name)
-    create_example_module(project_name, 'example.py')
+    create_demo_readme_md(project_name)
+    create_demo_py_module(project_name, 'example.py')
     # create_example_notebook(project_name, 'example_notebook.ipynb')
     # create example_workflow(project_name)
     create_gitignore(project_name)

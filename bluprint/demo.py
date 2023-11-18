@@ -1,5 +1,6 @@
 """Placeholder file contents for new projects."""
 
+import os
 import importlib
 import pathlib
 import shutil
@@ -10,8 +11,10 @@ def create_demo_readme_md(project_name: str) -> None:
         readme.write(f'#{project_name}\n Description.')
 
 
-def copy_demo_files(project_name: str) -> None:
-    project_path = pathlib.Path('f{project_name}')
+def copy_demo_files(
+    project_path: pathlib.Path,
+    project_name: str,
+) -> None:
     demo_path = importlib.resources.files('demo').joinpath('')
     shutil.copytree(
         src=demo_path,

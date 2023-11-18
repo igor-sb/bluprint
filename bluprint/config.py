@@ -32,5 +32,5 @@ def load_config_yaml(
     config_file: str = 'config.yaml',
     config_dir: str = 'conf',
 ) -> DictConfig:
-    conf_dir: PosixPath = importlib.resources.files('conf')
+    conf_dir: PosixPath = importlib.resources.files(config_dir)
     return OmegaConf.load(conf_dir.joinpath(config_file))

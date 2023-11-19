@@ -1,12 +1,13 @@
 """Command-line interface for bluprint."""
 
 import os
+import pathlib
 import subprocess
 
 import fire
 
 from bluprint.binary import Executable, check_if_executable_is_installed
-from bluprint.demo import create_demo_py_module, create_demo_readme_md
+from bluprint.demo import copy_demo_files, create_demo_readme_md
 
 
 def latest_python_version() -> str:
@@ -39,11 +40,6 @@ def initalize_poetry(project_name: str, python_version: str) -> None:
     ])
 
 
-def create_gitignore(project_name: str) -> None:
-    with open(f'{project_name}/.gitignore', 'w') as gitignore:
-        gitignore.write('**/__pycache__/\n.venv')
-
-
 def main(project_name: str, python_version: str | None) -> None:
     for executable in ('pyenv', 'poetry', 'git', 'gh'):
         check_if_executable_is_installed(executable)
@@ -52,10 +48,7 @@ def main(project_name: str, python_version: str | None) -> None:
         python_version = latest_python_version()
     initalize_poetry(project_name, python_version)
     create_demo_readme_md(project_name)
-    create_demo_py_module(project_name, 'example.py')
-    # create_example_notebook(project_name, 'example_notebook.ipynb')
-    # create example_workflow(project_name)
-    create_gitignore(project_name)
+    copy_demo_files(project_name, pathlib.Path(project_name))
 
 
 if __name__ == '__main__':

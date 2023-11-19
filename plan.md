@@ -105,3 +105,8 @@ a_and_b:
   - summarize
   - plot
 ```
+
+Use `poetry` to orchestrate jobs behind the scenes.
+For each notebook create a function/method that calculates hash of the python
+cells only.
+Use caching with this hash to see if notebooks need to be re-run. 

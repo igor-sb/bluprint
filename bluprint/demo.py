@@ -1,6 +1,5 @@
 """Placeholder file contents for new projects."""
 
-import os
 import importlib
 import pathlib
 import shutil

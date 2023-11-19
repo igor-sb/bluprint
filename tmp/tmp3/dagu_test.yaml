@@ -1,0 +1,5 @@
+steps:
+  - name: "Step 1"
+    command: echo "Hello from Step 1!"
+  - name: "Step 2"
+    command: echo "Hello from Step 2!"

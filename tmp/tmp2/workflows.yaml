@@ -1,4 +1,8 @@
-a_and_b:
-  - preprocess
-  - summarize
-  - plot
+test_workflow:
+  - test1.ipynb
+  - test2.ipynb
+  - |
+    samtools view somefile.bam
+xtest_workflow:
+  - xtest1.ipynb
+  - xtest2.ipynb

@@ -74,6 +74,8 @@ Steps for creating a new project `bluprint create {project_name}`:
 	- `git`
 	- `gh`
 
+
+
 * Create folder structure: `mkdir -p`:
 	- `{project_name}/.github/workflows`
 	- `{project_name}/conf`
@@ -83,10 +85,6 @@ Steps for creating a new project `bluprint create {project_name}`:
 
 * Run `poetry config --local virtualenvs.in-project true`
 * Run `poetry init --name={package_name} --python={python_version} --no-interaction --directory={directory}`
-* Create simple template `conf/config.yaml`
-* Create simple example notebook `notebooks/example.ipynb`
-* Create `src/module_example.py`
-* Create `README.md` with `#{project_name}\n Description placeholder.`
 * Add notebook execution to .github/workflows:
 
 Adding features on top of the base blueprint:

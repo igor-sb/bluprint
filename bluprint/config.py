@@ -2,7 +2,7 @@
 
 import importlib
 from copy import deepcopy
-from pathlib import PosixPath
+from pathlib import PosixPath, Path
 
 from omegaconf import DictConfig, OmegaConf
 
@@ -22,15 +22,30 @@ def load_data_yaml(
     data_dir: str = 'data',
     config_dir: str = 'conf',
 ) -> DictConfig:
-    conf_dir: PosixPath = importlib.resources.files(config_dir)
-    conf = OmegaConf.load(conf_dir.joinpath(config_file))
+    conf = load_config_yaml(config_file, config_dir)
     data_path = str(importlib.resources.files(data_dir).joinpath(''))
     return add_prefix_to_nested_config(conf, prefix=data_path)
+
+
+def load_workflow_yaml(
+    config_file: str = 'workflows.yaml',
+    config_dir: str = 'conf',
+    notebook_dir: str = 'notebooks',
+) -> DictConfig:
+    conf = load_config_yaml(config_file, config_dir)
+    notebook_path = str(importlib.resources.files(notebook_dir).joinpath(''))
+    for workflow_name, notebooks in conf.items():
+        conf[workflow_name] = [
+            str(Path(notebook_path) / notebook) for notebook in notebooks
+        ]            
+    return conf
 
 
 def load_config_yaml(
     config_file: str = 'config.yaml',
     config_dir: str = 'conf',
 ) -> DictConfig:
-    conf_dir: PosixPath = importlib.resources.files(config_dir)
+    conf_dir: PosixPath = importlib.resources.files(
+        config_dir.replace('/', '.'),
+    )
     return OmegaConf.load(conf_dir.joinpath(config_file))

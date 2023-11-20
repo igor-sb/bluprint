@@ -41,7 +41,7 @@ def initalize_poetry(project_name: str, python_version: str) -> None:
 
 
 def main(project_name: str, python_version: str | None) -> None:
-    for executable in ('pyenv', 'poetry', 'git', 'gh'):
+    for executable in ('pyenv', 'poetry'):
         check_if_executable_is_installed(executable)
     create_project_folder_skeleton(project_name)
     if not python_version:

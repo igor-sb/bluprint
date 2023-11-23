@@ -2,7 +2,7 @@
 
 import importlib
 from copy import deepcopy
-from pathlib import PosixPath, Path
+from pathlib import Path, PosixPath
 
 from omegaconf import DictConfig, OmegaConf
 
@@ -37,15 +37,17 @@ def load_workflow_yaml(
     for workflow_name, notebooks in conf.items():
         conf[workflow_name] = [
             str(Path(notebook_path) / notebook) for notebook in notebooks
-        ]            
+        ]
     return conf
+
+
+def absolute_path(dir: str) -> PosixPath:
+    return importlib.resources.files(dir.replace('/', '.')).joinpath('')
 
 
 def load_config_yaml(
     config_file: str = 'config.yaml',
     config_dir: str = 'conf',
 ) -> DictConfig:
-    conf_dir: PosixPath = importlib.resources.files(
-        config_dir.replace('/', '.'),
-    )
+    conf_dir: PosixPath = absolute_path(config_dir)
     return OmegaConf.load(conf_dir.joinpath(config_file))

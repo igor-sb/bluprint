@@ -68,6 +68,7 @@ ignore = [
 	'WPS348',  # WPS348 Found a line that starts with a dot
 	'WPS226',  # WPS226 Found string literal over-use: count > 3
 	'WPS305',  # WPS305 Found `f` string
+	'W503',  # line break before binary operator
 ]
 per-file-ignores = [
 	# S101 Use of assert detected.

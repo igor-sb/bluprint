@@ -45,7 +45,7 @@ bluprint = "bluprint.cli:main"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.pytest]
+[tool.pytest.ini_options]
 # Fire library throws this warning
 filterwarnings = [
 	"ignore:.*pipes.* is deprecated and slated for removal:DeprecationWarning",

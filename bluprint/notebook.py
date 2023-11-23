@@ -12,7 +12,7 @@ from nbformat import read as read_notebook
 from tqdm import tqdm
 
 from bluprint.colors import Style
-from bluprint.config import absolute_path, load_config_yaml
+from bluprint.config import absolute_path
 
 
 def run_notebook(
@@ -29,7 +29,6 @@ def run_notebook(
         display_prefix,
         {'metadata': {'path': '.'}},
     )
-
 
 
 class ExecutorWithProgressBar(ExecutePreprocessor):
@@ -82,13 +81,4 @@ def progress(iterable: Iterable, name: str) -> Iterable:
             + sep + ' {n_fmt}/{total_fmt} cells '
             + sep + ' Elapsed: {elapsed}'
         ),
-    )
-
-
-if __name__ == '__main__':
-    workflow = load_config_yaml('workflows.yaml', 'tmp/tmp2')
-    run_notebook(
-        notebook_file=workflow['test_workflow'][0],
-        display_prefix=os.path.basename(workflow['test_workflow'][0]),
-        notebook_dir='tmp/tmp2'
     )

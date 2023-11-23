@@ -18,8 +18,12 @@ def add_graphic_prefixes(notebooks: list[str]) -> list[str]:
     return ascii_out
 
 
-def main() -> None:
-    workflows = load_config_yaml('workflows.yaml', config_dir='tmp/tmp2')
+def run_workflow(
+    workflow_yaml: str = 'workflows.yaml',
+    yaml_dir: str = 'conf',
+    notebook_dir: str = 'notebooks',
+) -> None:
+    workflows = load_config_yaml(workflow_yaml, yaml_dir)
     logging.info('Running workflows:')
     for workflow_name, notebooks in workflows.items():
         logging.info(style_workflow(workflow_name))
@@ -27,7 +31,7 @@ def main() -> None:
             run_notebook(
                 notebook_file=nb_file,
                 display_prefix=prefix,
-                notebook_dir='tmp.tmp2',
+                notebook_dir=notebook_dir,
             )
     logging.info('Done.')
 
@@ -39,4 +43,4 @@ if __name__ == '__main__':
         encoding='utf-8',
         level=logging.INFO,
     )
-    fire.Fire(main)
+    fire.Fire(run_workflow)

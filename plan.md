@@ -108,3 +108,20 @@ Use `poetry` to orchestrate jobs behind the scenes.
 For each notebook create a function/method that calculates hash of the python
 cells only.
 Use caching with this hash to see if notebooks need to be re-run. 
+
+
+
+Deprecated code:
+
+def load_workflow_yaml(
+    config_file: str = 'workflows.yaml',
+    config_dir: str = 'conf',
+    notebook_dir: str = 'notebooks',
+) -> DictConfig:
+    conf = load_config_yaml(config_file, config_dir)
+    notebook_path = str(importlib.resources.files(notebook_dir).joinpath(''))
+    for workflow_name, notebooks in conf.items():
+        conf[workflow_name] = [
+            str(Path(notebook_path) / notebook) for notebook in notebooks
+        ]
+    return conf

@@ -4,3 +4,4 @@ junit
 .coverage
 .mypy_cache
 .pytest_cache
+tmp

@@ -126,4 +126,53 @@ def load_workflow_yaml(
             str(Path(notebook_path) / notebook) for notebook in notebooks
         ]
     return conf
+
+
+# CHECK IF SUB_CONFIG IS A RELATIVE PATH
+# Don't append prefix if it's an absolute path, or URI
+def add_prefix_to_nested_config(
+    conf: DictConfig | ListConfig,
+    prefix: str | PosixPath,
+) -> DictConfig | ListConfig:
+    config = deepcopy(conf)            
+    if isinstance(config, ListConfig):
+        for index, sub_config in enumerate(config):
+            if isinstance(sub_config, DictConfig | ListConfig):
+                config[index] = add_prefix_to_nested_config(sub_config, prefix)
+            else:
+                config[index] = f'{prefix}{sub_config}'
+
+    elif isinstance(config, DictConfig):
+        for key, sub_config in conf.items():
+            if isinstance(sub_config, DictConfig | ListConfig):
+                config[key] = add_prefix_to_nested_config(sub_config, prefix)
+            else:
+                config[key] = f'{prefix}{sub_config}'
+    return config
+
+
+
+def add_prefix_to_nested_config2(
+    conf: DictConfig | ListConfig,
+    prefix: str | PosixPath,
+) -> DictConfig | ListConfig:
+    config = conf
+    def process_sub_config(sub_config: Any, key: Any):
+        if isinstance(sub_config, DictConfig | ListConfig):
+            config[key] = add_prefix_to_nested_config2(sub_config, prefix)         
+        
+    if isinstance(config, ListConfig):
+        for index, sub_config in enumerate(config):
+            if isinstance(sub_config, DictConfig | ListConfig):
+                config[index] = add_prefix_to_nested_config(sub_config, prefix)
+            else:
+                config[index] = f'{prefix}{sub_config}'
+
+    elif isinstance(config, DictConfig):
+        for key, sub_config in conf.items():
+            if isinstance(sub_config, DictConfig | ListConfig):
+                config[key] = add_prefix_to_nested_config(sub_config, prefix)
+            else:
+                config[key] = f'{prefix}{sub_config}'
+    return config
 ```

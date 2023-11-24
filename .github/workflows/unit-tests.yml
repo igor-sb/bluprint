@@ -1,0 +1,42 @@
+name: Unit tests
+
+on:
+  workflow_call:
+
+env:
+  PYTHON_VERSION: 3.11.2
+
+jobs:
+
+  test-pipeline:
+    name: Run with code coverage
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.git_ref }}
+          lfs: True
+
+      - name: Install and setup Python, Poetry, virtual env
+        uses: ./.github/actions/install-python
+        with:
+          PYTHON_VERSION: ${{ env.PYTHON_VERSION }}
+
+      - name: Run unit tests
+        run: |
+          export JUPYTER_PLATFORM_DIRS=1
+          poetry run jupyter --paths
+          make test
+        env:
+          PY_COLORS: 1
+
+      - name: Report
+        run: |
+          make report-coverage
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

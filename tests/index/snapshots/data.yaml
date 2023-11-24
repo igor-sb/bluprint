@@ -1,0 +1,8 @@
+dir1:
+  dir1a:
+    file1: dir1/dir1a/file1.txt
+    file2: dir1/dir1a/file2.txt
+  file3: dir1/file3.txt
+dir2:
+  file4: dir2/file4.txt
+file5: file5.txt

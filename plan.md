@@ -83,7 +83,6 @@ Steps for creating a new project `bluprint create {project_name}`:
 	- `{project_name}/src`
 	Use `os.makedirs()`` from Python
 
-* Run `poetry config --local virtualenvs.in-project true`
 * Run `poetry init --name={package_name} --python={python_version} --no-interaction --directory={directory}`
 * Add notebook execution to .github/workflows:
 

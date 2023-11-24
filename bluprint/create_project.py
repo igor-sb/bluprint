@@ -43,6 +43,10 @@ def initalize_poetry(project_name: str, python_version: str) -> None:
     ])
 
 
+def install_project_as_editable_package() -> None:
+    Executable(['poetry', 'run', 'pip', 'init', '-e', '.'])
+
+
 def create(project_name: str, python_version: str | None) -> None:
     for executable in ('pyenv', 'poetry'):
         check_if_executable_is_installed(executable)
@@ -52,6 +56,7 @@ def create(project_name: str, python_version: str | None) -> None:
     initalize_poetry(project_name, python_version)
     create_demo_readme_md(project_name)
     copy_demo_files(project_name, Path(project_name))
+    install_project_as_editable_package()
 
 
 if __name__ == '__main__':

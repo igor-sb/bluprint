@@ -1,4 +1,0 @@
-a_and_b:
-  raw: "a_and_b/raw.csv"
-  summarized: "a_and_b/summarized.csv"
-  transformed: "a_and_b/transformed.csv"

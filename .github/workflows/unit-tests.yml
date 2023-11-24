@@ -27,7 +27,7 @@ jobs:
       - name: Run unit tests
         run: |
           export JUPYTER_PLATFORM_DIRS=1
-          jupyter --paths
+          poetry run jupyter --paths
           make test
         env:
           PY_COLORS: 1

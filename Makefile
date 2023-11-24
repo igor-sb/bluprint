@@ -42,7 +42,7 @@ shell:
 precommit: poetry-precommit lint
 
 poetry-precommit:
-		poetry run pre-commit run --all-files
+		${POETRY_RUN} pre-commit run --all-files
 
 report-coverage:
 		${POETRY_RUN} coverage report

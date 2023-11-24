@@ -98,3 +98,11 @@ exclude = [
 	'tmp',
 	'demo/project'
 ]
+
+[tool.mypy]
+[[tool.mypy.overrides]]
+module = [
+	"pandas.*",
+	"fire.*"
+]
+ignore_missing_imports = true

@@ -1,8 +1,7 @@
 """Command-line interface for bluprint."""
 
-import os
-import pathlib
 import subprocess
+from pathlib import Path
 
 import fire
 
@@ -24,9 +23,13 @@ def latest_python_version() -> str:
     return python_version.stdout.decode('UTF-8').strip()
 
 
-def create_project_folder_skeleton(project_name: str) -> None:
-    for folder in ('.venv', 'conf', 'notebooks', f'{project_name}'):
-        os.makedirs(f'{project_name}/{folder}')
+def create_project_directory_skeleton(
+    project_name: str,
+    directories: tuple[str, ...] = ('.venv', 'conf', 'notebooks'),
+) -> None:
+    for folder in (*directories, f'{project_name}'):
+        folder_path = Path(project_name) / folder
+        folder_path.mkdir(parents=True)
 
 
 def initalize_poetry(project_name: str, python_version: str) -> None:
@@ -43,12 +46,12 @@ def initalize_poetry(project_name: str, python_version: str) -> None:
 def main(project_name: str, python_version: str | None) -> None:
     for executable in ('pyenv', 'poetry'):
         check_if_executable_is_installed(executable)
-    create_project_folder_skeleton(project_name)
+    create_project_directory_skeleton(project_name)
     if not python_version:
         python_version = latest_python_version()
     initalize_poetry(project_name, python_version)
     create_demo_readme_md(project_name)
-    copy_demo_files(project_name, pathlib.Path(project_name))
+    copy_demo_files(project_name, Path(project_name))
 
 
 if __name__ == '__main__':

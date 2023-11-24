@@ -2,10 +2,7 @@
 
 from pathlib import Path
 
-from bluprint.config import (
-	add_prefix_to_nested_config,
-	load_config_yaml,
-)
+from bluprint.config import add_prefix_to_nested_config, load_config_yaml
 
 
 def test_load_data_yaml():

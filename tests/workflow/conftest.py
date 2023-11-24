@@ -1,7 +1,12 @@
 """Test fixtures."""
 
-import os
 from pathlib import Path
 
-base_path = os.path.abspath('.')
-fixture_path = Path(base_path) / 'tests' / 'workflow' / 'fixtures'
+import pytest
+
+snapshot_path = Path('tests').absolute() / 'workflow' / 'snapshots'
+
+
+@pytest.fixture()
+def reference_test_log_file():
+    return str(snapshot_path / 'test.log')

@@ -6,6 +6,7 @@ from typing import Any, Iterable
 
 from jupyter_client.manager import KernelManager
 from nbclient import NotebookClient
+from nbconvert import NotebookExporter
 from nbconvert.preprocessors import ExecutePreprocessor
 from nbformat import NotebookNode
 from nbformat import read as read_notebook
@@ -24,11 +25,14 @@ def run_notebook(
     os.environ['PYDEVD_DISABLE_FILE_VALIDATION'] = '1'
     project_path = absolute_path(notebook_dir)
     executor = ExecutorWithProgressBar(timeout=timeout)
-    executor.run_all_cells(
+    notebook_results = executor.run_all_cells(
         Path(project_path) / notebook_file,
         display_prefix,
         {'metadata': {'path': '.'}},
     )
+    exporter = NotebookExporter()
+    with open(Path(project_path) / notebook_file, 'w') as notebook:
+        notebook.write(exporter.from_notebook_node(notebook_results[0])[0])
 
 
 class ExecutorWithProgressBar(ExecutePreprocessor):

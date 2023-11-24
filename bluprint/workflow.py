@@ -1,6 +1,6 @@
 """Simple workflow orchestrator."""
 
-import logging
+import sys
 
 import fire
 
@@ -24,23 +24,22 @@ def run_workflow(
     notebook_dir: str = 'notebooks',
 ) -> None:
     workflows = load_config_yaml(workflow_yaml, yaml_dir)
-    logging.info('Running workflows:')
+    sys.stderr.write('Running workflows:\n')
     for workflow_name, notebooks in workflows.items():
-        logging.info(style_workflow(workflow_name))
+        sys.stderr.write(
+            '{styled_workflow_name}\n'.format(
+                styled_workflow_name=style_workflow(str(workflow_name)),
+            ),
+        )
         for nb_file, prefix in zip(notebooks, add_graphic_prefixes(notebooks)):
             run_notebook(
                 notebook_file=nb_file,
                 display_prefix=prefix,
                 notebook_dir=notebook_dir,
             )
-    logging.info('Done.')
+    sys.stderr.write('Done.\n')
 
 
 if __name__ == '__main__':
-    logging.basicConfig(
-        style='{',
-        format='{message}',
-        encoding='utf-8',
-        level=logging.INFO,
-    )
+
     fire.Fire(run_workflow)

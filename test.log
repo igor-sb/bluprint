@@ -1,6 +1,6 @@
 Running workflows:
 [95m[1mtest_workflow[0m
-[96m[1m├─── test1.ipynb[0m   0% [96m─[0m 0/4 cells [96m─[0m Elapsed: 00:00[96m[1m├─── test1.ipynb[0m  50% [96m─[0m 2/4 cells [96m─[0m Elapsed: 00:02[96m[1m├─── test1.ipynb[0m  75% [96m─[0m 3/4 cells [96m─[0m Elapsed: 00:05[96m[1m├─── test1.ipynb[0m 100% [96m─[0m 4/4 cells [96m─[0m Elapsed: 00:09[96m[1m├─── test1.ipynb[0m 100% [96m─[0m 4/4 cells [96m─[0m Elapsed: 00:09
+[96m[1m├─── test1.ipynb[0m   0% [96m─[0m 0/4 cells [96m─[0m Elapsed: 00:00[96m[1m├─── test1.ipynb[0m  50% [96m─[0m 2/4 cells [96m─[0m Elapsed: 00:01[96m[1m├─── test1.ipynb[0m 100% [96m─[0m 4/4 cells [96m─[0m Elapsed: 00:01
 [96m[1m└─── test2.ipynb[0m   0% [96m─[0m 0/1 cells [96m─[0m Elapsed: 00:00[96m[1m└─── test2.ipynb[0m 100% [96m─[0m 1/1 cells [96m─[0m Elapsed: 00:00
 [95m[1mxtest_workflow[0m
 [96m[1m├─── test3.ipynb[0m   0% [96m─[0m 0/2 cells [96m─[0m Elapsed: 00:00[96m[1m├─── test3.ipynb[0m  50% [96m─[0m 1/2 cells [96m─[0m Elapsed: 00:01[96m[1m├─── test3.ipynb[0m 100% [96m─[0m 2/2 cells [96m─[0m Elapsed: 00:01

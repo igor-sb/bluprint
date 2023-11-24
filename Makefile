@@ -34,7 +34,7 @@ lint-flake8:
 
 lint-mypy:
 		@echo "\n${BLUE}Running mypy...${NC}\n"
-		${POETRY_RUN} mypy --show-error-codes ${PROJ}
+		${POETRY_RUN} mypy --show-error-codes -p ${PROJ}
 
 shell:
 		poetry shell

@@ -97,7 +97,7 @@ Usage: `bluprint run workflow a_and_b`
 
 YAML definition in workflows.yaml:
 
-```
+```sh
 a_and_b:
   - preprocess
   - summarize
@@ -113,6 +113,7 @@ Use caching with this hash to see if notebooks need to be re-run.
 
 Deprecated code:
 
+```sh
 def load_workflow_yaml(
     config_file: str = 'workflows.yaml',
     config_dir: str = 'conf',
@@ -125,3 +126,4 @@ def load_workflow_yaml(
             str(Path(notebook_path) / notebook) for notebook in notebooks
         ]
     return conf
+```

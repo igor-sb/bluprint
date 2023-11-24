@@ -11,8 +11,8 @@ def create_demo_readme_md(project_name: str) -> None:
 
 
 def copy_demo_files(
-    project_path: pathlib.Path,
     project_name: str,
+    project_path: pathlib.Path,
 ) -> None:
     demo_path = importlib.resources.files('demo').joinpath('')
     shutil.copytree(

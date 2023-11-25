@@ -2,6 +2,7 @@
 
 import os
 import re
+from pathlib import Path
 
 from bluprint.capture_output import capture_stderr
 from bluprint.cli import Bluprint
@@ -36,8 +37,7 @@ def test_run_workflow_cli(
     workflow_log = capture_stderr(
         bp.workflow,
         workflow_name='xtest_workflow',
-        workflow_yaml='workflows.yaml',
-        workflow_yaml_dir=fixture_path,
+        workflow_yaml=Path(fixture_path) / 'workflows.yaml',
         notebook_dir=fixture_path,
     )
     for pattern in (' Elapsed: [0-9:]+', r'\x1b[^m]*m', r'\r'):

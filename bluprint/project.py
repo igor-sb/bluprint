@@ -34,7 +34,6 @@ def create_project_directory_skeleton(
         folder_path = Path(parent_dir) / project_name / folder
         folder_path.mkdir(parents=True)
     sys.stderr.write(' ✓\n')
-    
 
 
 def initalize_poetry(
@@ -42,33 +41,25 @@ def initalize_poetry(
     python_version: str,
     working_dir: str,
 ) -> None:
-    sys.stderr.write(f'Initializing poetry:')
-    sys.stderr.flush()
     subprocess.run(
-        [
-            'poetry',
-            'init',
+        [  # noqa: WPS317
+            'poetry', 'init',
             '--no-interaction',
             '--name', project_name,
             '--python', python_version,
         ],
         cwd=working_dir,
     )
-    sys.stderr.write(' ✓\n')
 
 
 def install_project_as_editable_package(
-    project_name: str,
     project_dir: str = '.',
 ) -> None:
-    sys.stderr.write('Installing project as package:')
-    sys.stderr.flush()    
     subprocess.run(
         ['poetry', 'run', 'pip', 'install', '-e', '.'],
         cwd=project_dir,
         capture_output=True,
     )
-    sys.stderr.write(' ✓\n')
 
 
 def create_project(
@@ -88,7 +79,7 @@ def create_project(
     initalize_poetry(project_name, python_version, project_dir)
     create_demo_readme_md(project_name, project_dir)
     copy_demo_files(project_name, project_dir)
-    install_project_as_editable_package(project_name, project_dir)
+    install_project_as_editable_package(project_dir)
 
 
 if __name__ == '__main__':

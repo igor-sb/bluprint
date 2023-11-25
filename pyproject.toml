@@ -61,11 +61,14 @@ ignore = [
 	'D102',  # D102 Missing docstring in public method
 	'D103',  # D103 Missing docstring in public function
 	'D107',  # D107 Missing docstring in __init__
+	'D412',  # No blank lines allowed between a section header and its content
 	'I003',  # I003 isort expected 1 blank line in imports, found 0
 	'DAR101',  # DAR101 Missing parameter(s) in Docstring: - repeated_bases_regex
 	'DAR201',  # DAR201 Missing "Returns" in Docstring: - return
 	'S311',  # S311 Standard pseudo-random generators are not suitable for security/cryptographic purposes.
 	'S404',  # Consider possible security implications associated with the subprocess module.
+	'S603',  # subprocess call - check for execution of untrusted input.
+	'S607',  # Starting a process with a partial executable path
 	'WPS348',  # WPS348 Found a line that starts with a dot
 	'WPS226',  # WPS226 Found string literal over-use: count > 3
 	'WPS305',  # WPS305 Found `f` string

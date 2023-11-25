@@ -6,7 +6,7 @@ from pathlib import PosixPath
 import fire
 from omegaconf import DictConfig, ListConfig
 
-from bluprint.colors import style_notebook, style_workflow
+from bluprint.colors import style_notebook, style_workflow, styled_print
 from bluprint.config import load_config_yaml
 from bluprint.notebook import run_notebook
 
@@ -28,10 +28,9 @@ def run_workflow(
     if workflow_name not in workflow_cfg:
         raise KeyError(f'Invalid workflow: {workflow_name}')
     workflow_notebooks = workflow_cfg[workflow_name]
-    sys.stderr.write(
-        '{styled_workflow_name}\n'.format(
-            styled_workflow_name=style_workflow(str(workflow_name)),
-        ),
+    styled_print(
+        style_workflow(str(workflow_name)),
+        print_bluprint=False,
     )
     workflow_notebooks_with_prefixes = zip(
         workflow_notebooks,
@@ -51,10 +50,9 @@ def run_workflows(
     notebook_dir: str | PosixPath = 'notebooks',
 ):
     workflow_cfg = load_config_yaml(workflow_yaml, workflow_yaml_dir)
-    sys.stderr.write('Running workflows:\n')
+    styled_print('run all workflows')
     for workflow_name in workflow_cfg.keys():
         run_workflow(workflow_name, workflow_cfg, notebook_dir)
-    sys.stderr.write('Done.\n')
 
 
 if __name__ == '__main__':

@@ -6,6 +6,7 @@ from pathlib import Path, PosixPath
 import fire
 
 from bluprint.config import load_config_yaml
+from bluprint.project import create_project
 from bluprint.workflow import run_workflow
 
 
@@ -15,6 +16,7 @@ class Bluprint(object):
     def create(self, project_name: str):
         """Create a new directory with a bluprint project."""
         print(f'Creating a new project {project_name}.')  # noqa: WPS421
+        create_project(project_name)
 
     def init(self):
         """Initialize a bluprint project in existing directory."""
@@ -44,7 +46,7 @@ class Bluprint(object):
                 containing workflow YAML.
             notebook_dir (str | PosixPath, optional): Root directory containing
                 all the notebooks.
-        
+
         """
         sys.stderr.write('Running single workflow:\n')
         cfg = load_config_yaml(workflow_yaml, workflow_yaml_dir)

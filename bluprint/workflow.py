@@ -1,4 +1,4 @@
-"""Simple workflow orchestrator."""
+"""Bluprint workflow orchestrator."""
 
 import sys
 from pathlib import PosixPath

@@ -1,6 +1,5 @@
 """Bluprint workflow orchestrator."""
 
-import sys
 from pathlib import PosixPath
 
 import fire
@@ -27,7 +26,7 @@ def run_workflow(
 ) -> None:
     if workflow_name not in workflow_cfg:
         raise KeyError(f'Invalid workflow: {workflow_name}')
-    workflow_notebooks = workflow_cfg[workflow_name]
+    workflow_notebooks = workflow_cfg[workflow_name]  # type: ignore
     styled_print(
         style_workflow(str(workflow_name)),
         print_bluprint=False,
@@ -40,7 +39,7 @@ def run_workflow(
         run_notebook(
             notebook_file=notebook_file,
             display_prefix=graphical_prefix,
-            notebook_dir=notebook_dir,
+            notebook_dir=str(notebook_dir),
         )
 
 
@@ -49,10 +48,10 @@ def run_workflows(
     workflow_yaml_dir: str | PosixPath = 'conf',
     notebook_dir: str | PosixPath = 'notebooks',
 ):
-    workflow_cfg = load_config_yaml(workflow_yaml, workflow_yaml_dir)
+    workflow_cfg = load_config_yaml(str(workflow_yaml), workflow_yaml_dir)
     styled_print('run all workflows')
     for workflow_name in workflow_cfg.keys():
-        run_workflow(workflow_name, workflow_cfg, notebook_dir)
+        run_workflow(str(workflow_name), workflow_cfg, notebook_dir)
 
 
 if __name__ == '__main__':

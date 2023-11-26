@@ -16,7 +16,7 @@ from bluprint.colors import Style
 from bluprint.config import absolute_path
 
 
-def run_notebook(
+def run_jupyter_notebook(
     notebook_file: str,
     display_prefix: str,
     notebook_dir: str = 'notebooks',

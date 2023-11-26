@@ -14,7 +14,12 @@ from bluprint.workflow import run_workflow
 class Bluprint(object):
     """Bluprint sub-commands used by CLI."""
 
-    def create(self, project_name: str):
+    def create(
+        self,
+        project_name: str,
+        python_version: str | None = None,
+        parent_dir: str | None = None,
+    ):
         """Create a directory with a bluprint project.
 
         Creates a project directory structure:
@@ -31,9 +36,21 @@ class Bluprint(object):
         as a Python package, without a need to `pip install` them each time
         there is a change.
 
+        Args:
+
+        project_name (str): Name of the project, also the name of the main
+        project directory.
+
+        python_version (str | None, optional): Python version to be used. If
+        not specified, uses the latest stable version from `pyenv install -l`.
+
+        parent_dir (str | None, optional): Parent directory to create a
+        PROJECT_NAME directory in. If not specific PARENT_DIR is a current
+        directory.
+
         """
         styled_print(f'create {project_name}')
-        create_project(project_name)
+        create_project(project_name, python_version, parent_dir)
 
     def init(self):
         """Initialize a bluprint project in existing directory."""

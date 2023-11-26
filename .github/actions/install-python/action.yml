@@ -17,7 +17,7 @@ runs:
     - name: Install pyenv
       uses: "gabrielfalcao/pyenv-action@v11"
       with:
-        default: ${{ inputs.PYTHON_VERSION }}
+        default: 3.11.2
 
     - name: Install poetry
       run: |

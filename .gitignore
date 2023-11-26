@@ -5,3 +5,5 @@ junit
 .mypy_cache
 .pytest_cache
 tmp
+htmlcov
+coverage.xml

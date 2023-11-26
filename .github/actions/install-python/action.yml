@@ -14,7 +14,15 @@ runs:
       with:
         python-version: ${{ inputs.PYTHON_VERSION }}
 
+    - name: Load Cached pyenv
+      id: pyenv-cache
+      uses: actions/cache@v3
+      with:
+        path: /home/runner/.pyenv/
+        key: pyenv-${{ runner.os }}-${{ inputs.PYTHON_VERSION }}
+
     - name: Install pyenv
+      if: steps.pyenv-cache.outputs.cache-hit != 'true'
       uses: "gabrielfalcao/pyenv-action@v17"
       with:
         default: 3.11.2

@@ -7,3 +7,4 @@ junit
 tmp
 htmlcov
 coverage.xml
+.Rproj.user

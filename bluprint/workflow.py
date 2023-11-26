@@ -2,7 +2,6 @@
 
 from pathlib import PosixPath
 
-import fire
 from omegaconf import DictConfig, ListConfig
 
 from bluprint.colors import style_notebook, style_workflow, styled_print
@@ -10,13 +9,8 @@ from bluprint.config import load_config_yaml
 from bluprint.notebook import run_notebook
 
 
-def add_graphic_prefixes(notebooks: list[str]) -> list[str]:
-    ascii_out = [
-        style_notebook(f'├─── {notebook_name}')
-        for notebook_name in notebooks
-    ]
-    ascii_out[-1] = ascii_out[-1].replace('├', '└')
-    return ascii_out
+class InvalidWorkflowError(Exception):
+    """Raises exception when invalid workflow is specified."""
 
 
 def run_workflow(
@@ -25,7 +19,7 @@ def run_workflow(
     notebook_dir: str | PosixPath = 'notebooks',
 ) -> None:
     if workflow_name not in workflow_cfg:
-        raise KeyError(f'Invalid workflow: {workflow_name}')
+        raise InvalidWorkflowError(f'{workflow_name} does not exist.')
     workflow_notebooks = workflow_cfg[workflow_name]  # type: ignore
     styled_print(
         style_workflow(str(workflow_name)),
@@ -54,5 +48,10 @@ def run_workflows(
         run_workflow(str(workflow_name), workflow_cfg, notebook_dir)
 
 
-if __name__ == '__main__':
-    fire.Fire(run_workflow)
+def add_graphic_prefixes(notebooks: list[str]) -> list[str]:
+    ascii_out = [
+        style_notebook(f'├─── {notebook_name}')
+        for notebook_name in notebooks
+    ]
+    ascii_out[-1] = ascii_out[-1].replace('├', '└')
+    return ascii_out

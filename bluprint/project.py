@@ -4,8 +4,6 @@ import re
 import subprocess
 from pathlib import Path, PosixPath
 
-import fire
-
 from bluprint.binary import check_if_executable_is_installed
 from bluprint.demo import copy_demo_files
 
@@ -71,7 +69,3 @@ def create_project(
     initalize_poetry(project_name, python_version, project_dir)
     copy_demo_files(project_name, project_dir)
     install_project_as_editable_package(project_dir)
-
-
-if __name__ == '__main__':
-    fire.Fire(create_project)

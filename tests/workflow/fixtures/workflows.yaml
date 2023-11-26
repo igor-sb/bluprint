@@ -2,5 +2,5 @@ test_workflow:
   - test1.ipynb
   - test2.ipynb
 xtest_workflow:
-  - test3.ipynb
-  - test4.ipynb
+  - xtest/test3.ipynb
+  - xtest/test4.ipynb

@@ -51,14 +51,14 @@ def load_data_yaml(
     return add_prefix_to_nested_config(conf, prefix=data_path)
 
 
-def absolute_path(directory: str | PosixPath) -> str:
+def absolute_path(directory: str | PosixPath | Path) -> str:
     path_as_module = str(directory).strip('/').replace('/', '.')
     return str(resources.files(path_as_module).joinpath(''))
 
 
 def load_config_yaml(
     config_file: str = 'config.yaml',
-    config_dir: str | PosixPath = 'conf',
+    config_dir: str | PosixPath | Path = 'conf',
 ) -> DictConfig | ListConfig:
     absolute_config_dir = absolute_path(config_dir)
     return OmegaConf.load(Path(absolute_config_dir) / config_file)

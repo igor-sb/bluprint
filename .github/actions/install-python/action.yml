@@ -14,8 +14,9 @@ runs:
       with:
         python-version: ${{ inputs.PYTHON_VERSION }}
 
-    - name: Install poetry
+    - name: Install poetry & pyenv
       run: |
+        curl https://pyenv.run | bash
         pip3 install --upgrade poetry
         poetry config virtualenvs.in-project true
       shell: bash

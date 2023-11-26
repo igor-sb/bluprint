@@ -1,6 +1,6 @@
 """Bluprint workflow orchestrator."""
 
-from pathlib import PosixPath, Path
+from pathlib import Path, PosixPath
 
 from omegaconf import DictConfig, ListConfig
 
@@ -13,7 +13,7 @@ class InvalidWorkflowError(Exception):
     """Raises exception when invalid workflow is specified."""
 
 
-class InvalidNotebookType(Exception):
+class InvalidNotebookTypeError(Exception):
     """Raises exception when invalid notebook type is specified."""
 
 
@@ -46,7 +46,9 @@ def run_workflow(
             case '.qmd':
                 pass
             case nb_extension:
-                raise InvalidNotebookType(f'Invalid extension {nb_extension}')
+                raise InvalidNotebookTypeError(
+                    f'Invalid extension {nb_extension}',
+                )
 
 
 def run_workflows(

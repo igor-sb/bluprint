@@ -8,3 +8,7 @@ tmp
 htmlcov
 coverage.xml
 .Rproj.user
+demo/notebooks/example_rmarkdown_files
+demo/notebooks/example_rmarkdown.html
+demo/notebooks/example_quarto_files
+demo/notebooks/example_quarto.html

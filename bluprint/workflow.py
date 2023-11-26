@@ -6,11 +6,15 @@ from omegaconf import DictConfig, ListConfig
 
 from bluprint.colors import style_notebook, style_workflow, styled_print
 from bluprint.config import load_config_yaml
-from bluprint.notebook import run_jupyter_notebook
+from bluprint.notebook.jupyter import run_jupyter_notebook
 
 
 class InvalidWorkflowError(Exception):
     """Raises exception when invalid workflow is specified."""
+
+
+class InvalidNotebookType(Exception):
+    """Raises exception when invalid notebook type is specified."""
 
 
 def run_workflow(
@@ -37,9 +41,12 @@ def run_workflow(
                     display_prefix=graphical_prefix,
                     notebook_dir=str(notebook_dir),
                 )
-            case '.rmd'
-        
-        
+            case '.Rmd':
+                pass
+            case '.qmd':
+                pass
+            case nb_extension:
+                raise InvalidNotebookType(f'Invalid extension {nb_extension}')
 
 
 def run_workflows(

@@ -6,15 +6,8 @@ from omegaconf import DictConfig, ListConfig
 
 from bluprint.colors import style_notebook, style_workflow, styled_print
 from bluprint.config import load_config_yaml
+from bluprint.errors import InvalidNotebookTypeError, InvalidWorkflowError
 from bluprint.notebook.jupyter import run_jupyter_notebook
-
-
-class InvalidWorkflowError(Exception):
-    """Raises exception when invalid workflow is specified."""
-
-
-class InvalidNotebookTypeError(Exception):
-    """Raises exception when invalid notebook type is specified."""
 
 
 def run_workflow(

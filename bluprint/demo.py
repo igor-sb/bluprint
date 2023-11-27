@@ -14,7 +14,7 @@ def copy_demo_files(
     shutil.copytree(
         src=Path(demo_path),
         dst=project_dir,
-        ignore=shutil.ignore_patterns('project'),
+        ignore=shutil.ignore_patterns(['project', '*.Rmd', '*.R']),
         dirs_exist_ok=True,
     )
     shutil.copytree(

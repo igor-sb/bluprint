@@ -8,6 +8,7 @@ from bluprint.colors import styled_print
 from bluprint.config import load_config_yaml
 from bluprint.index import index_dir_to_config_yaml
 from bluprint.project import create_project
+from bluprint.r_project import create_r_project
 from bluprint.workflow import run_workflow
 
 
@@ -19,6 +20,7 @@ class Bluprint(object):
         project_name: str,
         python_version: str | None = None,
         parent_dir: str | None = None,
+        r_proj: bool = False,
     ):
         """Create a directory with a bluprint project.
 
@@ -47,10 +49,15 @@ class Bluprint(object):
         parent_dir (str | None, optional): Parent directory to create a
         PROJECT_NAME directory in. If not specific PARENT_DIR is a current
         directory.
+        
+        r_proj (bool): Setup R library using renv to support package isolation
+        in RMarkdown notebooks.
 
         """
         styled_print(f'create {project_name}')
         create_project(project_name, python_version, parent_dir)
+        if r_proj:
+            create_r_project(project_name, parent_dir)
 
     def init(self):
         """Initialize a bluprint project in existing directory."""

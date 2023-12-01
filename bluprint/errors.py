@@ -1,4 +1,4 @@
-"""List of all errors used within bluprint."""
+"""List of all errors used within bluprint."""  # noqa: WPS202
 
 from dataclasses import dataclass
 
@@ -30,15 +30,3 @@ class InvalidWorkflowError(StyledError):
 
 class InvalidNotebookTypeError(StyledError):
     """Raises exception when invalid notebook type is specified."""
-
-
-class RpackageMissingError(StyledError):
-    """Raises exception if an R package is not installed in R."""
-
-
-class RenvInitError(StyledError):
-    """Raises exception if renv:init() fails."""
-
-
-class PoetryAddError(StyledError):
-    """Raises exception if poetry add fails."""

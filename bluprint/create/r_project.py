@@ -2,10 +2,10 @@
 
 import subprocess
 import sys
-from pathlib import Path, PosixPath
+from pathlib import Path
 
+from bluprint.create.errors import RenvInitError, RpackageMissingError
 from bluprint.demo import copy_rproj_file
-from bluprint.errors import RenvInitError, RpackageMissingError
 
 
 def create_r_project(
@@ -28,7 +28,7 @@ def check_if_r_package_is_installed(package: str) -> None:
         raise RpackageMissingError(r_error_msg)
 
 
-def run_renv_init(project_dir: str | PosixPath):
+def run_renv_init(project_dir: str | Path):
     r_error_msg = subprocess.run(
         ['Rscript', '-e', 'renv::init()'],
         capture_output=True,
@@ -38,7 +38,7 @@ def run_renv_init(project_dir: str | PosixPath):
         raise RenvInitError(r_error_msg)
 
 
-def run_renv_install(package: str, project_dir: str | PosixPath) -> str:
+def run_renv_install(package: str, project_dir: str | Path) -> None:
     r_error_msg = subprocess.run(
         ['Rscript', '-e', f'renv::install("{package}")'],
         capture_output=True,

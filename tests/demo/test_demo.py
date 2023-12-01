@@ -1,9 +1,10 @@
 """Tests for installing demo files."""
 
 import tempfile
-from filecmp import dircmp, DEFAULT_IGNORES
+from filecmp import DEFAULT_IGNORES, dircmp
 from importlib import resources
 from pathlib import Path
+
 import bluprint
 from bluprint.demo import copy_demo_files
 

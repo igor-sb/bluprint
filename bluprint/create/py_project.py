@@ -5,8 +5,8 @@ import re
 import subprocess
 from pathlib import Path, PosixPath
 
+from bluprint.create.errors import PoetryAddError
 from bluprint.demo import copy_demo_files
-from bluprint.errors import PoetryAddError
 
 
 def create_project(
@@ -56,7 +56,7 @@ def initalize_poetry(
 
 def interpolate_project_name_in_example_nbs(
     project_name: str,
-    project_dir: str | PosixPath,
+    project_dir: str | Path | PosixPath,
 ) -> None:
     example_ipynb = Path(project_dir) / 'notebooks' / 'example_jupyternb.ipynb'
     with open(example_ipynb) as example_ipynb_file:
@@ -70,7 +70,10 @@ def interpolate_project_name_in_example_nbs(
         json.dump(example_ipynb_data, example_ipynb_file)
 
 
-def install_python_package(package: str, project_dir: str | PosixPath) -> None:
+def install_python_package(
+    package: str,
+    project_dir: str | Path | PosixPath,
+) -> None:
     subprocess.run(
         ['poetry', 'env', 'use', '3.11.2'],
         cwd=project_dir,

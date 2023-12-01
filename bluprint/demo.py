@@ -24,7 +24,10 @@ def copy_demo_files(
     )
 
 
-def copy_rproj_file(project_name: str, project_dir: str | PosixPath) -> None:
+def copy_rproj_file(
+    project_name: str,
+    project_dir: str | Path | PosixPath,
+) -> None:
     demo_path = str(dir_in_package('demo'))
     shutil.copyfile(
         src=Path(demo_path) / 'project.Rproj',

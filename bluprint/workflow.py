@@ -35,9 +35,9 @@ def run_workflow(
                     notebook_dir=str(notebook_dir),
                 )
             case '.Rmd':
-                pass
+                pass  # noqa: WPS420
             case '.qmd':
-                pass
+                pass  # noqa: WPS420
             case nb_extension:
                 raise InvalidNotebookTypeError(
                     f'Invalid extension {nb_extension} in {notebook_file}',

@@ -20,10 +20,10 @@ def execute_rmd(rmd_file: str) -> None:  # noqa: WPS210
             stderr=subprocess.PIPE,
         )
         last_percent = 0
-        for line in rmd_out.stdout:
+        for line in rmd_out.stdout:  # type: ignore
             if progress_bar_re.match(line):
                 current_percent = int(progress_bar_re.sub(r'\1', line))
                 tqdm_progress.update(current_percent - last_percent)
                 sys.stdout.flush()
                 last_percent = current_percent
-        rmd_out.stdout.close()
+        rmd_out.stdout.close()  # type: ignore

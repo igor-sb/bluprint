@@ -7,13 +7,13 @@ import fire
 from bluprint.binary import check_if_executable_is_installed
 from bluprint.colors import styled_print
 from bluprint.config import load_config_yaml
-from bluprint.errors import ProjectExistsError
-from bluprint.index import index_dir_to_config_yaml
-from bluprint.project import create_project
-from bluprint.r_project import (
+from bluprint.create.py_project import create_project
+from bluprint.create.r_project import (
     check_if_r_package_is_installed,
     create_r_project,
 )
+from bluprint.errors import ProjectExistsError
+from bluprint.index import index_dir_to_config_yaml
 from bluprint.workflow import run_workflow
 
 

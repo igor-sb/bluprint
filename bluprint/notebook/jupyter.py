@@ -2,7 +2,7 @@
 
 import os
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 from jupyter_client.manager import KernelManager
 from nbclient import NotebookClient
@@ -10,13 +10,12 @@ from nbconvert import NotebookExporter
 from nbconvert.preprocessors import ExecutePreprocessor
 from nbformat import NotebookNode
 from nbformat import read as read_notebook
-from tqdm import tqdm
 
-from bluprint.colors import Style
 from bluprint.config import absolute_path
+from bluprint.notebook.progress import progress
 
 
-def run_notebook(
+def run_jupyter_notebook(
     notebook_file: str,
     display_prefix: str,
     notebook_dir: str = 'notebooks',
@@ -73,16 +72,3 @@ class KernelClientError(Exception):
 
 class InfoMessageError(Exception):
     """Raised if info message cannot be obtained from nb kernel."""
-
-
-def progress(iterable: Iterable, name: str) -> Iterable:
-    sep = f'{Style.cyan}─{Style.end}'
-    return tqdm(
-        iterable,
-        desc=name,
-        bar_format=(
-            '{desc} {percentage:3.0f}% '
-            + sep + ' {n_fmt}/{total_fmt} cells '
-            + sep + ' Elapsed: {elapsed}'
-        ),
-    )

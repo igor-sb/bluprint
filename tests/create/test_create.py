@@ -5,7 +5,6 @@ from importlib import resources
 from pathlib import Path
 
 import bluprint
-from bluprint.project import create_project
 
 
 def test_create_project(find_files_in_dir, monkeypatch):
@@ -19,7 +18,8 @@ def test_create_project(find_files_in_dir, monkeypatch):
     demo_dir = bluprint.demo.dir_in_package('demo')
 
     with tempfile.TemporaryDirectory() as temp_dir:
-        create_project(
+        bp = bluprint.cli.Bluprint()
+        bp.create(
             project_name='project',
             python_version='3.11.2',
             parent_dir=temp_dir,
@@ -32,6 +32,7 @@ def test_create_project(find_files_in_dir, monkeypatch):
             file_path.relative_to(demo_dir)
             for file_path in find_files_in_dir(demo_dir)
         }
-        demo_files.add(Path('pyproject.toml'))
+        demo_files.update([Path('pyproject.toml'), Path('poetry.lock')])
+        demo_files.remove(Path('project.Rproj'))  # Python-only test
         assert project_files == demo_files
         assert (Path(temp_dir) / 'project' / '.venv').exists()

@@ -4,17 +4,29 @@ from pathlib import Path, PosixPath
 
 import fire
 
+from bluprint.binary import check_if_executable_is_installed
 from bluprint.colors import styled_print
 from bluprint.config import load_config_yaml
+from bluprint.create.py_project import create_project
+from bluprint.create.r_project import (
+    check_if_r_package_is_installed,
+    create_r_project,
+)
+from bluprint.errors import ProjectExistsError
 from bluprint.index import index_dir_to_config_yaml
-from bluprint.project import create_project
 from bluprint.workflow import run_workflow
 
 
 class Bluprint(object):
     """Bluprint sub-commands used by CLI."""
 
-    def create(self, project_name: str):
+    def create(
+        self,
+        project_name: str,
+        python_version: str | None = None,
+        parent_dir: str | None = None,
+        r_proj: bool = False,
+    ):
         """Create a directory with a bluprint project.
 
         Creates a project directory structure:
@@ -31,9 +43,40 @@ class Bluprint(object):
         as a Python package, without a need to `pip install` them each time
         there is a change.
 
+        Args:
+
+        project_name (str): Name of the project, also the name of the main
+        project directory.
+
+        python_version (str | None, optional): Python version to be used. If
+        not specified, uses the latest stable version from `pyenv install -l`.
+
+        parent_dir (str | None, optional): Parent directory to create a
+        PROJECT_NAME directory in. If not specific PARENT_DIR is a current
+        directory.
+
+        r_proj (bool): Setup R library using renv to support package isolation
+        in RMarkdown notebooks.
+
         """
-        styled_print(f'create {project_name}')
-        create_project(project_name)
+        check_if_project_exists(project_name, parent_dir)
+        for executable in ('pyenv', 'poetry'):
+            check_if_executable_is_installed(executable)
+        if r_proj:
+            check_if_executable_is_installed('Rscript')
+            check_if_r_package_is_installed('renv')
+
+        styled_print(
+            'creating Python{with_r} {project_name}... '.format(
+                project_name=project_name,
+                with_r='/R' if r_proj else '',
+            ),
+            endline='',
+        )
+        create_project(project_name, python_version, parent_dir)
+        if r_proj:
+            create_r_project(project_name, parent_dir)
+        styled_print('ok', print_bluprint=False)
 
     def init(self):
         """Initialize a bluprint project in existing directory."""
@@ -91,6 +134,13 @@ class Bluprint(object):
         """
         styled_print(f'index {input_dir}/** ❯ {output_yaml}')
         index_dir_to_config_yaml(input_dir, output_yaml)
+
+
+def check_if_project_exists(project_name: str, parent_dir: str | None) -> None:
+    if not parent_dir:
+        parent_dir = '.'
+    if (Path(parent_dir) / project_name).is_dir():
+        raise ProjectExistsError(f'{project_name} directory exists.')
 
 
 def main():

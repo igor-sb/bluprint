@@ -1,16 +1,13 @@
 """Bluprint workflow orchestrator."""
 
-from pathlib import PosixPath
+from pathlib import Path, PosixPath
 
 from omegaconf import DictConfig, ListConfig
 
 from bluprint.colors import style_notebook, style_workflow, styled_print
 from bluprint.config import load_config_yaml
-from bluprint.notebook import run_notebook
-
-
-class InvalidWorkflowError(Exception):
-    """Raises exception when invalid workflow is specified."""
+from bluprint.errors import InvalidNotebookTypeError, InvalidWorkflowError
+from bluprint.notebook.jupyter import run_jupyter_notebook
 
 
 def run_workflow(
@@ -30,11 +27,21 @@ def run_workflow(
         add_graphic_prefixes(workflow_notebooks),
     )
     for notebook_file, graphical_prefix in workflow_notebooks_with_prefixes:
-        run_notebook(
-            notebook_file=notebook_file,
-            display_prefix=graphical_prefix,
-            notebook_dir=str(notebook_dir),
-        )
+        match Path(notebook_file).suffix:
+            case '.ipynb':
+                run_jupyter_notebook(
+                    notebook_file=notebook_file,
+                    display_prefix=graphical_prefix,
+                    notebook_dir=str(notebook_dir),
+                )
+            case '.Rmd':
+                pass  # noqa: WPS420
+            case '.qmd':
+                pass  # noqa: WPS420
+            case nb_extension:
+                raise InvalidNotebookTypeError(
+                    f'Invalid extension {nb_extension} in {notebook_file}',
+                )
 
 
 def run_workflows(

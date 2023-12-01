@@ -7,6 +7,7 @@ import fire
 from bluprint.binary import check_if_executable_is_installed
 from bluprint.colors import styled_print
 from bluprint.config import load_config_yaml
+from bluprint.errors import ProjectExistsError
 from bluprint.index import index_dir_to_config_yaml
 from bluprint.project import create_project
 from bluprint.r_project import (
@@ -58,15 +59,17 @@ class Bluprint(object):
         in RMarkdown notebooks.
 
         """
+        check_if_project_exists(project_name, parent_dir)
         for executable in ('pyenv', 'poetry'):
             check_if_executable_is_installed(executable)
         if r_proj:
             check_if_executable_is_installed('Rscript')
             check_if_r_package_is_installed('renv')
+
         styled_print(
-            'creating {project_name}{with_r}... '.format(
+            'creating Python{with_r} {project_name}... '.format(
                 project_name=project_name,
-                with_r=' with R' if r_proj else '',
+                with_r='/R' if r_proj else '',
             ),
             endline='',
         )
@@ -131,6 +134,13 @@ class Bluprint(object):
         """
         styled_print(f'index {input_dir}/** ❯ {output_yaml}')
         index_dir_to_config_yaml(input_dir, output_yaml)
+
+
+def check_if_project_exists(project_name: str, parent_dir: str | None) -> None:
+    if not parent_dir:
+        parent_dir = '.'
+    if (Path(parent_dir) / project_name).is_dir():
+        raise ProjectExistsError(f'{project_name} directory exists.')
 
 
 def main():

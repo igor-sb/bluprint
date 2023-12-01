@@ -32,6 +32,7 @@ def test_create_project(find_files_in_dir, monkeypatch):
             file_path.relative_to(demo_dir)
             for file_path in find_files_in_dir(demo_dir)
         }
-        demo_files.add(Path('pyproject.toml'))
+        demo_files.update([Path('pyproject.toml'), Path('poetry.lock')])
+        demo_files.remove(Path('project.Rproj'))  # Python-only test
         assert project_files == demo_files
         assert (Path(temp_dir) / 'project' / '.venv').exists()

@@ -20,6 +20,10 @@ class MissingExecutableError(StyledError):
     """Raises an exception if a required executable is missing."""
 
 
+class ProjectExistsError(StyledError):
+    """Raises exception when project directory exists."""
+
+
 class InvalidWorkflowError(StyledError):
     """Raises exception when invalid workflow is specified."""
 
@@ -29,8 +33,12 @@ class InvalidNotebookTypeError(StyledError):
 
 
 class RpackageMissingError(StyledError):
-    """Raise exception if an R package is not installed in R."""
+    """Raises exception if an R package is not installed in R."""
 
 
 class RenvInitError(StyledError):
-    """Raise exception if renv:init() fails."""
+    """Raises exception if renv:init() fails."""
+
+
+class PoetryAddError(StyledError):
+    """Raises exception if poetry add fails."""

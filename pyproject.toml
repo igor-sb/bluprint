@@ -10,8 +10,8 @@ python = ">=3.11,<3.12"
 notebook = "^7.0.6"
 fire = "^0.5.0"
 omegaconf = "^2.3.0"
-tdqm = "^0.0.1"
 directory-tree = "^0.0.4"
+tqdm = "^4.66.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.3"
@@ -48,7 +48,6 @@ filterwarnings = [
 [tool.isort]
 profile = "wemake"
 line_length = 79
-# force_grid_wrap = 2
 
 [tool.flake8]
 ignore = [

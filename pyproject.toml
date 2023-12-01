@@ -47,6 +47,8 @@ filterwarnings = [
     
 [tool.isort]
 profile = "wemake"
+line_length = 79
+# force_grid_wrap = 2
 
 [tool.flake8]
 ignore = [

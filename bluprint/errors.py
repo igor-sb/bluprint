@@ -8,11 +8,13 @@ from bluprint.colors import Style
 @dataclass
 class StyledError(Exception):
     """Highlighted error message in Python error dump."""
+
     message: str = ''
 
     def __str__(self):
+        """Error message formatting."""
         return f'{Style.red}{self.message}{Style.end}'
-    
+
 
 class MissingExecutableError(StyledError):
     """Raises an exception if a required executable is missing."""
@@ -27,4 +29,8 @@ class InvalidNotebookTypeError(StyledError):
 
 
 class RpackageMissingError(StyledError):
-    """Raise this exception if an R package is not installed in R."""
+    """Raise exception if an R package is not installed in R."""
+
+
+class RenvInitError(StyledError):
+    """Raise exception if renv:init() fails."""

@@ -4,7 +4,6 @@ import re
 import subprocess
 from pathlib import Path, PosixPath
 
-from bluprint.binary import check_if_executable_is_installed
 from bluprint.demo import copy_demo_files
 
 
@@ -61,8 +60,6 @@ def create_project(
     if not parent_dir:
         parent_dir = '.'
     project_dir = Path(parent_dir) / project_name
-    for executable in ('pyenv', 'poetry'):
-        check_if_executable_is_installed(executable)
     create_project_directory_skeleton(project_name, parent_dir)
     if not python_version:
         python_version = latest_python_version()

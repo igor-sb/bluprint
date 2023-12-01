@@ -53,10 +53,17 @@ def bluprint_command(command: str) -> str:
     )
 
 
-def styled_print(command: str, print_bluprint: bool = True) -> None:
+def styled_print(
+    command: str,
+    print_bluprint: bool = True,
+    endline: str = '\n',
+) -> None:
     if print_bluprint:
-        sys.stderr.write(
-            '{0}\n'.format(bluprint_command(command)),
-        )
-    else:
-        sys.stderr.write('{0}\n'.format(command))
+        command = bluprint_command(command)
+    sys.stderr.write(
+        '{command}{endline}'.format(
+            command=command,
+            endline=endline,
+        ),
+    )
+    sys.stderr.flush()

@@ -4,11 +4,15 @@ from pathlib import Path, PosixPath
 
 import fire
 
+from bluprint.binary import check_if_executable_is_installed
 from bluprint.colors import styled_print
 from bluprint.config import load_config_yaml
 from bluprint.index import index_dir_to_config_yaml
 from bluprint.project import create_project
-from bluprint.r_project import create_r_project
+from bluprint.r_project import (
+    check_if_r_package_is_installed,
+    create_r_project,
+)
 from bluprint.workflow import run_workflow
 
 
@@ -49,15 +53,27 @@ class Bluprint(object):
         parent_dir (str | None, optional): Parent directory to create a
         PROJECT_NAME directory in. If not specific PARENT_DIR is a current
         directory.
-        
+
         r_proj (bool): Setup R library using renv to support package isolation
         in RMarkdown notebooks.
 
         """
-        styled_print(f'create {project_name}')
+        for executable in ('pyenv', 'poetry'):
+            check_if_executable_is_installed(executable)
+        if r_proj:
+            check_if_executable_is_installed('Rscript')
+            check_if_r_package_is_installed('renv')
+        styled_print(
+            'creating {project_name}{with_r}... '.format(
+                project_name=project_name,
+                with_r=' with R' if r_proj else '',
+            ),
+            endline='',
+        )
         create_project(project_name, python_version, parent_dir)
         if r_proj:
             create_r_project(project_name, parent_dir)
+        styled_print('ok', print_bluprint=False)
 
     def init(self):
         """Initialize a bluprint project in existing directory."""

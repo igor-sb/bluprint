@@ -24,5 +24,13 @@ def copy_demo_files(
     )
 
 
+def copy_rproj_file(project_name: str, project_dir: str | PosixPath) -> None:
+    demo_path = str(dir_in_package('demo'))
+    shutil.copyfile(
+        src=Path(demo_path) / 'project.Rproj',
+        dst=Path(project_dir) / f'{project_name}.Rproj',
+    )
+
+
 def dir_in_package(package_dir: str) -> PosixPath | Traversable:
     return resources.files(package_dir).joinpath('')

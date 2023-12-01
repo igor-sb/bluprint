@@ -40,7 +40,7 @@ def run_workflow(
                 pass
             case nb_extension:
                 raise InvalidNotebookTypeError(
-                    f'Invalid extension {nb_extension}',
+                    f'Invalid extension {nb_extension} in {notebook_file}',
                 )
 
 

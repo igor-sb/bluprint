@@ -32,6 +32,8 @@ jobs:
 
       - name: Run unit tests
         run: |
+          echo "Showing path:"
+          echo "$PATH"
           export PATH=$PATH:/home/runner/.pyenv/bin
           export JUPYTER_PLATFORM_DIRS=1
           poetry run jupyter --paths

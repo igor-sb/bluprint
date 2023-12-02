@@ -15,3 +15,4 @@ runs:
     - name: Install renv
       run: |
         Rscript -e 'install.packages("renv", repos="https://packagemanager.posit.co/cran/__linux__/focal/2023-12-01")'
+      shell: bash

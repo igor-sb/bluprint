@@ -23,9 +23,12 @@ runs:
 
     - name: Install pyenv
       if: steps.pyenv-cache.outputs.cache-hit != 'true'
-      uses: "gabrielfalcao/pyenv-action@v17"
-      with:
-        default: ${{ inputs.PYTHON_VERSION }}
+      run: |
+        git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+        echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+        echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+        echo 'eval "$(pyenv init -)"' >> ~/.bashrc        
+      shell: bash
 
     - name: Install poetry
       run: |

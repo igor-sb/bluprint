@@ -34,6 +34,7 @@ instructions. Then run this:
    :maxdepth: 1
    :caption: Contents:
 
+   configuration
 
 .. toctree::
    :maxdepth: 1

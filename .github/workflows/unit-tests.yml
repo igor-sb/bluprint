@@ -5,6 +5,7 @@ on:
 
 env:
   PYTHON_VERSION: 3.11.2
+  R_VERSION: 4.2.2
 
 jobs:
 
@@ -23,6 +24,11 @@ jobs:
         uses: ./.github/actions/install-python
         with:
           PYTHON_VERSION: ${{ env.PYTHON_VERSION }}
+      
+      - name: Install and setup R and packages
+        uses: ./.github/actions/install-r
+        with:
+          R_VERSION: ${{ env.R_VERSION }}
 
       - name: Run unit tests
         run: |

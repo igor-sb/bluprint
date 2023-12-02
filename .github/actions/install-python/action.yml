@@ -18,7 +18,7 @@ runs:
       id: pyenv-cache
       uses: actions/cache@v3
       with:
-        path: /home/runner/.pyenv/
+        path: /home/runner/.pyenv
         key: pyenv-${{ runner.os }}-${{ inputs.PYTHON_VERSION }}
 
     - name: Install pyenv
@@ -28,7 +28,7 @@ runs:
         echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
         echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
         echo 'eval "$(pyenv init -)"' >> ~/.bashrc
-        echo 'export PATH=$PATH:$HOME/.pyenv/bin'
+        echo 'export PATH=$PATH:/home/runner/.pyenv/bin'
       shell: bash
 
     - name: Install poetry

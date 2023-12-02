@@ -1,0 +1,5 @@
+exon_id,exon_start,exon_end,exon_rc,exon_seq,genome_seq,read_id,read_start,read_end,exon_gap
+exon_03,0,66,False,CTGAAG...,CTGAAG...,m64098_220714_021535/100991569/ccs,1955,2021,
+exon_03,0,66,True,CTGAAG...,CTTGGG...,m64098_220714_021535/103154991/ccs,243,309,
+exon_02,0,87,True,AATCTC...,CTTCCG...,m64098_220714_021535/103154991/ccs,6745,6832,6436.0
+...,...,...,...,...,...,...,...,...,...

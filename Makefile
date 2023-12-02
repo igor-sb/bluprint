@@ -4,7 +4,7 @@ PROJ= bluprint
 NC=\033[0m # No Color
 
 .PHONY: install autolint lint lint-flake8 shell precommit poetry-precommit \
-		install-dev test report-coverage
+		install-dev test report-coverage docs
 
 test:
 		${POETRY_RUN} coverage erase
@@ -49,7 +49,7 @@ report-coverage:
 		${POETRY_RUN} coverage html
 		${POETRY_RUN} coverage xml
 
-doc:
+docs:
 	@echo "\n${BLUE}Preparing Sphinx documentation...${NC}\n"
 	@cd docs; make html; make prepare-gh-pages
 

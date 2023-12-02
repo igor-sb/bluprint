@@ -18,14 +18,18 @@ runs:
       id: pyenv-cache
       uses: actions/cache@v3
       with:
-        path: /home/runner/.pyenv/
+        path: /home/runner/.pyenv
         key: pyenv-${{ runner.os }}-${{ inputs.PYTHON_VERSION }}
 
     - name: Install pyenv
       if: steps.pyenv-cache.outputs.cache-hit != 'true'
-      uses: "gabrielfalcao/pyenv-action@v17"
-      with:
-        default: 3.11.2
+      run: |
+        git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+        echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+        echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+        echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+        echo 'export PATH=$PATH:/home/runner/.pyenv/bin'
+      shell: bash
 
     - name: Install poetry
       run: |
@@ -35,7 +39,7 @@ runs:
 
     - name: Load Cached Virtualenv
       id: venv-cache
-      uses: actions/cache@v2.1.3
+      uses: actions/cache@v3
       with:
         path: .venv
         key: venv-${{ inputs.PYTHON_VERSION }}-${{ runner.os }}-${{ hashFiles('**/pyproject.toml', '**/poetry.lock') }}
@@ -44,4 +48,3 @@ runs:
       if: steps.venv-cache.outputs.cache-hit != 'true'
       run: make install
       shell: bash
-  

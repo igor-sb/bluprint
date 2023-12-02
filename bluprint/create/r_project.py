@@ -1,10 +1,13 @@
 """Create an R project for bluprint."""
 
 import subprocess
-import sys
 from pathlib import Path
 
-from bluprint.create.errors import RenvInitError, RpackageMissingError
+from bluprint.create.errors import (
+    RenvInitError,
+    RenvInstallError,
+    RpackageMissingError,
+)
 from bluprint.demo import copy_rproj_file
 
 
@@ -45,4 +48,4 @@ def run_renv_install(package: str, project_dir: str | Path) -> None:
         cwd=project_dir,
     ).stderr.decode('utf-8')
     if r_error_msg:
-        sys.stderr.write(r_error_msg)
+        raise RenvInstallError(r_error_msg)

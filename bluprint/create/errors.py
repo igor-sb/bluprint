@@ -13,3 +13,7 @@ class RpackageMissingError(StyledError):
 
 class RenvInitError(StyledError):
     """Raises exception if renv:init() fails."""
+
+
+class RenvInstallError(StyledError):
+    """Raises exception if renv::install() fails."""

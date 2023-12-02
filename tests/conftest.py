@@ -12,9 +12,10 @@ def find_files_in_dir():  # noqa: WPS210
         lookup_dir: str | PosixPath,
     ) -> set[PosixPath]:
         venv_dir = str(Path(lookup_dir) / '.venv')
+        renv_dir = str(Path(lookup_dir) / 'renv')
         file_list = set()
         for root, _dirs, files in os.walk(lookup_dir):
-            if not root.startswith(venv_dir):
+            if not root.startswith(venv_dir) and not root.startswith(renv_dir):
                 for file in files:  # noqa: WPS110
                     file_list.add(Path(root) / file)
         return file_list

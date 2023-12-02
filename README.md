@@ -1,3 +1,10 @@
-# Bluprint: fast data science
+![logo](docs/images/bluprint.png){width=10% height=10%} 
 
-![logo](docs/images/bluprint.png)
+_________________
+
+# Bluprint
+
+Framework for fast and reproducible exploratory analyses in data science.
+
+
+

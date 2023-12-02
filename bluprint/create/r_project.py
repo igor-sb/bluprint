@@ -1,7 +1,6 @@
 """Create an R project for bluprint."""
 
 import subprocess
-import sys
 from pathlib import Path
 
 from bluprint.create.errors import (

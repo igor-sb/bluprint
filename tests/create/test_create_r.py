@@ -7,14 +7,9 @@ from pathlib import Path
 import pytest
 
 import bluprint
-from bluprint.create.errors import (
-    RenvInitError,
-    RenvInstallError,
-    RpackageMissingError,
-)
+from bluprint.create.errors import RenvInstallError, RpackageMissingError
 from bluprint.create.r_project import (
     check_if_r_package_is_installed,
-    run_renv_init,
     run_renv_install,
 )
 

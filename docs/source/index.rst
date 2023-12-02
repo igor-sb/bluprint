@@ -34,8 +34,12 @@ instructions. Then run this:
    :maxdepth: 1
    :caption: Contents:
 
-   index
 
+.. toctree::
+   :maxdepth: 1
+   :caption: Existing projects:
+
+   data_index
 
 
 Indices and tables

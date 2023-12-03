@@ -1,7 +1,8 @@
 dir1:
   dir1a:
-    file1: dir1/dir1a/file1.txt
+    file_1: dir1/dir1a/file.1.txt
     file2: dir1/dir1a/file2.txt
+    file_1_txt: dir1/dir1a/file_1.txt
   file3: dir1/file3.txt
 dir2:
   file4: dir2/file4.txt

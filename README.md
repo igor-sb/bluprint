@@ -1,4 +1,4 @@
-![logo](docs/images/bluprint.png){width=10% height=10%} 
+![logo](docs/source/images/bluprint_wide.png)
 
 _________________
 

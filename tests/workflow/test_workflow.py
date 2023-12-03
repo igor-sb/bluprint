@@ -2,6 +2,8 @@
 
 import os
 import re
+import sys
+from io import StringIO
 from pathlib import Path
 
 import pytest
@@ -9,6 +11,19 @@ import pytest
 from bluprint.capture_output import capture_stderr
 from bluprint.cli import Bluprint
 from bluprint.workflow import InvalidWorkflowError, run_workflows
+
+
+def capture_stderr(func, *args, **kwargs):
+    buffer = StringIO()
+    original_stderr = sys.stderr
+
+    try:  # noqa: WPS501, WPS229
+        sys.stderr = buffer
+        func(*args, **kwargs)
+        return buffer.getvalue()  # noqa: WPS331
+
+    finally:
+        sys.stderr = original_stderr
 
 
 def test_run_workflows(reference_test_log_file, snapshot):

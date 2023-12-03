@@ -8,7 +8,6 @@ from pathlib import Path
 
 import pytest
 
-from bluprint.capture_output import capture_stderr
 from bluprint.cli import Bluprint
 from bluprint.workflow import InvalidWorkflowError, run_workflows
 

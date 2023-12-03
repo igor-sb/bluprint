@@ -11,10 +11,8 @@ Features
 
 * Streamlined data loading and path handling through YAML configuration files
 
-Installation
+Requirements
 ------------
-
-Requirements:
 
 * `Pyenv <https://github.com/pyenv/pyenv>`_
 * `Poetry <https://python-poetry.org/docs/#installation>`_
@@ -22,6 +20,16 @@ Requirements:
 For RMarkdown notebooks:
 
 * R packages {renv}, {reticulate}, {yaml}
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install bluprint
+
+
+
 
 
 

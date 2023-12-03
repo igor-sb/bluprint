@@ -1,5 +1,6 @@
 """Command-line interface for bluprint."""
 
+import sys
 from pathlib import Path, PosixPath
 
 import fire
@@ -15,6 +16,8 @@ from bluprint.create.r_project import (
 from bluprint.errors import ProjectExistsError
 from bluprint.index import index_dir_to_config_yaml
 from bluprint.workflow import run_workflow
+
+sys.tracebacklimit = 0
 
 
 class Bluprint(object):

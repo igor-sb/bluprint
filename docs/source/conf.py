@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'gencdna'
+project = 'bluprint'
 copyright = '2023, Igor Segota'
 author = 'Igor Segota'
 release = '0.1'

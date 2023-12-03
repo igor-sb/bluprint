@@ -6,28 +6,26 @@ Bluprint
 Bluprint is a command line utility that helps organize exploratory data science
 workflows, which rely on "quick and dirty" analyses using notebooks.
 
+Features
+--------
+
+* Streamlined data loading and path handling through YAML configuration files
+
 Installation
 ------------
 
 Requirements:
 
-* Pyenv
-* Poetry
+The main 
+
+* `Pyenv <https://github.com/pyenv/pyenv>`_
+* `Poetry <https://python-poetry.org/docs/#installation>`_
 
 For RMarkdown notebooks:
 
-* R packages {reticulate}, {yaml}
+* R packages {renv}, {reticulate}, {yaml}
 
 
-You need to have Python with `Poetry <https://python-poetry.org/>`_ installed.
-See `Poetry Installation <https://python-poetry.org/docs/#installation>`_ 
-instructions. Then run this:
-
-.. code-block:: bash
-
-   git clone https://github.com/igor-sb/gencdna.git
-   cd gencdna
-   make install
 
 
 .. toctree::

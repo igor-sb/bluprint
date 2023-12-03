@@ -16,15 +16,12 @@ Installation
 
 Requirements:
 
-The main 
-
 * `Pyenv <https://github.com/pyenv/pyenv>`_
 * `Poetry <https://python-poetry.org/docs/#installation>`_
 
 For RMarkdown notebooks:
 
 * R packages {renv}, {reticulate}, {yaml}
-
 
 
 

@@ -18,21 +18,28 @@ def test_create_project(find_files_in_dir, monkeypatch):
     demo_dir = bluprint.demo.dir_in_package('demo')
 
     with tempfile.TemporaryDirectory() as temp_dir:
-        bp = bluprint.cli.Bluprint()
-        bp.create(
+        bluprint.cli.Bluprint().create(
             project_name='project',
             python_version='3.11.2',
             parent_dir=temp_dir,
         )
+        project_dir = Path(temp_dir) / 'project'
         project_files = {
-            file_path.relative_to(Path(temp_dir) / 'project')
-            for file_path in find_files_in_dir(Path(temp_dir) / 'project')
+            file_path.relative_to(project_dir)
+            for file_path in find_files_in_dir(project_dir)
         }
         demo_files = {
             file_path.relative_to(demo_dir)
             for file_path in find_files_in_dir(demo_dir)
         }
-        demo_files.update([Path('pyproject.toml'), Path('poetry.lock')])
+        demo_files.update([
+            Path('pyproject.toml'),
+            Path('poetry.lock'),
+            Path('.python-version'),
+        ])
         demo_files.remove(Path('project.Rproj'))  # Python-only test
         assert project_files == demo_files
-        assert (Path(temp_dir) / 'project' / '.venv').exists()
+        assert (project_dir / '.venv' / 'bin').exists()
+        assert (project_dir / '.venv' / 'lib').exists()
+        assert (project_dir / '.venv' / 'share').exists()
+        assert (project_dir / '.venv' / 'pyvenv.cfg').exists()

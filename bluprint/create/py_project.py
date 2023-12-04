@@ -23,15 +23,14 @@ def create_project(
     project_dir = Path(parent_dir) / project_name
     create_project_directory_skeleton(project_name, parent_dir)
     if not python_version:
-        python_version = get_python_version()
-    initalize_poetry(project_name, python_version, project_dir)
+        python_version = default_python_version()
     copy_demo_files(project_name, project_dir)
     interpolate_project_name_in_example_nbs(project_name, project_dir)
+    initalize_poetry(project_name, python_version, project_dir)
     for package in ('ipykernel', 'pandas'):
         run(['poetry', 'add', package], PoetryAddError, cwd=project_dir)
     run(['pyenv', 'local', python_version], PoetryRunError, cwd=project_dir)
-    tmp = run(['poetry', 'install'], PoetryRunError, cwd=project_dir)
-    print(tmp)
+    run(['poetry', 'install'], PoetryRunError, cwd=project_dir)
     install_project_as_editable_package(project_dir)
 
 
@@ -89,6 +88,6 @@ def install_project_as_editable_package(project_dir: str | Path = '.') -> None:
     )
 
 
-def get_python_version() -> str:
+def default_python_version() -> str:
     python_out = run(['python', '--version'], PythonVersionError)
     return python_out.strip().replace('Python ', '')

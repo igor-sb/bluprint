@@ -19,17 +19,16 @@ autopep8 = "^2.0.4"
 wemake-python-styleguide = "^0.18.0"
 unify = "^0.5"
 isort = "^5.12.0"
-flake8 = "^6.1.0"
 pre-commit = "^3.5.0"
 coverage = "^7.3.2"
 sphinx = "^7.2.6"
 mypy = "^1.6.1"
 pytest-snapshot = "^0.9.0"
 sphinx-rtd-theme = "^1.3.0"
-flake8-pyproject = "^1.2.3"
 argcomplete = "^3.1.6"
 pylint = "^3.0.2"
 types-tqdm = "^4.66.0.4"
+flake8-pyproject = "^1.2.3"
 
 [tool.poetry.scripts]
 bluprint = "bluprint.cli:main"
@@ -85,6 +84,8 @@ per-file-ignores = [
 		WPS432,
 		I004
 	""",
+	# WPS202 Found too many module members
+	'**/errors.py: WPS202',
 ]
 exclude = [
 	'docs',

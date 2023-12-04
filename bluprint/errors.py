@@ -9,7 +9,8 @@ from bluprint.colors import Style
 class StyledError(Exception):
     """Highlighted error message in Python error dump."""
 
-    message: str = ''
+    def __init__(self, message: str = ''):
+        self.message = message
 
     def __str__(self):
         """Error message formatting."""

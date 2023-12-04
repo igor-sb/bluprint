@@ -3,8 +3,24 @@
 from bluprint.errors import StyledError
 
 
+class PyenvError(StyledError):
+    """Raises exception if pyenv command fails."""
+
+
 class PoetryAddError(StyledError):
     """Raises exception if poetry add fails."""
+
+
+class PoetryInitError(StyledError):
+    """Raises exception if poetry init fails."""
+
+
+class PoetryRunError(StyledError):
+    """Raises exception if poetry run fails."""
+
+
+class PoetryEnvError(StyledError):
+    """Raises exception if poetry env fails."""
 
 
 class RpackageMissingError(StyledError):

@@ -3,8 +3,8 @@
 from bluprint.errors import StyledError
 
 
-class PyenvError(StyledError):
-    """Raises exception if pyenv command fails."""
+class PythonVersionError(StyledError):
+    """Raises exception if python --version fails."""
 
 
 class PoetryAddError(StyledError):

@@ -8,7 +8,7 @@ from bluprint.create.errors import (
     PoetryAddError,
     PoetryInitError,
     PoetryRunError,
-    PyenvError,
+    PythonVersionError,
 )
 from bluprint.demo import copy_demo_files
 
@@ -23,12 +23,15 @@ def create_project(
     project_dir = Path(parent_dir) / project_name
     create_project_directory_skeleton(project_name, parent_dir)
     if not python_version:
-        python_version = global_python_version()
+        python_version = get_python_version()
     initalize_poetry(project_name, python_version, project_dir)
     copy_demo_files(project_name, project_dir)
     interpolate_project_name_in_example_nbs(project_name, project_dir)
     for package in ('ipykernel', 'pandas'):
         run(['poetry', 'add', package], PoetryAddError, cwd=project_dir)
+    run(['pyenv', 'local', python_version], PoetryRunError, cwd=project_dir)
+    tmp = run(['poetry', 'install'], PoetryRunError, cwd=project_dir)
+    print(tmp)
     install_project_as_editable_package(project_dir)
 
 
@@ -86,6 +89,6 @@ def install_project_as_editable_package(project_dir: str | Path = '.') -> None:
     )
 
 
-def global_python_version() -> str:
-    python_out = run(['pyenv', 'global'], PyenvError)
-    return python_out.strip()
+def get_python_version() -> str:
+    python_out = run(['python', '--version'], PythonVersionError)
+    return python_out.strip().replace('Python ', '')

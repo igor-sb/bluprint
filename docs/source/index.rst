@@ -4,30 +4,49 @@ Bluprint
 ========
 
 Bluprint is a command line utility that helps organize exploratory data science
-workflows, which rely on "quick and dirty" analyses using notebooks.
+projects, which rely on "quick and dirty" analyses using notebooks.
 
 Features
 --------
 
-* Streamlined data loading and path handling through YAML configuration files
+* Project-specific Python/R environments
 
-Requirements
-------------
+* Fully portable projects: copy or move the project folder anywhere
 
-* `Pyenv <https://github.com/pyenv/pyenv>`_
-* `Poetry <https://python-poetry.org/docs/#installation>`_
+* Configuration and data paths organized in YAML files
 
-For RMarkdown notebooks:
+* Project-specific code easily importable into notebooks:
+  ``from myproject import function``
 
-* R packages {renv}, {reticulate}, {yaml}
+* Quickly check all notebook cells can be executed in order
+
+* Setup simple notebook workflows through YAML
+
 
 Installation
 ------------
 
 .. code-block:: bash
 
-   pip install bluprint
+   pipx install bluprint
 
+This will make the bluprint available in any Python environment.
+
+
+Requirements
+------------
+
+* `pyenv <https://github.com/pyenv/pyenv>`_: Python version manager
+
+* `pipx <https://github.com/pypa/pipx>`_: Python package installer used for
+  installing bluprint and poetry
+
+* `poetry <https://python-poetry.org/docs/#installation>`_: Python package and
+  dependency manager
+   
+* R packages {renv}, {reticulate}, {yaml} for RMarkdown notebooks
+
+* Recommended: `rig <https://github.com/r-lib/rig>`_ to manage R versions
 
 
 
@@ -37,7 +56,9 @@ Installation
    :maxdepth: 1
    :caption: Contents:
 
+   tutorial
    configuration
+   python_versions
 
 .. toctree::
    :maxdepth: 1

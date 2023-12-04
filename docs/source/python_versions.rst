@@ -1,8 +1,9 @@
 How to manipulate Python versions
 =================================
 
-``pyenv`` is a tool used to manage Python versions. Once it is installed, use
-``pyenv versions`` to see which Python versions are installed, e.g.:
+You can use `pyenv <https://github.com/pyenv/pyenv#installation>`_ to manage
+Python versions. Once it is installed, use ``pyenv versions`` to see which
+Python versions are installed:
 
 .. code-block::bash
 
@@ -15,9 +16,9 @@ How to manipulate Python versions
 	3.12.0a5
 	3.13.0a2
 
-Python versions available to download and install:
+Here's how to get python versions available to download and install:
 
-.. code-block::bash
+.. code-block:: bash
 
 	❯ pyenv install -l | grep '\s[0-9]'
 	...
@@ -33,7 +34,7 @@ Python versions available to download and install:
 
 Installing a new version, e.g. 3.13.0a2:
 
-.. code-block::bash
+.. code-block:: bash
 
 	❯ pyenv install 3.13.0a2
 	Downloading Python-3.13.0a2.tar.xz...
@@ -45,4 +46,5 @@ Installing a new version, e.g. 3.13.0a2:
 Once a different Python version is install you can use it
 
 * globally using: ``pyenv global 3.13.0a2``
-* locally (in the current directory) using ``pyenv local 3.13.0a2``
+
+* locally (whenever you are in the current directory) using ``pyenv local 3.13.0a2``

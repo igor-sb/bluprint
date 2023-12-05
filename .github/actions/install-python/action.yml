@@ -30,6 +30,7 @@ runs:
         echo 'eval "$(pyenv init -)"' >> ~/.bashrc
         echo 'export PATH=$PATH:/home/runner/.pyenv/bin'
         /home/runner/.pyenv/bin/pyenv install ${{ inputs.PYTHON_VERSION }}
+        /home/runner/.pyenv/bin/pyenv global ${{ inputs.PYTHON_VERSION }}
       shell: bash
     
     - name: Install poetry

@@ -38,7 +38,7 @@ def create_project(
         # print(sh(f'cd {project_dir}; poetry add {package}; poetry env info', PoetryAddError, cwd=project_dir))
         # print(sh(f'{project_dir}/install.sh'))
     print('install')
-    run('install.sh', Exception, cwd=project_dir)
+    run(['bash', 'install.sh'], Exception, cwd=project_dir)
     print('info')
     print(poetry(['env', 'info'], PoetryInstallError, cwd=project_dir))
     print('install')

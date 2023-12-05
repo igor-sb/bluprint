@@ -39,6 +39,7 @@ def test_create_py_project(find_files_in_dir, monkeypatch):  # noqa: WPS210
             Path('.python-version'),
         ])
         demo_files.remove(Path('project.Rproj'))  # Python-only test
+        demo_files.remove(Path('install.sh'))
         venv_dir = project_dir / '.venv'
         import os
         print(os.listdir(str(venv_dir)))

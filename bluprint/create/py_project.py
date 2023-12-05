@@ -31,7 +31,7 @@ def create_project(
     run(['pyenv', 'local', python_version], PoetryRunError, cwd=project_dir)
     # print('env-use')
     # print(poetry(['env', 'use', python_version], PoetryRunError, cwd=project_dir))
-    run(['deactivate'], Exception, cwd=project_dir)
+    poetry('shell', Exception, cwd=project_dir)
     for package in ('ipykernel', 'pandas'):
         print('add')
         # print(poetry(['add', package, '-C', project_dir], PoetryAddError, cwd=project_dir))

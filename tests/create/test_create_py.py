@@ -18,6 +18,8 @@ def test_create_py_project(find_files_in_dir, monkeypatch):  # noqa: WPS210
     demo_dir = demo.dir_in_package('demo')
 
     with tempfile.TemporaryDirectory() as temp_dir:
+        import subprocess
+        subprocess.run(['pyenv', 'versions'])
         cli.Bluprint().create(
             project_name='project',
             parent_dir=temp_dir,

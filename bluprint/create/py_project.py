@@ -33,7 +33,7 @@ def create_project(
     # print(poetry(['env', 'use', python_version], PoetryRunError, cwd=project_dir))
     for package in ('ipykernel', 'pandas'):
         print('add')
-        print(poetry(['add', package], PoetryAddError, cwd=project_dir))
+        print(poetry(['add', package, '-C', project_dir], PoetryAddError, cwd=project_dir))
     print('install')
     print(poetry('install', PoetryInstallError, cwd=project_dir))
     install_project_as_editable_package(project_dir)

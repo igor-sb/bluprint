@@ -1,5 +1,5 @@
-How to manipulate Python versions
-=================================
+How to manage Python versions
+=============================
 
 You can use `pyenv <https://github.com/pyenv/pyenv#installation>`_ to manage
 Python versions. Once it is installed, use ``pyenv versions`` to see which

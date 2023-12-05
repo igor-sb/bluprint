@@ -40,6 +40,8 @@ def test_create_py_project(find_files_in_dir, monkeypatch):  # noqa: WPS210
         ])
         demo_files.remove(Path('project.Rproj'))  # Python-only test
         venv_dir = project_dir / '.venv'
+        import os
+        print(os.listdir(str(venv_dir)))
         assert project_files == demo_files
         assert (venv_dir / 'bin').exists()
         assert (venv_dir / 'lib').exists()

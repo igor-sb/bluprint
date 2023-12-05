@@ -41,6 +41,7 @@ def test_create_pyr_project(find_files_in_dir, monkeypatch):  # noqa: 210
             Path('poetry.lock'),
             Path('renv.lock'),
             Path('.Rprofile'),
+            Path('.python-version'),
         ])
         venv_dir = Path(temp_dir) / 'project' / '.venv'
         assert project_files == demo_files

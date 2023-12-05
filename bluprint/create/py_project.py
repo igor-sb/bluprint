@@ -29,10 +29,13 @@ def create_project(
     interpolate_project_name_in_example_nbs(project_name, project_dir)
     initalize_poetry(project_name, python_version, project_dir)
     run(['pyenv', 'local', python_version], PoetryRunError, cwd=project_dir)
-    poetry(['env', 'use', python_version], PoetryRunError, cwd=project_dir)
+    print('env-use')
+    print(poetry(['env', 'use', python_version], PoetryRunError, cwd=project_dir))
     for package in ('ipykernel', 'pandas'):
-        poetry(['add', package], PoetryAddError, cwd=project_dir)
-    poetry('install', PoetryInstallError, cwd=project_dir)
+        print('add')
+        print(poetry(['add', package], PoetryAddError, cwd=project_dir))
+    print('install')
+    print(poetry('install', PoetryInstallError, cwd=project_dir))
     install_project_as_editable_package(project_dir)
 
 

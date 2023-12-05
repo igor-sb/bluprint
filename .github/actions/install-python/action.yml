@@ -29,6 +29,7 @@ runs:
         echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
         echo 'eval "$(pyenv init -)"' >> ~/.bashrc
         echo 'export PATH=$PATH:/home/runner/.pyenv/bin'
+        source ~/.bashrc
         pyenv install ${{ inputs.PYTHON_VERSION }}
       shell: bash
     

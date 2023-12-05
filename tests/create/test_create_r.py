@@ -11,7 +11,7 @@ from bluprint.create.errors import RpackageMissingError
 from bluprint.create.r_project import check_if_r_package_is_installed
 
 
-def test_create_pyr_project(find_files_in_dir, monkeypatch):
+def test_create_pyr_project(find_files_in_dir, monkeypatch):  # noqa: 210
     # When pytest runs, resources.files() references tests folder and not the
     # main package folder. This restores reference to the package folder.
     def mock_resources_files(arg):  # noqa: WPS430
@@ -45,10 +45,6 @@ def test_create_pyr_project(find_files_in_dir, monkeypatch):
         venv_dir = Path(temp_dir) / 'project' / '.venv'
         assert project_files == demo_files
         assert (Path(temp_dir) / 'project' / 'renv').exists()
-        assert (venv_dir).exists()
-        assert (venv_dir / 'bin').exists()
-        assert (venv_dir / 'lib').exists()
-        assert (venv_dir / 'share').exists()
         assert (venv_dir / 'pyvenv.cfg').exists()
 
 

@@ -34,7 +34,8 @@ def create_project(
     for package in ('ipykernel', 'pandas'):
         print('add')
         # print(poetry(['add', package, '-C', project_dir], PoetryAddError, cwd=project_dir))
-        print(sh(f'poetry add {package}', PoetryAddError, cwd=project_dir))
+        print(f'cding into {project_dir}')
+        print(sh(f'cd {project_dir}; poetry add {package}', PoetryAddError, cwd=project_dir))
     print('info')
     print(poetry(['env', 'info'], PoetryInstallError, cwd=project_dir))
     print('install')

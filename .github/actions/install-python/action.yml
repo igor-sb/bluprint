@@ -31,11 +31,6 @@ runs:
         echo 'export PATH=$PATH:/home/runner/.pyenv/bin'
       shell: bash
     
-    - name: Install python through pyenv
-      run: |
-        pyenv install ${{ inputs.PYTHON_VERSION }}
-      shell: bash
-
     - name: Install poetry
       run: |
         pip3 install --upgrade poetry

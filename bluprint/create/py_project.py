@@ -35,7 +35,7 @@ def create_project(
         print('add')
         print(poetry(['add', package, '-C', project_dir], PoetryAddError, cwd=project_dir))
     print('info')
-    print(poetry(['env', 'info'], cwd=project_dir))
+    print(poetry(['env', 'info'], PoetryInstallError, cwd=project_dir))
     print('install')
     print(poetry('install', PoetryInstallError, cwd=project_dir))
     install_project_as_editable_package(project_dir)

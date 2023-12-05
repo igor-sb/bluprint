@@ -3,7 +3,7 @@
 import json
 from pathlib import Path, PosixPath
 
-from bluprint.binary import poetry, run
+from bluprint.binary import poetry, run, sh
 from bluprint.create.errors import (
     PoetryAddError,
     PoetryInitError,
@@ -33,7 +33,8 @@ def create_project(
     # print(poetry(['env', 'use', python_version], PoetryRunError, cwd=project_dir))
     for package in ('ipykernel', 'pandas'):
         print('add')
-        print(poetry(['add', package, '-C', project_dir], PoetryAddError, cwd=project_dir))
+        # print(poetry(['add', package, '-C', project_dir], PoetryAddError, cwd=project_dir))
+        sh(f'poetry add {package}', PoetryAddError, cwd=project_dir)
     print('info')
     print(poetry(['env', 'info'], PoetryInstallError, cwd=project_dir))
     print('install')

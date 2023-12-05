@@ -79,7 +79,7 @@ class Bluprint(object):
         create_project(project_name, python_version, parent_dir)
         if r_proj:
             create_r_project(project_name, parent_dir)
-        styled_print('ok', print_bluprint=False)
+        styled_print('Ok', print_bluprint=False)
 
     def init(self):
         """Initialize a bluprint project in existing directory."""

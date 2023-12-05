@@ -23,6 +23,10 @@ class PoetryEnvError(StyledError):
     """Raises exception if poetry env fails."""
 
 
+class PoetryInstallError(StyledError):
+    """Raises exception if poetry install fails."""
+
+
 class RpackageMissingError(StyledError):
     """Raises exception if an R package is not installed in R."""
 

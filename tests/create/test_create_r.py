@@ -6,29 +6,25 @@ from pathlib import Path
 
 import pytest
 
-import bluprint
-from bluprint.create.errors import RenvInstallError, RpackageMissingError
-from bluprint.create.r_project import (
-    check_if_r_package_is_installed,
-    run_renv_install,
-)
+from bluprint import cli, demo
+from bluprint.create.errors import RpackageMissingError
+from bluprint.create.r_project import check_if_r_package_is_installed
 
 
-def test_create_project(find_files_in_dir, monkeypatch):
+def test_create_pyr_project(find_files_in_dir, monkeypatch):
     # When pytest runs, resources.files() references tests folder and not the
     # main package folder. This restores reference to the package folder.
     def mock_resources_files(arg):  # noqa: WPS430
         return (
             resources.files('demo').joinpath('').parent.parent / 'demo'
         )
-    monkeypatch.setattr(bluprint.demo, 'dir_in_package', mock_resources_files)
-    demo_dir = bluprint.demo.dir_in_package('demo')
+    monkeypatch.setattr(demo, 'dir_in_package', mock_resources_files)
+    demo_dir = demo.dir_in_package('demo')
 
     with tempfile.TemporaryDirectory() as temp_dir:
-        bp = bluprint.cli.Bluprint()
+        bp = cli.Bluprint()
         bp.create(
             project_name='project',
-            python_version='3.11.2',
             parent_dir=temp_dir,
             r_proj=True,
         )
@@ -46,16 +42,16 @@ def test_create_project(find_files_in_dir, monkeypatch):
             Path('renv.lock'),
             Path('.Rprofile'),
         ])
+        venv_dir = Path(temp_dir) / 'project' / '.venv'
         assert project_files == demo_files
-        assert (Path(temp_dir) / 'project' / '.venv').exists()
         assert (Path(temp_dir) / 'project' / 'renv').exists()
+        assert (venv_dir).exists()
+        assert (venv_dir / 'bin').exists()
+        assert (venv_dir / 'lib').exists()
+        assert (venv_dir / 'share').exists()
+        assert (venv_dir / 'pyvenv.cfg').exists()
 
 
 def test_check_if_r_package_is_not_installed():
     with pytest.raises(RpackageMissingError):
         check_if_r_package_is_installed('fake_package')
-
-
-def test_run_renv_install_fail():
-    with pytest.raises(RenvInstallError):
-        run_renv_install('fake_package', '.')

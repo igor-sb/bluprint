@@ -1,8 +1,8 @@
 """Create an R project for bluprint."""
 
-import subprocess
 from pathlib import Path
 
+from bluprint.binary import rcmd
 from bluprint.create.errors import (
     RenvInitError,
     RenvInstallError,
@@ -17,35 +17,11 @@ def create_r_project(
 ) -> None:
     if not project_dir:
         project_dir = '.'
-    run_renv_init(Path(project_dir) / project_name)
-    run_renv_install('reticulate', Path(project_dir) / project_name)
-    copy_rproj_file(project_name, Path(project_dir) / project_name)
+    working_dir = Path(project_dir) / project_name
+    rcmd('renv::init()', RenvInitError, cwd=working_dir)
+    rcmd('renv::install("reticulate")', RenvInstallError, cwd=working_dir)
+    copy_rproj_file(project_name, working_dir)
 
 
 def check_if_r_package_is_installed(package: str) -> None:
-    r_error_msg = subprocess.run(
-        ['Rscript', '-e', f'library({package})'],
-        capture_output=True,
-    ).stderr.decode('utf-8')
-    if r_error_msg.startswith(f'Error in library({package})'):
-        raise RpackageMissingError(r_error_msg)
-
-
-def run_renv_init(project_dir: str | Path):
-    r_error_msg = subprocess.run(
-        ['Rscript', '-e', 'renv::init()'],
-        capture_output=True,
-        cwd=project_dir,
-    ).stderr.decode('utf-8')
-    if r_error_msg:
-        raise RenvInitError(r_error_msg)
-
-
-def run_renv_install(package: str, project_dir: str | Path) -> None:
-    r_error_msg = subprocess.run(
-        ['Rscript', '-e', f'renv::install("{package}")'],
-        capture_output=True,
-        cwd=project_dir,
-    ).stderr.decode('utf-8')
-    if r_error_msg:
-        raise RenvInstallError(r_error_msg)
+    rcmd(f'library({package})', RpackageMissingError)

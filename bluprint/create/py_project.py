@@ -3,10 +3,11 @@
 import json
 from pathlib import Path, PosixPath
 
-from bluprint.binary import run
+from bluprint.binary import poetry, run
 from bluprint.create.errors import (
     PoetryAddError,
     PoetryInitError,
+    PoetryInstallError,
     PoetryRunError,
     PythonVersionError,
 )
@@ -27,10 +28,11 @@ def create_project(
     copy_demo_files(project_name, project_dir)
     interpolate_project_name_in_example_nbs(project_name, project_dir)
     initalize_poetry(project_name, python_version, project_dir)
-    for package in ('ipykernel', 'pandas'):
-        run(['poetry', 'add', package], PoetryAddError, cwd=project_dir)
     run(['pyenv', 'local', python_version], PoetryRunError, cwd=project_dir)
-    run(['poetry', 'install'], PoetryRunError, cwd=project_dir)
+    poetry(['env', 'use', python_version], PoetryRunError, cwd=project_dir)
+    for package in ('ipykernel', 'pandas'):
+        poetry(['add', package], PoetryAddError, cwd=project_dir)
+    poetry('install', PoetryInstallError, cwd=project_dir)
     install_project_as_editable_package(project_dir)
 
 
@@ -46,19 +48,11 @@ def create_project_directory_skeleton(
 
 def initalize_poetry(
     project_name: str,
-    python_version: str,
+    python_ver: str,
     working_dir: str | Path | PosixPath,
 ) -> None:
-    run(
-        [
-            'poetry',
-            'init',
-            '-n',
-            '--name',
-            project_name,
-            '--python',
-            f'~{python_version}',
-        ],
+    poetry(
+        ['init', '-n', '--name', project_name, '--python', f'~{python_ver}'],
         PoetryInitError,
         cwd=working_dir,
     )
@@ -81,8 +75,8 @@ def interpolate_project_name_in_example_nbs(
 
 
 def install_project_as_editable_package(project_dir: str | Path = '.') -> None:
-    run(
-        ['poetry', 'run', 'pip', 'install', '-e', '.'],
+    poetry(
+        ['run', 'pip', 'install', '-e', '.'],
         PoetryRunError,
         cwd=project_dir,
     )

@@ -18,11 +18,16 @@ runs:
       uses: gabrielfalcao/pyenv-action@v17
       with:
         default: "${{ inputs.PYTHON_VERSION }}"
+      run: |
+        pyenv global ${{ inputs.PYTHON_VERSION }}
 
     - name: Set up Poetry
       uses: abatilo/actions-poetry@v2.3.0
       with:
         poetry-version: 1.7
+      run: |
+        poetry config virtualenvs.create true --local
+        poetry config virtualenvs.in-project true --local        
 
     # - name: Load Cached pyenv
     #   id: pyenv-cache

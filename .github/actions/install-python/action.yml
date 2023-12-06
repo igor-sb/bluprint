@@ -13,13 +13,20 @@ runs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ inputs.PYTHON_VERSION }}
-    
+
+    - name: Load Cached pyenv
+      id: pyenv-cache
+      uses: actions/cache@v3
+      with:
+        path: /opt/hostedtoolcache/pyenv_root/
+        key: pyenv-${{ runner.os }}-${{ inputs.PYTHON_VERSION }}
+
     - name: Set up pyenv
+      if: steps.pyenv-cache.outputs.cache-hit != 'true'
       uses: gabrielfalcao/pyenv-action@v17
       with:
         default: "${{ inputs.PYTHON_VERSION }}"
-      run: |
-        pyenv global ${{ inputs.PYTHON_VERSION }}
+        command: pyenv global ${{ inputs.PYTHON_VERSION }}
 
     - name: Set up Poetry
       uses: abatilo/actions-poetry@v2.3.0

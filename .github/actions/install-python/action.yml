@@ -9,7 +9,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Set up Python
+    - name: Install Python
       uses: actions/setup-python@v4
       with:
         python-version: ${{ inputs.PYTHON_VERSION }}
@@ -21,23 +21,31 @@ runs:
         path: /opt/hostedtoolcache/pyenv_root/
         key: pyenv-${{ runner.os }}-${{ inputs.PYTHON_VERSION }}
 
-    - name: Set up pyenv
+    - name: Install pyenv
       if: steps.pyenv-cache.outputs.cache-hit != 'true'
       uses: gabrielfalcao/pyenv-action@v17
       with:
         default: "${{ inputs.PYTHON_VERSION }}"
         command: pyenv global ${{ inputs.PYTHON_VERSION }}
 
-    - name: Set up Poetry
-      uses: abatilo/actions-poetry@v2.3.0
-      with:
-        poetry-version: 1.7
-
-    - name: Setup Poetry config
+    # - name: Set up Poetry
+    #   uses: abatilo/actions-poetry@v2.3.0
+    #   with:
+    #     poetry-version: 1.7
+    - name: Install poetry
       run: |
+        python -m pip install --user pipx
+        python -m pipx ensurepath
+        pipx install poetry
         poetry config virtualenvs.create true
         poetry config virtualenvs.in-project true
       shell: bash
+
+    # - name: Setup Poetry config
+    #   run: |
+    #     poetry config virtualenvs.create true
+    #     poetry config virtualenvs.in-project true
+    #   shell: bash
 
     # - name: Load Cached pyenv
     #   id: pyenv-cache

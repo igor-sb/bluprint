@@ -32,9 +32,11 @@ runs:
       uses: abatilo/actions-poetry@v2.3.0
       with:
         poetry-version: 1.7
+
+    - name: Setup Poetry config
       run: |
-        poetry config virtualenvs.create true --local
-        poetry config virtualenvs.in-project true --local        
+        poetry config virtualenvs.create true
+        poetry config virtualenvs.in-project true
 
     # - name: Load Cached pyenv
     #   id: pyenv-cache

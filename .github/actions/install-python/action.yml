@@ -20,7 +20,7 @@ runs:
         default: "${{ inputs.PYTHON_VERSION }}"
 
     - name: Set up Poetry
-      uses: abatilo/actions-poetry@v2
+      uses: abatilo/actions-poetry@v2.3.0
       with:
         poetry-version: 1.7
 

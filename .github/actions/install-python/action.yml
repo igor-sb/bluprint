@@ -37,6 +37,7 @@ runs:
       run: |
         poetry config virtualenvs.create true
         poetry config virtualenvs.in-project true
+      shell: bash
 
     # - name: Load Cached pyenv
     #   id: pyenv-cache

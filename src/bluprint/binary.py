@@ -27,6 +27,12 @@ def poetry(command: str | list[str], exception: type[Error], **kwargs):
     return run(['poetry', *command], exception, **kwargs)
 
 
+def pdm(command: str | list[str], exception: type[Error], **kwargs):
+    if isinstance(command, str):
+        command = [command]
+    return run(['pdm', *command], exception, **kwargs)
+
+
 def rcmd(command: str | list[str], exception: type[Error], **kwargs):
     if isinstance(command, str):
         command = [command]

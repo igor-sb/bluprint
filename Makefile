@@ -1,4 +1,4 @@
-POETRY_RUN := poetry run
+POETRY_RUN := pdm run
 FOLDERS= bluprint
 PROJ= bluprint
 NC=\033[0m # No Color
@@ -8,7 +8,7 @@ NC=\033[0m # No Color
 
 test:
 		${POETRY_RUN} coverage erase
-		${POETRY_RUN} coverage run --branch -m pytest tests ${PROJ} \
+		${POETRY_RUN} coverage run --branch -m pytest tests src/${PROJ} \
 				--junitxml=junit/test-results.xml -v
 
 install: install-dev

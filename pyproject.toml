@@ -1,3 +1,20 @@
+[project]
+name = "bluprint"
+version = "0.1.0"
+description = ""
+authors = [
+	{name = "igor-sb"},
+]
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "notebook>=7.0.6",
+    "fire>=0.5.0",
+    "omegaconf>=2.3.0",
+    "tqdm>=4.66.1",
+]
+
 [tool.poetry]
 name = "bluprint"
 version = "0.1.0"
@@ -33,9 +50,34 @@ flake8-pyproject = "^1.2.3"
 [tool.poetry.scripts]
 bluprint = "bluprint.cli:main"
 
+
+
+[tool.pdm.scripts]
+bluprint = {call = "bluprint.cli:main"}
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest>=7.4.3",
+    "pytest-mock>=3.12.0",
+    "autopep8>=2.0.4",
+    "wemake-python-styleguide>=0.18.0",
+    "unify>=0.5",
+    "isort>=5.12.0",
+    "pre-commit>=3.5.0",
+    "coverage>=7.3.2",
+    "sphinx>=7.2.6",
+    "mypy>=1.7.1",
+    "pytest-snapshot>=0.9.0",
+    "sphinx-rtd-theme>=2.0.0",
+    "argcomplete>=3.1.6",
+    "pylint>=3.0.2",
+    "types-tqdm>=4.66.0.5",
+    "flake8-pyproject>=1.2.3",
+]
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
 
 [tool.pytest.ini_options]
 # Fire library throws this warning

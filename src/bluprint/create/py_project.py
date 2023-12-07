@@ -3,7 +3,7 @@
 import json
 from pathlib import Path, PosixPath
 
-from bluprint.binary import poetry, run, sh
+from bluprint.binary import poetry, run, pdm
 from bluprint.create.errors import (
     PoetryAddError,
     PoetryInitError,
@@ -30,20 +30,20 @@ def create_project(
     initalize_poetry(project_name, python_version, project_dir)
     print(f'Project dir: {project_dir}')
     print(run(['tree', project_dir], Exception, cwd=project_dir))
-    run(['pyenv', 'local', python_version], PoetryRunError, cwd=project_dir)
+    # run(['pyenv', 'local', python_version], PoetryRunError, cwd=project_dir)
     # print('env-use')
     # print(poetry(['env', 'use', python_version], PoetryRunError, cwd=project_dir))
     print(run(['ls', '-lha'], Exception, cwd=project_dir))
     for package in ('ipykernel', 'pandas'):
         print('add')
-        print(poetry(['add', package, '-C', project_dir], PoetryAddError))
+        print(pdm(['add', package], PoetryAddError, cwd=project_dir))
         # print(sh(f'cd {project_dir}; poetry add {package}; poetry env info', PoetryAddError, cwd=project_dir))
         # print(sh(f'{project_dir}/install.sh'))
     # run(['bash', 'install.sh'], Exception, cwd=project_dir)
-    print('info')
-    print(poetry(['env', 'info', '-C', project_dir], PoetryInstallError))
-    print('install')
-    print(poetry('install', PoetryInstallError, cwd=project_dir))
+    # print('info')
+    # print(poetry(['env', 'info', '-C', project_dir], PoetryInstallError))
+    # print('install')
+    # print(poetry('install', PoetryInstallError, cwd=project_dir))
     install_project_as_editable_package(project_dir)
 
 
@@ -62,8 +62,13 @@ def initalize_poetry(
     python_ver: str,
     working_dir: str | Path | PosixPath,
 ) -> None:
-    poetry(
-        ['init', '-n', '--name', project_name, '--python', f'~{python_ver}'],
+    # poetry(
+    #     ['init', '-n', '--name', project_name, '--python', f'~{python_ver}'],
+    #     PoetryInitError,
+    #     cwd=working_dir,
+    # )
+    pdm(
+        ['init', '-n', '--python', python_ver],
         PoetryInitError,
         cwd=working_dir,
     )
@@ -86,8 +91,8 @@ def interpolate_project_name_in_example_nbs(
 
 
 def install_project_as_editable_package(project_dir: str | Path = '.') -> None:
-    poetry(
-        ['run', 'pip', 'install', '-e', '.'],
+    pdm(
+        ['add', '-e', '.', '--dev'],
         PoetryRunError,
         cwd=project_dir,
     )

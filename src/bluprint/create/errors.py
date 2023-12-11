@@ -7,24 +7,12 @@ class PythonVersionError(StyledError):
     """Raises exception if python --version fails."""
 
 
-class PoetryAddError(StyledError):
+class PdmAddError(StyledError):
     """Raises exception if poetry add fails."""
 
 
-class PoetryInitError(StyledError):
+class PdmInitError(StyledError):
     """Raises exception if poetry init fails."""
-
-
-class PoetryRunError(StyledError):
-    """Raises exception if poetry run fails."""
-
-
-class PoetryEnvError(StyledError):
-    """Raises exception if poetry env fails."""
-
-
-class PoetryInstallError(StyledError):
-    """Raises exception if poetry install fails."""
 
 
 class RpackageMissingError(StyledError):

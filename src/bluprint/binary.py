@@ -2,6 +2,7 @@
 
 import shutil
 import subprocess
+from pathlib import Path
 from typing import TypeVar
 
 from bluprint.errors import MissingExecutableError, StyledError
@@ -27,25 +28,18 @@ def poetry(command: str | list[str], exception: type[Error], **kwargs):
     return run(['poetry', *command], exception, **kwargs)
 
 
-def pdm(command: str | list[str], exception: type[Error], **kwargs):
+def pdm(
+    command: str | list[str],
+    exception: type[Error],
+    cwd: str | Path,
+    **kwargs,
+):
     if isinstance(command, str):
         command = [command]
-    return run(['pdm', *command], exception, **kwargs)
+    return run(['pdm', *command], exception, cwd=cwd, **kwargs)
 
 
 def rcmd(command: str | list[str], exception: type[Error], **kwargs):
     if isinstance(command, str):
         command = [command]
     return run(['Rscript', '-e', *command], exception, **kwargs)
-
-
-def sh(command: str, exception: type[Error], **kwargs):
-    command_out = subprocess.run(
-        command,
-        capture_output=True,
-        shell=True,
-        **kwargs,
-    )
-    if command_out.returncode == 1:
-        raise exception(command_out.stderr.decode('utf-8'))
-    return command_out.stdout.decode('utf-8')

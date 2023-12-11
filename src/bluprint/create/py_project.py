@@ -1,17 +1,16 @@
 """Create a bluprint project."""
 
-import json
-from pathlib import Path, PosixPath
+from importlib import resources
+from pathlib import Path
 
-from bluprint.binary import poetry, run, pdm
+import nbformat
+
+from bluprint.binary import pdm, run
 from bluprint.create.errors import (
-    PoetryAddError,
-    PoetryInitError,
-    PoetryInstallError,
-    PoetryRunError,
+    PdmAddError,
+    PdmInitError,
     PythonVersionError,
 )
-from bluprint.demo import copy_demo_files
 
 
 def create_project(
@@ -22,80 +21,37 @@ def create_project(
     if not parent_dir:
         parent_dir = '.'
     project_dir = Path(parent_dir) / project_name
-    create_project_directory_skeleton(project_name, parent_dir)
     if not python_version:
         python_version = default_python_version()
-    copy_demo_files(project_name, project_dir)
-    interpolate_project_name_in_example_nbs(project_name, project_dir)
-    initalize_poetry(project_name, python_version, project_dir)
-    print(f'Project dir: {project_dir}')
-    print(run(['tree', project_dir], Exception, cwd=project_dir))
-    # run(['pyenv', 'local', python_version], PoetryRunError, cwd=project_dir)
-    # print('env-use')
-    # print(poetry(['env', 'use', python_version], PoetryRunError, cwd=project_dir))
-    print(run(['ls', '-lha'], Exception, cwd=project_dir))
-    for package in ('ipykernel', 'pandas'):
-        print('add')
-        print(pdm(['add', package], PoetryAddError, cwd=project_dir))
-        # print(sh(f'cd {project_dir}; poetry add {package}; poetry env info', PoetryAddError, cwd=project_dir))
-        # print(sh(f'{project_dir}/install.sh'))
-    # run(['bash', 'install.sh'], Exception, cwd=project_dir)
-    # print('info')
-    # print(poetry(['env', 'info', '-C', project_dir], PoetryInstallError))
-    # print('install')
-    # print(poetry('install', PoetryInstallError, cwd=project_dir))
-    install_project_as_editable_package(project_dir)
-
-
-def create_project_directory_skeleton(
-    project_name: str,
-    parent_dir: str = '.',
-    directories: tuple[str, ...] = ('.venv', 'conf', 'notebooks'),
-) -> None:
-    for folder in (*directories, f'{project_name}'):
-        folder_path = Path(parent_dir) / project_name / folder
-        folder_path.mkdir(parents=True)
-
-
-def initalize_poetry(
-    project_name: str,
-    python_ver: str,
-    working_dir: str | Path | PosixPath,
-) -> None:
-    # poetry(
-    #     ['init', '-n', '--name', project_name, '--python', f'~{python_ver}'],
-    #     PoetryInitError,
-    #     cwd=working_dir,
-    # )
+    project_dir.mkdir(parents=True)
+    template_dir = resources.files('demo').joinpath('')
     pdm(
-        ['init', '-n', '--python', python_ver],
-        PoetryInitError,
-        cwd=working_dir,
-    )
-
-
-def interpolate_project_name_in_example_nbs(
-    project_name: str,
-    project_dir: str | Path | PosixPath,
-) -> None:
-    example_ipynb = Path(project_dir) / 'notebooks' / 'example_jupyternb.ipynb'
-    with open(example_ipynb) as example_ipynb_file:
-        example_ipynb_data = json.load(example_ipynb_file)
-
-    example_ipynb_data['cells'][2]['source'] = (
-        example_ipynb_data['cells'][2]['source'][0]  # noqa: WPS219
-        .replace('{{project}}', project_name)
-    )
-    with open(example_ipynb, 'w') as example_ipynb_file:  # noqa: WPS440
-        json.dump(example_ipynb_data, example_ipynb_file)
-
-
-def install_project_as_editable_package(project_dir: str | Path = '.') -> None:
-    pdm(
-        ['add', '-e', '.', '--dev'],
-        PoetryRunError,
+        ['init', '-n', '--python', python_version, template_dir],
+        PdmInitError,
         cwd=project_dir,
     )
+    (project_dir / 'project.Rproj').unlink()
+    replace_placeholder_name(
+        project_dir / 'notebooks' / 'example_jupyternb.ipynb',
+        project_name,
+    )
+    pdm(['add', 'ipykernel', 'pandas'], PdmAddError, cwd=project_dir)
+
+
+def replace_placeholder_name(
+    notebook_path: str | Path,
+    project_name: str,
+    placeholder='{{project}}',
+) -> None:
+    with open(notebook_path, 'r', encoding='utf-8') as in_notebook_file:
+        notebook_content = nbformat.read(in_notebook_file, as_version=4)
+
+    for cell in notebook_content['cells']:
+        if 'source' in cell and isinstance(cell['source'], str):
+            cell['source'] = cell['source'].replace(placeholder, project_name)
+
+    with open(notebook_path, 'w', encoding='utf-8') as out_notebook_file:
+        nbformat.write(notebook_content, out_notebook_file)
 
 
 def default_python_version() -> str:

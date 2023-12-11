@@ -24,9 +24,9 @@ install-dev:
 		chmod +x .git/hooks/pre-commit
 
 autolint:
-		@${POETRY_RUN} autopep8 -r -i ${FOLDERS}
-		@${POETRY_RUN} unify -r -i ${FOLDERS}
-		@${POETRY_RUN} isort ${FOLDERS}
+		@${POETRY_RUN} autopep8 -r -i src/${FOLDERS}
+		@${POETRY_RUN} unify -r -i src/${FOLDERS}
+		@${POETRY_RUN} isort src/${FOLDERS}
 
 lint-flake8:
 		@echo "\n${BLUE}Running flake8...${NC}\n"

@@ -63,8 +63,7 @@ class Bluprint(object):
 
         """
         check_if_project_exists(project_name, parent_dir)
-        for executable in ('pyenv', 'pdm'):
-            check_if_executable_is_installed(executable)
+        check_if_executable_is_installed('pdm')
         if r_proj:
             check_if_executable_is_installed('Rscript')
             check_if_r_package_is_installed('renv')

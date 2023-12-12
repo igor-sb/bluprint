@@ -1,4 +1,4 @@
-POETRY_RUN := pdm run
+PDM_RUN := pdm run
 FOLDERS= src
 PROJ= src
 NC=\033[0m # No Color
@@ -7,12 +7,12 @@ NC=\033[0m # No Color
 		install-dev test report-coverage docs lint-mypy
 
 test:
-		${POETRY_RUN} coverage erase
-		${POETRY_RUN} coverage run --branch -m pytest tests ${PROJ} \
+		${PDM_RUN} coverage erase
+		${PDM_RUN} coverage run --branch -m pytest tests ${PROJ} \
 				--junitxml=junit/test-results.xml -v
 
 install: install-dev
-		poetry install
+		${PDM_RUN} install
 
 lint:
 		make autolint
@@ -24,30 +24,27 @@ install-dev:
 		chmod +x .git/hooks/pre-commit
 
 autolint:
-		@${POETRY_RUN} autopep8 -r -i ${FOLDERS}
-		@${POETRY_RUN} unify -r -i ${FOLDERS}
-		@${POETRY_RUN} isort ${FOLDERS}
+		@${PDM_RUN} autopep8 -r -i ${FOLDERS}
+		@${PDM_RUN} unify -r -i ${FOLDERS}
+		@${PDM_RUN} isort ${FOLDERS}
 
 lint-flake8:
 		@echo "\n${BLUE}Running flake8...${NC}\n"
-		@${POETRY_RUN} flake8 .
+		@${PDM_RUN} flake8 .
 
 lint-mypy:
 		@echo "\n${BLUE}Running mypy...${NC}\n"
-		${POETRY_RUN} mypy --show-error-codes ${PROJ}
-
-shell:
-		poetry shell
+		${PDM_RUN} mypy --show-error-codes ${PROJ}
 
 precommit: poetry-precommit lint
 
 poetry-precommit:
-		${POETRY_RUN} pre-commit run --all-files
+		${PDM_RUN} pre-commit run --all-files
 
 report-coverage:
-		${POETRY_RUN} coverage report
-		${POETRY_RUN} coverage html
-		${POETRY_RUN} coverage xml
+		${PDM_RUN} coverage report
+		${PDM_RUN} coverage html
+		${PDM_RUN} coverage xml
 
 docs:
 	@echo "\n${BLUE}Preparing Sphinx documentation...${NC}\n"

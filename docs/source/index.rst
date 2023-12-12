@@ -36,17 +36,19 @@ This will make the bluprint available in any Python environment.
 Requirements
 ------------
 
-* `pyenv <https://github.com/pyenv/pyenv>`_: Python version manager
-
 * `pipx <https://github.com/pypa/pipx>`_: Python package installer used for
-  installing bluprint and poetry
+  installing bluprint
 
-* `poetry <https://python-poetry.org/docs/#installation>`_: Python package and
-  dependency manager
+* `pdm <https://pdm-project.org/latest/>`_: Python dependency manager
    
-* R packages {renv}, {reticulate}, {yaml} for RMarkdown notebooks
+* For RMarkdown notebooks R packages {renv}, {reticulate} and {yaml}
 
-* Recommended: `rig <https://github.com/r-lib/rig>`_ to manage R versions
+Recommended:
+
+* `pyenv <https://github.com/pyenv/pyenv>`_ to manage Python versions
+* `rig <https://github.com/r-lib/rig>`_ to manage R versions
+
+
 
 
 

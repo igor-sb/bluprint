@@ -38,7 +38,7 @@ runs:
       uses: actions/cache@v3
       with:
         path: .venv
-        key: venv-${{ inputs.PYTHON_VERSION }}-${{ runner.os }}-${{ hashFiles('**/pyproject.toml', '**/poetry.lock') }}
+        key: venv-${{ inputs.PYTHON_VERSION }}-${{ runner.os }}-${{ hashFiles('**/pyproject.toml', '**/pdm.lock') }}
 
     - name: Install dependencies and project in dev mode
       if: steps.venv-cache.outputs.cache-hit != 'true'

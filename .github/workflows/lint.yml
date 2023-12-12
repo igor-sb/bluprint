@@ -22,9 +22,8 @@ jobs:
           python-version: ${{env.PYTHON_VERSION}}
 
       - name: Install PDM
-        uses: pdm-project/setup-pdm@v3
-        with:
-          python-version: ${{ inputs.PYTHON_VERSION }}
+        run: pip install pdm
+        shell: bash
 
       - name: Load Cached Virtualenv
         id: cache

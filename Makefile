@@ -12,7 +12,7 @@ test:
 				--junitxml=junit/test-results.xml -v
 
 install: install-dev
-		${PDM_RUN} install
+		pdm install
 
 lint:
 		make autolint

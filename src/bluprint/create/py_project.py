@@ -26,7 +26,7 @@ def create_project(
     project_dir.mkdir(parents=True)
     template_dir = resources.files('demo').joinpath('')
     pdm(
-        ['init', '-n', '--python', python_version, template_dir],
+        ['init', '-n', '--python', python_version, str(template_dir)],
         PdmInitError,
         cwd=project_dir,
     )

@@ -65,6 +65,7 @@ ignore = [
 	'D101',  # D101 Missing docstring in public class
 	'D102',  # D102 Missing docstring in public method
 	'D103',  # D103 Missing docstring in public function
+	'D104',  # Missing docstring in public package
 	'D107',  # D107 Missing docstring in __init__
 	'D412',  # No blank lines allowed between a section header and its content
 	'I003',  # I003 isort expected 1 blank line in imports, found 0
@@ -113,6 +114,7 @@ exclude = [
 [[tool.mypy.overrides]]
 module = [
 	"pandas.*",
-	"fire.*"
+	"fire.*",
+	"notebook.*",
 ]
 ignore_missing_imports = true

@@ -1,14 +1,14 @@
 POETRY_RUN := pdm run
-FOLDERS= bluprint
-PROJ= bluprint
+FOLDERS= src
+PROJ= src
 NC=\033[0m # No Color
 
 .PHONY: install autolint lint lint-flake8 shell precommit poetry-precommit \
-		install-dev test report-coverage docs
+		install-dev test report-coverage docs lint-mypy
 
 test:
 		${POETRY_RUN} coverage erase
-		${POETRY_RUN} coverage run --branch -m pytest tests src/${PROJ} \
+		${POETRY_RUN} coverage run --branch -m pytest tests ${PROJ} \
 				--junitxml=junit/test-results.xml -v
 
 install: install-dev
@@ -24,9 +24,9 @@ install-dev:
 		chmod +x .git/hooks/pre-commit
 
 autolint:
-		@${POETRY_RUN} autopep8 -r -i src/${FOLDERS}
-		@${POETRY_RUN} unify -r -i src/${FOLDERS}
-		@${POETRY_RUN} isort src/${FOLDERS}
+		@${POETRY_RUN} autopep8 -r -i ${FOLDERS}
+		@${POETRY_RUN} unify -r -i ${FOLDERS}
+		@${POETRY_RUN} isort ${FOLDERS}
 
 lint-flake8:
 		@echo "\n${BLUE}Running flake8...${NC}\n"
@@ -34,7 +34,7 @@ lint-flake8:
 
 lint-mypy:
 		@echo "\n${BLUE}Running mypy...${NC}\n"
-		${POETRY_RUN} mypy --show-error-codes -p ${PROJ}
+		${POETRY_RUN} mypy --show-error-codes ${PROJ}
 
 shell:
 		poetry shell

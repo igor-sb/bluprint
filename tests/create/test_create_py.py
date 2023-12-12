@@ -5,7 +5,7 @@ from pathlib import Path
 from bluprint import cli, demo
 
 
-def test_create_py_project(find_files_in_dir, tmp_path):  # noqa: WPS210
+def test_create_py_project(find_files_in_dir, tmp_path):
     demo_dir = demo.dir_in_package('demo')
     cli.Bluprint().create(
         project_name='project',

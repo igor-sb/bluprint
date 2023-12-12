@@ -3,8 +3,16 @@
 from bluprint.errors import StyledError
 
 
-class PoetryAddError(StyledError):
+class PythonVersionError(StyledError):
+    """Raises exception if python --version fails."""
+
+
+class PdmAddError(StyledError):
     """Raises exception if poetry add fails."""
+
+
+class PdmInitError(StyledError):
+    """Raises exception if poetry init fails."""
 
 
 class RpackageMissingError(StyledError):

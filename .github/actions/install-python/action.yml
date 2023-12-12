@@ -1,5 +1,5 @@
 name: Install Python
-description: Action for installing Python and Poetry
+description: Action for installing Python and PDM
 
 inputs:
   PYTHON_VERSION:
@@ -9,32 +9,13 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Set up Python
+    - name: Install Python
       uses: actions/setup-python@v4
       with:
         python-version: ${{ inputs.PYTHON_VERSION }}
 
-    - name: Load Cached pyenv
-      id: pyenv-cache
-      uses: actions/cache@v3
-      with:
-        path: /home/runner/.pyenv
-        key: pyenv-${{ runner.os }}-${{ inputs.PYTHON_VERSION }}
-
-    - name: Install pyenv
-      if: steps.pyenv-cache.outputs.cache-hit != 'true'
-      run: |
-        git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-        echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
-        echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
-        echo 'eval "$(pyenv init -)"' >> ~/.bashrc
-        echo 'export PATH=$PATH:/home/runner/.pyenv/bin'
-      shell: bash
-
-    - name: Install poetry
-      run: |
-        pip3 install --upgrade poetry
-        poetry config virtualenvs.in-project true
+    - name: Install PDM
+      run: pip install pdm
       shell: bash
 
     - name: Load Cached Virtualenv
@@ -42,7 +23,7 @@ runs:
       uses: actions/cache@v3
       with:
         path: .venv
-        key: venv-${{ inputs.PYTHON_VERSION }}-${{ runner.os }}-${{ hashFiles('**/pyproject.toml', '**/poetry.lock') }}
+        key: venv-${{ inputs.PYTHON_VERSION }}-${{ runner.os }}-${{ hashFiles('**/pyproject.toml', '**/pdm.lock') }}
 
     - name: Install dependencies and project in dev mode
       if: steps.venv-cache.outputs.cache-hit != 'true'

@@ -1,5 +1,6 @@
 """Command-line interface for bluprint."""
 
+import sys
 from pathlib import Path, PosixPath
 
 import fire
@@ -15,6 +16,8 @@ from bluprint.create.r_project import (
 from bluprint.errors import ProjectExistsError
 from bluprint.index import index_dir_to_config_yaml
 from bluprint.workflow import run_workflow
+
+sys.tracebacklimit = 0
 
 
 class Bluprint(object):
@@ -60,8 +63,7 @@ class Bluprint(object):
 
         """
         check_if_project_exists(project_name, parent_dir)
-        for executable in ('pyenv', 'poetry'):
-            check_if_executable_is_installed(executable)
+        check_if_executable_is_installed('pdm')
         if r_proj:
             check_if_executable_is_installed('Rscript')
             check_if_r_package_is_installed('renv')
@@ -76,7 +78,7 @@ class Bluprint(object):
         create_project(project_name, python_version, parent_dir)
         if r_proj:
             create_r_project(project_name, parent_dir)
-        styled_print('ok', print_bluprint=False)
+        styled_print('Ok', print_bluprint=False)
 
     def init(self):
         """Initialize a bluprint project in existing directory."""

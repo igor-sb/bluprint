@@ -15,14 +15,6 @@ dependencies = [
     "tqdm>=4.66.1",
 ]
 
-[tool.poetry]
-name = "bluprint"
-version = "0.1.0"
-description = ""
-authors = ["igor-sb"]
-readme = "README.md"
-
-
 [tool.pdm.scripts]
 bluprint = {call = "bluprint.cli:main"}
 
@@ -45,10 +37,6 @@ dev = [
     "types-tqdm>=4.66.0.5",
     "flake8-pyproject>=1.2.3",
 ]
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
 
 [tool.pytest.ini_options]
 # Fire library throws this warning

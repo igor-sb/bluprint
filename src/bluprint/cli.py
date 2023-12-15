@@ -69,7 +69,7 @@ class Bluprint(object):
             check_if_r_package_is_installed('renv')
 
         styled_print(
-            'creating Python{with_r} {project_name}... '.format(
+            'creating Python{with_r} project {project_name}... '.format(
                 project_name=project_name,
                 with_r='/R' if r_proj else '',
             ),

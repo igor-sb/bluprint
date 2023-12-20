@@ -14,15 +14,7 @@ runs:
       with:
         python-version: ${{ inputs.PYTHON_VERSION }}
 
-    - name: Load Cached Python Site Packages
-      id: python-pkg-cache
-      uses: actions/cache@v3
-      with:
-        path: /opt/hostedtoolcache/Python/${{ inputs.PYTHON_VERSION }}
-        key: python-pkg-cache-${{ inputs.PYTHON_VERSION }}-${{ hashFiles('**') }}
-
     - name: Install PDM and package dependencies
-      if: steps.venv-cache.outputs.cache-hit != 'true'
       run: |
         pip install pdm
         make install

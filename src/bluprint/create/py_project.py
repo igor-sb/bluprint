@@ -5,12 +5,8 @@ from pathlib import Path
 
 import nbformat
 
-from bluprint.binary import pdm, run
-from bluprint.create.errors import (
-    PdmAddError,
-    PdmInitError,
-    PythonVersionError,
-)
+from bluprint.binary import pdm_init, pdm_add, run
+from bluprint.create.errors import PythonVersionError
 
 
 def create_project(
@@ -25,17 +21,13 @@ def create_project(
         python_version = default_python_version()
     project_dir.mkdir(parents=True)
     template_dir = resources.files('demo').joinpath('')
-    pdm(
-        ['init', '-n', '--python', python_version, str(template_dir)],
-        PdmInitError,
-        cwd=project_dir,
-    )
+    pdm_init(python_version, str(template_dir), project_dir)
     (project_dir / 'project.Rproj').unlink()
     replace_placeholder_name(
         project_dir / 'notebooks' / 'example_jupyternb.ipynb',
         project_name,
     )
-    pdm(['add', 'ipykernel', 'pandas'], PdmAddError, cwd=project_dir)
+    pdm_add(['bluprint_conf', 'ipykernel', 'pandas'], project_dir)
 
 
 def replace_placeholder_name(

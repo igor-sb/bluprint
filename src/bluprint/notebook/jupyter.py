@@ -11,7 +11,7 @@ from nbconvert.preprocessors import ExecutePreprocessor
 from nbformat import NotebookNode
 from nbformat import read as read_notebook
 
-from bluprint.config import absolute_path
+from bluprint_conf import absolute_package_path
 from bluprint.notebook.progress import progress
 
 
@@ -22,7 +22,7 @@ def run_jupyter_notebook(
     timeout: int = -1,
 ) -> None:
     os.environ['PYDEVD_DISABLE_FILE_VALIDATION'] = '1'
-    project_path = absolute_path(notebook_dir)
+    project_path = absolute_package_path(notebook_dir)
     executor = ExecutorWithProgressBar(timeout=timeout)
     notebook_results = executor.run_all_cells(
         Path(project_path) / notebook_file,

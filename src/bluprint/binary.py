@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import TypeVar
 
 from bluprint.errors import MissingExecutableError, StyledError
+from bluprint.create.errors import PdmAddError, PdmInitError
 
 Error = TypeVar('Error', bound=StyledError)
 
@@ -37,6 +38,18 @@ def pdm(
     if isinstance(command, str):
         command = [command]
     return run(['pdm', *command], exception, cwd=cwd, **kwargs)
+
+
+def pdm_init(python_version: str, template_dir: str, project_dir: str):
+    return pdm(
+        ['init', '-n', '--python', python_version, template_dir],
+        PdmInitError,
+        cwd=project_dir,
+    )
+
+
+def pdm_add(packages: list[str], project_dir: str | Path):
+    return pdm(['add', *packages], PdmAddError, cwd=project_dir)
 
 
 def rcmd(command: str | list[str], exception: type[Error], **kwargs):

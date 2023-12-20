@@ -4,10 +4,10 @@ import sys
 from pathlib import Path, PosixPath
 
 import fire
+from bluprint_conf import load_config_yaml
 
 from bluprint.binary import check_if_executable_is_installed
 from bluprint.colors import styled_print
-from bluprint.config import load_config_yaml
 from bluprint.create.py_project import create_project
 from bluprint.create.r_project import (
     check_if_r_package_is_installed,
@@ -116,10 +116,7 @@ class Bluprint(object):
 
         """
         styled_print(f'run workflow {workflow_name}')
-        cfg = load_config_yaml(
-            Path(workflow_yaml).name,
-            Path(workflow_yaml).parent,
-        )
+        cfg = load_config_yaml(workflow_yaml)
         run_workflow(
             workflow_name=workflow_name,
             workflow_cfg=cfg,

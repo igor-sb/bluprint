@@ -1,11 +1,11 @@
 """Create a bluprint project."""
 
-from importlib import resources
 from pathlib import Path
 
 import nbformat
+from importlib_resources import files
 
-from bluprint.binary import pdm_init, pdm_add, run
+from bluprint.binary import pdm_add, pdm_init, run
 from bluprint.create.errors import PythonVersionError
 
 
@@ -20,8 +20,8 @@ def create_project(
     if not python_version:
         python_version = default_python_version()
     project_dir.mkdir(parents=True)
-    template_dir = resources.files('demo').joinpath('')
-    pdm_init(python_version, str(template_dir), project_dir)
+    template_dir = files('bluprint').joinpath('demo')
+    pdm_init(python_version, str(template_dir), str(project_dir))
     (project_dir / 'project.Rproj').unlink()
     replace_placeholder_name(
         project_dir / 'notebooks' / 'example_jupyternb.ipynb',

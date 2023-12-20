@@ -1,12 +1,12 @@
 """Test creating a new Python project."""
 
 from pathlib import Path
-
-from bluprint import cli, demo
+from importlib_resources import files
+from bluprint import cli
 
 
 def test_create_py_project(find_files_in_dir, tmp_path):
-    demo_dir = demo.dir_in_package('demo')
+    demo_dir = files('bluprint').joinpath('demo')
     cli.Bluprint().create(
         project_name='project',
         parent_dir=tmp_path,

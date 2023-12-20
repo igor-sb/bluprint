@@ -1,16 +1,16 @@
 """Placeholder file contents for new projects."""
 
 import shutil
-from importlib import resources
-from importlib.abc import Traversable
-from pathlib import Path, PosixPath
+from pathlib import Path
+
+from importlib_resources import files
 
 
 def copy_demo_files(
     project_name: str,
-    project_dir: str | Path | PosixPath,
+    project_dir: str | Path,
 ) -> None:
-    demo_path = str(dir_in_package('demo'))
+    demo_path = files('bluprint').joinpath('demo')
     shutil.copytree(
         src=Path(demo_path),
         dst=project_dir,
@@ -26,14 +26,10 @@ def copy_demo_files(
 
 def copy_rproj_file(
     project_name: str,
-    project_dir: str | Path | PosixPath,
+    project_dir: str | Path,
 ) -> None:
-    demo_path = str(dir_in_package('demo'))
+    demo_path = files('bluprint').joinpath('demo')
     shutil.copyfile(
         src=Path(demo_path) / 'project.Rproj',
         dst=Path(project_dir) / f'{project_name}.Rproj',
     )
-
-
-def dir_in_package(package_dir: str) -> PosixPath | Traversable:
-    return resources.files(package_dir).joinpath('')

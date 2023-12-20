@@ -3,14 +3,15 @@
 from pathlib import Path
 
 import pytest
+from importlib_resources import files
 
-from bluprint import cli, demo
+from bluprint import cli
 from bluprint.create.errors import RpackageMissingError
 from bluprint.create.r_project import check_if_r_package_is_installed
 
 
 def test_create_pyr_project(find_files_in_dir, tmp_path):
-    demo_dir = demo.dir_in_package('demo')
+    demo_dir = files('bluprint').joinpath('demo')
     bp = cli.Bluprint()
     bp.create(
         project_name='project',

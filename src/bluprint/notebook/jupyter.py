@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 from typing import Any
 
+from bluprint_conf import absolute_package_path
 from jupyter_client.manager import KernelManager
 from nbclient import NotebookClient
 from nbconvert import NotebookExporter
@@ -11,7 +12,6 @@ from nbconvert.preprocessors import ExecutePreprocessor
 from nbformat import NotebookNode
 from nbformat import read as read_notebook
 
-from bluprint_conf import absolute_package_path
 from bluprint.notebook.progress import progress
 
 

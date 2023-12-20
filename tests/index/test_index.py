@@ -6,9 +6,7 @@ from pathlib import Path
 from bluprint.index import index_dir_to_config_yaml
 
 
-def test_index_dir_to_config_yaml(
-    snapshot,
-):
+def test_index_dir_to_config_yaml(snapshot):
     test_data_dir = Path('tests') / 'index' / 'fixtures'
     expected_yaml = 'data.yaml'
     with tempfile.NamedTemporaryFile('r+') as actual_yaml:

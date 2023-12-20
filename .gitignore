@@ -1,9 +1,9 @@
 # Bluprint specific file
 .Rproj.user
-demo/notebooks/example_rmarkdown_files
-demo/notebooks/example_rmarkdown.html
-demo/notebooks/example_quarto_files
-demo/notebooks/example_quarto.html
+src/bluprint/demo/notebooks/example_rmarkdown_files
+src/bluprint/demo/notebooks/example_rmarkdown.html
+src/bluprint/demo/notebooks/example_quarto_files
+src/bluprint/demo/notebooks/example_quarto.html
 
 # MacOS
 **/.DS_Store
@@ -119,7 +119,7 @@ ipython_config.py
 #   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
 #   in version control.
 #   https://pdm.fming.dev/#use-with-ide
-.pdm-python
+**/.pdm-python
 .pdm.toml
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm

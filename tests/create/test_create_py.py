@@ -6,7 +6,7 @@ from bluprint import cli
 
 
 def test_create_py_project(find_files_in_dir, tmp_path):
-    demo_dir = files('bluprint').joinpath('demo')
+    template_dir = files('bluprint').joinpath('template')
     cli.Bluprint().create(
         project_name='project',
         parent_dir=tmp_path,
@@ -16,17 +16,17 @@ def test_create_py_project(find_files_in_dir, tmp_path):
         file_path.relative_to(project_dir)
         for file_path in find_files_in_dir(project_dir)
     }
-    demo_files = {
-        file_path.relative_to(demo_dir)
-        for file_path in find_files_in_dir(demo_dir)
+    template_files = {
+        file_path.relative_to(template_dir)
+        for file_path in find_files_in_dir(template_dir)
     }
-    demo_files.update([
+    template_files.update([
         Path('pyproject.toml'),
         Path('pdm.lock'),
     ])
-    demo_files.remove(Path('project.Rproj'))  # Python-only test
+    template_files.remove(Path('project.Rproj'))  # Python-only test
     venv_dir = project_dir / '.venv'
-    assert project_files == demo_files
+    assert project_files == template_files
     assert (venv_dir / 'bin').exists()
     assert (venv_dir / 'lib').exists()
     assert (venv_dir / 'share').exists()

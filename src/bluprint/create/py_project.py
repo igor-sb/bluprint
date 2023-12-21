@@ -20,7 +20,7 @@ def create_project(
     if not python_version:
         python_version = default_python_version()
     project_dir.mkdir(parents=True)
-    template_dir = files('bluprint').joinpath('demo')
+    template_dir = files('bluprint').joinpath('template')
     pdm_init(python_version, str(template_dir), str(project_dir))
     (project_dir / 'project.Rproj').unlink()
     replace_placeholder_name(

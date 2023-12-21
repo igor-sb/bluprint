@@ -99,7 +99,7 @@ exclude = [
 	'.git',
 	'data',
 	'tmp',
-	'src/bluprint/demo',
+	'src/bluprint/template',
 ]
 
 [tool.mypy]

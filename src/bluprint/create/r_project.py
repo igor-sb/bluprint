@@ -8,7 +8,7 @@ from bluprint.create.errors import (
     RenvInstallError,
     RpackageMissingError,
 )
-from bluprint.demo import copy_rproj_file
+from bluprint.template import copy_rproj_file
 
 
 def create_r_project(

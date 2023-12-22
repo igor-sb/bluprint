@@ -63,6 +63,8 @@ ignore = [
 	'I003',  # I003 isort expected 1 blank line in imports, found 0
 	'DAR101',  # DAR101 Missing parameter(s) in Docstring: - repeated_bases_regex
 	'DAR201',  # DAR201 Missing "Returns" in Docstring: - return
+	'RST201',  # RST201 Block quote ends without a blank line; unexpected unindent.
+	'RST301',  # RST301 Unexpected indentation.
 	'S311',  # S311 Standard pseudo-random generators are not suitable for security/cryptographic purposes.
 	'S404',  # Consider possible security implications associated with the subprocess module.
 	'S603',  # subprocess call - check for execution of untrusted input.

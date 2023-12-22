@@ -52,3 +52,12 @@ docs:
 
 clean-docs:
 	@cd docs; rm -rf build; rm -rf html
+
+clean:
+	rm -rf .mypy_cache
+	rm -rf .pytest_cache
+	rm -rf bluprint.egg-info
+	rm -rf build
+	rm -rf dist
+	rm -rf htmlcov
+	rm -rf junit

@@ -1,6 +1,7 @@
 """Command-line interface for bluprint."""
 
 import sys
+from os import getcwd
 from pathlib import Path, PosixPath
 
 import fire
@@ -69,13 +70,13 @@ class Bluprint(object):
             ),
             endline='',
         )
-        self._check_project(project_name, parent_dir, r_proj)
+        self.check_project(project_name, parent_dir, r_proj)
         create_project(project_name, python_version, parent_dir)
         if r_proj:
             initialize_r_project(project_name, parent_dir)
         styled_print('Ok', print_bluprint=False)
 
-    def _check_project(
+    def check_project(
         self,
         project_name: str,
         parent_dir: str | None = None,
@@ -91,22 +92,28 @@ class Bluprint(object):
         self,
         project_name: str,
         python_version: str | None = None,
+        project_dir: str | None = None,
         r_proj: bool = False,
     ) -> None:
         """Initialize a bluprint project in existing directory.
 
         Args:
 
-        project_name (str): Name of the project, also the name of the main
-        project directory.
+        project_name (str): Name of the project.
+        python_version (str | None, optional): Python version to be used.
+            If not specified, uses the latest stable version from
+            `pyenv install -l`.
+        project_dir (str | None, optional): Project directory where to
+            initialize a new bluprint project. By default uses current working
+            directory.
+        r_proj (bool): Setup R library using renv to support package
+            isolation in RMarkdown notebooks.
 
-        python_version (str, optional): Python version to be used. If
-        not specified, uses the latest stable version from `pyenv install -l`.
-
-        r_proj (bool, optional): Setup R library using renv to support package
-        isolation in RMarkdown notebooks.
-
+        Raises:
+            ProjectExistsError: _description_
         """
+        if not project_dir:
+            project_dir = getcwd()
         styled_print(
             'initializing Python{with_r} project {project_name}... '.format(
                 project_name=project_name,
@@ -114,7 +121,12 @@ class Bluprint(object):
             ),
             endline='',
         )
-        initialize_project(project_name, python_version)
+        if (Path(project_dir) / 'pyproject.toml').exists():
+            raise ProjectExistsError(
+                f'pyproject.toml already exists in {project_dir}: '
+                + 'cannot initialize new bluprint project',
+            )
+        initialize_project(project_name, python_version, Path(project_dir))
         if r_proj:
             initialize_r_project(project_name)
         styled_print('Ok', print_bluprint=False)

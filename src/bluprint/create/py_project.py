@@ -24,15 +24,15 @@ def create_project(
 def initialize_project(
     project_name: str,
     python_version: str | None = None,
-    project_dir: Path = Path('.'),
+    project_dir: str | Path = '.',
 ) -> None:
     if not python_version:
         python_version = default_python_version()
     template_dir = files('bluprint').joinpath('template')
     pdm_init(python_version, str(template_dir), str(project_dir))
-    (project_dir / 'project.Rproj').unlink()
+    (Path(project_dir) / 'project.Rproj').unlink()
     replace_placeholder_name(
-        project_dir / 'notebooks' / 'example_jupyternb.ipynb',
+        Path(project_dir) / 'notebooks' / 'example_jupyternb.ipynb',
         project_name,
     )
     pdm_add(['bluprint_conf', 'ipykernel', 'pandas'], project_dir)

@@ -1,16 +1,12 @@
 """Create a bluprint project."""
 
-from importlib import resources
 from pathlib import Path
 
 import nbformat
+from importlib_resources import files
 
-from bluprint.binary import pdm, run
-from bluprint.create.errors import (
-    PdmAddError,
-    PdmInitError,
-    PythonVersionError,
-)
+from bluprint.binary import pdm_add, pdm_init, run
+from bluprint.create.errors import PythonVersionError
 
 
 def create_project(
@@ -21,21 +17,25 @@ def create_project(
     if not parent_dir:
         parent_dir = '.'
     project_dir = Path(parent_dir) / project_name
+    project_dir.mkdir(parents=True)
+    initialize_project(project_name, python_version, project_dir)
+
+
+def initialize_project(
+    project_name: str,
+    python_version: str | None = None,
+    project_dir: str | Path = '.',
+) -> None:
     if not python_version:
         python_version = default_python_version()
-    project_dir.mkdir(parents=True)
-    template_dir = resources.files('demo').joinpath('')
-    pdm(
-        ['init', '-n', '--python', python_version, str(template_dir)],
-        PdmInitError,
-        cwd=project_dir,
-    )
-    (project_dir / 'project.Rproj').unlink()
+    template_dir = files('bluprint').joinpath('template')
+    pdm_init(python_version, str(template_dir), str(project_dir))
+    (Path(project_dir) / 'project.Rproj').unlink()
     replace_placeholder_name(
-        project_dir / 'notebooks' / 'example_jupyternb.ipynb',
+        Path(project_dir) / 'notebooks' / 'example_jupyternb.ipynb',
         project_name,
     )
-    pdm(['add', 'ipykernel', 'pandas'], PdmAddError, cwd=project_dir)
+    pdm_add(['bluprint_conf', 'ipykernel', 'pandas'], project_dir)
 
 
 def replace_placeholder_name(

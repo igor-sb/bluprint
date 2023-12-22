@@ -5,13 +5,14 @@ from importlib_resources import files
 from bluprint import cli
 
 
-def test_create_py_project(find_files_in_dir, tmp_path):
+def test_create_init_project(find_files_in_dir, tmp_path):
     template_dir = files('bluprint').joinpath('template')
-    cli.Bluprint().create(
+    project_dir = tmp_path / 'project'
+    project_dir.mkdir()
+    cli.Bluprint().init(
         project_name='project',
-        parent_dir=tmp_path,
+        project_dir=project_dir,
     )
-    project_dir = Path(tmp_path) / 'project'
     project_files = {
         file_path.relative_to(project_dir)
         for file_path in find_files_in_dir(project_dir)

@@ -26,12 +26,11 @@ def capture_stderr(func, *args, **kwargs):
 
 
 def test_run_workflows(reference_test_log_file, snapshot):
-    fixture_path = 'tests/workflow/fixtures'
     os.environ['JUPYTER_PLATFORM_DIRS'] = '1'
     workflow_log = capture_stderr(
         run_workflows,
-        workflow_yaml_dir=fixture_path,
-        notebook_dir=fixture_path,
+        workflow_yaml='tests/workflow/fixtures/workflows.yaml',
+        notebook_dir='tests/workflow/fixtures/',
     )
     for pattern in (' Elapsed: [0-9:]+', r'\x1b[^m]*m', r'\r'):
         workflow_log = re.sub(pattern, '', workflow_log)

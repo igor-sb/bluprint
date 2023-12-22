@@ -3,7 +3,7 @@
 Bluprint
 ========
 
-Bluprint is a command line utility that helps organize exploratory data science
+Bluprint is a command line utility for setting up reproducible 
 projects, which rely on "quick and dirty" analyses using notebooks.
 
 Features

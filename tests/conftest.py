@@ -14,6 +14,7 @@ def find_files_in_dir():  # noqa: WPS210
         venv_renv_dirs = (
             str(Path(lookup_dir) / '.venv'),
             str(Path(lookup_dir) / 'renv'),
+            str(Path(lookup_dir) / '.pdm-build'),
         )
         file_list = set()
         for root, _dirs, files in os.walk(lookup_dir):

@@ -1,9 +1,9 @@
 # Bluprint specific file
 .Rproj.user
-demo/notebooks/example_rmarkdown_files
-demo/notebooks/example_rmarkdown.html
-demo/notebooks/example_quarto_files
-demo/notebooks/example_quarto.html
+src/bluprint/template/notebooks/example_rmarkdown_files
+src/bluprint/template/notebooks/example_rmarkdown.html
+src/bluprint/template/notebooks/example_quarto_files
+src/bluprint/detemplatemo/notebooks/example_quarto.html
 
 # MacOS
 **/.DS_Store
@@ -120,6 +120,7 @@ ipython_config.py
 #   in version control.
 #   https://pdm.fming.dev/#use-with-ide
 .pdm-python
+!src/bluprint/template/.pdm-python
 .pdm.toml
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm

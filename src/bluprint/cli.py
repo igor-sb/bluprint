@@ -1,17 +1,18 @@
 """Command-line interface for bluprint."""
 
 import sys
+from os import getcwd
 from pathlib import Path, PosixPath
 
 import fire
+from bluprint_conf import load_config_yaml
 
 from bluprint.binary import check_if_executable_is_installed
 from bluprint.colors import styled_print
-from bluprint.config import load_config_yaml
-from bluprint.create.py_project import create_project
+from bluprint.create.py_project import create_project, initialize_project
 from bluprint.create.r_project import (
     check_if_r_package_is_installed,
-    create_r_project,
+    initialize_r_project,
 )
 from bluprint.errors import ProjectExistsError
 from bluprint.index import index_dir_to_config_yaml
@@ -29,7 +30,7 @@ class Bluprint(object):
         python_version: str | None = None,
         parent_dir: str | None = None,
         r_proj: bool = False,
-    ):
+    ) -> None:
         """Create a directory with a bluprint project.
 
         Creates a project directory structure:
@@ -58,31 +59,77 @@ class Bluprint(object):
         PROJECT_NAME directory in. If not specific PARENT_DIR is a current
         directory.
 
-        r_proj (bool): Setup R library using renv to support package isolation
-        in RMarkdown notebooks.
+        r_proj (bool, optional): Setup R library using renv to support package
+        isolation in RMarkdown notebooks.
 
         """
+        styled_print(
+            'creating Python{with_r} project {project_name}... '.format(
+                project_name=project_name,
+                with_r='/R' if r_proj else '',
+            ),
+            endline='',
+        )
+        self.check_project(project_name, parent_dir, r_proj)
+        create_project(project_name, python_version, parent_dir)
+        if r_proj:
+            initialize_r_project(project_name, parent_dir)
+        styled_print('Ok', print_bluprint=False)
+
+    def check_project(
+        self,
+        project_name: str,
+        parent_dir: str | None = None,
+        r_proj: bool = False,
+    ) -> None:
         check_if_project_exists(project_name, parent_dir)
         check_if_executable_is_installed('pdm')
         if r_proj:
             check_if_executable_is_installed('Rscript')
             check_if_r_package_is_installed('renv')
 
+    def init(
+        self,
+        project_name: str,
+        python_version: str | None = None,
+        project_dir: str | None = None,
+        r_proj: bool = False,
+    ) -> None:
+        """Initialize a bluprint project in existing directory.
+
+        Args:
+
+        project_name (str): Name of the project.
+        python_version (str | None, optional): Python version to be used.
+            If not specified, uses the latest stable version from
+            `pyenv install -l`.
+        project_dir (str | None, optional): Project directory where to
+            initialize a new bluprint project. By default uses current working
+            directory.
+        r_proj (bool): Setup R library using renv to support package
+            isolation in RMarkdown notebooks.
+
+        Raises:
+            ProjectExistsError: _description_
+        """
+        if not project_dir:
+            project_dir = getcwd()
         styled_print(
-            'creating Python{with_r} {project_name}... '.format(
+            'initializing Python{with_r} project {project_name}... '.format(
                 project_name=project_name,
                 with_r='/R' if r_proj else '',
             ),
             endline='',
         )
-        create_project(project_name, python_version, parent_dir)
+        if (Path(project_dir) / 'pyproject.toml').exists():
+            raise ProjectExistsError(
+                f'pyproject.toml already exists in {project_dir}: '
+                + 'cannot initialize new bluprint project',
+            )
+        initialize_project(project_name, python_version, Path(project_dir))
         if r_proj:
-            create_r_project(project_name, parent_dir)
+            initialize_r_project(project_name)
         styled_print('Ok', print_bluprint=False)
-
-    def init(self):
-        """Initialize a bluprint project in existing directory."""
-        print('Initializing project.')  # noqa: WPS421
 
     def workflow(
         self,
@@ -116,10 +163,7 @@ class Bluprint(object):
 
         """
         styled_print(f'run workflow {workflow_name}')
-        cfg = load_config_yaml(
-            Path(workflow_yaml).name,
-            Path(workflow_yaml).parent,
-        )
+        cfg = load_config_yaml(workflow_yaml)
         run_workflow(
             workflow_name=workflow_name,
             workflow_cfg=cfg,

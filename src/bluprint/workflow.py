@@ -2,10 +2,10 @@
 
 from pathlib import Path, PosixPath
 
+from bluprint_conf import load_config_yaml
 from omegaconf import DictConfig, ListConfig
 
 from bluprint.colors import style_notebook, style_workflow, styled_print
-from bluprint.config import load_config_yaml
 from bluprint.errors import InvalidNotebookTypeError, InvalidWorkflowError
 from bluprint.notebook.jupyter import run_jupyter_notebook
 
@@ -45,11 +45,10 @@ def run_workflow(
 
 
 def run_workflows(
-    workflow_yaml: str | PosixPath = 'workflows.yaml',
-    workflow_yaml_dir: str | PosixPath = 'conf',
+    workflow_yaml: str | PosixPath = 'conf/workflows.yaml',
     notebook_dir: str | PosixPath = 'notebooks',
 ):
-    workflow_cfg = load_config_yaml(str(workflow_yaml), workflow_yaml_dir)
+    workflow_cfg = load_config_yaml(workflow_yaml)
     styled_print('run all workflows')
     for workflow_name in workflow_cfg.keys():
         run_workflow(str(workflow_name), workflow_cfg, notebook_dir)

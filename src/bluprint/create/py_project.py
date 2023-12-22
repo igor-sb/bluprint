@@ -17,9 +17,17 @@ def create_project(
     if not parent_dir:
         parent_dir = '.'
     project_dir = Path(parent_dir) / project_name
+    project_dir.mkdir(parents=True)
+    initialize_project(project_name, python_version, project_dir)
+
+
+def initialize_project(
+    project_name: str,
+    python_version: str | None = None,
+    project_dir: Path = Path('.'),
+) -> None:
     if not python_version:
         python_version = default_python_version()
-    project_dir.mkdir(parents=True)
     template_dir = files('bluprint').joinpath('template')
     pdm_init(python_version, str(template_dir), str(project_dir))
     (project_dir / 'project.Rproj').unlink()

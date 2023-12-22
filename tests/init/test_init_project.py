@@ -7,10 +7,10 @@ from bluprint import cli
 
 def test_create_init_project(find_files_in_dir, tmp_path):
     template_dir = files('bluprint').joinpath('template')
-    project_dir = tmp_path / 'myproj'
+    project_dir = tmp_path / 'project'
     project_dir.mkdir()
     cli.Bluprint().init(
-        project_name='myproj',
+        project_name='project',
         project_dir=project_dir,
     )
     project_files = {

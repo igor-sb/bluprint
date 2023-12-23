@@ -30,6 +30,6 @@ def copy_rproj_file(
 ) -> None:
     template_path = files('bluprint').joinpath('template')
     shutil.copyfile(
-        src=Path(template_path) / 'project.Rproj',
+        src=Path(template_path) / '{{project}}.Rproj',
         dst=Path(project_dir) / f'{project_name}.Rproj',
     )

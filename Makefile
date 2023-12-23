@@ -61,3 +61,7 @@ clean:
 	rm -rf dist
 	rm -rf htmlcov
 	rm -rf junit
+	rm -rf src/bluprint/__pycache__
+	rm -rf src/bluprint/create/__pycache__
+	rm -rf src/bluprint/bluprint.egg-info
+	rm -rf tests/__pycache__

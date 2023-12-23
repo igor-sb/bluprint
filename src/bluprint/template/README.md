@@ -1,3 +1,3 @@
-# Project name
+# {{project}}
 
 Project description.

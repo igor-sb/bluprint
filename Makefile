@@ -65,3 +65,6 @@ clean:
 	rm -rf src/bluprint/create/__pycache__
 	rm -rf src/bluprint/bluprint.egg-info
 	rm -rf tests/__pycache__
+
+build:
+	@rm -rf build; pdm build

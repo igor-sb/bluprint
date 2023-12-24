@@ -8,10 +8,10 @@ from bluprint import cli
 def test_create_py_project(find_files_in_dir, tmp_path):
     template_dir = files('bluprint').joinpath('template')
     cli.Bluprint().create(
-        project_name='{{project}}',
+        project_name='placeholder_name',
         parent_dir=tmp_path,
     )
-    project_dir = Path(tmp_path) / '{{project}}'
+    project_dir = Path(tmp_path) / 'placeholder_name'
     project_files = {
         file_path.relative_to(project_dir)
         for file_path in find_files_in_dir(project_dir)
@@ -24,7 +24,7 @@ def test_create_py_project(find_files_in_dir, tmp_path):
         Path('pyproject.toml'),
         Path('pdm.lock'),
     ])
-    template_files.remove(Path('{{project}}.Rproj'))  # Python-only test
+    template_files.remove(Path('placeholder_name.Rproj'))  # Python-only test
     venv_dir = project_dir / '.venv'
     assert project_files == template_files
     assert (venv_dir / 'bin').exists()

@@ -56,6 +56,9 @@ processed_df = process_data(messy_df)
 processed_df.to_csv(data.user.processed)
 ```
 
+For a demonstration of a shareable project see
+[https://github.com/igor-sb/bluprint-demo/](https://github.com/igor-sb/bluprint-demo/).
+
 ## Bluprint project features
 
 * Configuration, data and common code can be consistenly imported without hunting down relative paths or copy/pasting absolute paths across the code.

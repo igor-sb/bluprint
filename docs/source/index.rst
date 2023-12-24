@@ -3,7 +3,7 @@
 Bluprint
 ========
 
-Bluprint is a command line utility for setting up reproducible 
+Bluprint is a command line utility for setting up reproducible
 projects, which rely on "quick and dirty" analyses using notebooks.
 
 Features
@@ -40,7 +40,7 @@ Requirements
   installing bluprint
 
 * `pdm <https://pdm-project.org/latest/>`_: Python dependency manager
-   
+
 * For RMarkdown notebooks R packages {renv}, {reticulate} and {yaml}
 
 Recommended:

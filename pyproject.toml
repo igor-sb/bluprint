@@ -14,7 +14,6 @@ dependencies = [
     "omegaconf>=2.3.0",
     "tqdm>=4.66.1",
     "bluprint-conf>=0.1.0",
-    "nbqa>=1.7.1",
 ]
 
 [project.scripts]
@@ -48,7 +47,7 @@ dev = [
 filterwarnings = [
 	"ignore:.*pipes.* is deprecated and slated for removal:DeprecationWarning",
 ]
-    
+
 [tool.isort]
 profile = "wemake"
 line_length = 79
@@ -62,7 +61,7 @@ ignore = [
 	'D107',  # D107 Missing docstring in __init__
 	'D412',  # No blank lines allowed between a section header and its content
 	'I003',  # I003 isort expected 1 blank line in imports, found 0
-	'DAR001',  # DAR003 Incorrect indentation: ~<
+	'DAR003',  # DAR003 Incorrect indentation: ~<
 	'DAR101',  # DAR101 Missing parameter(s) in Docstring: - repeated_bases_regex
 	'DAR201',  # DAR201 Missing "Returns" in Docstring: - return
 	'RST201',  # RST201 Block quote ends without a blank line; unexpected unindent.
@@ -86,7 +85,7 @@ per-file-ignores = [
 	# WPS421 Found wrong function call: print
 	# WPS428 Found statement that has no effect
 	# WPS432 Found magic number: 13
-	""" 
+	"""
 	tmp/**:
 		D100,
 		WPS421,

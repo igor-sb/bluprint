@@ -24,7 +24,7 @@ jobs:
         uses: ./.github/actions/install-python
         with:
           PYTHON_VERSION: ${{ env.PYTHON_VERSION }}
-      
+
       - name: Install and setup R and packages
         uses: ./.github/actions/install-r
         with:

@@ -7,7 +7,7 @@ from pathlib import Path, PosixPath
 import fire
 from bluprint_conf import load_config_yaml
 
-from bluprint.binary import check_if_executable_is_installed, run
+from bluprint.binary import check_if_executable_is_installed
 from bluprint.colors import styled_print
 from bluprint.create.py_project import create_project, initialize_project
 from bluprint.create.r_project import (
@@ -181,10 +181,6 @@ class Bluprint(object):
         """
         styled_print(f'index {input_dir}/** ❯ {output_yaml}')
         index_dir_to_config_yaml(input_dir, output_yaml)
-
-    def nbqa(self, *args, **kwargs) -> None:
-        pass
-
 
 def check_if_project_exists(project_name: str, parent_dir: str | None) -> None:
     if not parent_dir:

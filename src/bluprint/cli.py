@@ -182,6 +182,7 @@ class Bluprint(object):
         styled_print(f'index {input_dir}/** ❯ {output_yaml}')
         index_dir_to_config_yaml(input_dir, output_yaml)
 
+
 def check_if_project_exists(project_name: str, parent_dir: str | None) -> None:
     if not parent_dir:
         parent_dir = '.'

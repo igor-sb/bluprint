@@ -42,11 +42,11 @@ data = load_data_yaml() # default arg: conf/data.yaml
 print(data)
 #> {
 #>   'emailed': {
-#> 	   'messy': '/path/to/demo/data/emailed/messy.xlsx'
-#> 	 },
-#> 	 'user': {
+#>     'messy': '/path/to/demo/data/emailed/messy.xlsx'
+#>   },
+#>   'user': {
 #> 	   'processed': '/path/to/demo/data/user_processed.csv'
-#> 	 }
+#>   }
 #> }
 
 messy_df = pd.read_xlsx(data.emailed.messy)

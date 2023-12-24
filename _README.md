@@ -20,7 +20,7 @@ demo
     └── common_code.py
 ```
 
-All file paths are stored in *data.yaml*, and are listed relative to the *demo/data* directory for clarity:
+File paths are stored in *data.yaml*, relative to the *demo/data* directory:
 
 ```yaml
 emailed:
@@ -72,6 +72,8 @@ For a demonstration of a shareable project see
 * Support for both Jupyter and RMarkdown notebooks.
 
 * Bluprint projects are reproducible thanks to PDM pinning versions of all dependecies in a *pdm.lock* file and {renv} doing the same with R packages.
+
+* Support for simple workflows.
 
 ## Examples
 

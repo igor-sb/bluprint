@@ -3,7 +3,7 @@ Data index
 
 ``bluprint index`` creates a YAML configuration file from a directory of data
 files. For example, ``bluprint index data data.yaml`` parses the following
- ``data`` directory::
+``data`` directory::
 
 	data
 	├── dir1

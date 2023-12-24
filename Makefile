@@ -4,7 +4,7 @@ PROJ= src
 NC=\033[0m # No Color
 
 .PHONY: install autolint lint lint-flake8 shell precommit poetry-precommit \
-		install-dev test report-coverage docs lint-mypy
+		install-dev test report-coverage docs lint-mypy build
 
 test:
 		${PDM_RUN} coverage erase
@@ -61,3 +61,10 @@ clean:
 	rm -rf dist
 	rm -rf htmlcov
 	rm -rf junit
+	rm -rf src/bluprint/__pycache__
+	rm -rf src/bluprint/create/__pycache__
+	rm -rf src/bluprint/bluprint.egg-info
+	rm -rf tests/__pycache__
+
+build:
+	@rm -rf build; pdm build

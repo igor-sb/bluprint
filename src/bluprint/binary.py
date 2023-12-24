@@ -42,7 +42,7 @@ def pdm(
 
 def pdm_init(python_version: str, template_dir: str, project_dir: str):
     return pdm(
-        ['init', '-n', '--python', python_version, template_dir],
+        ['init', '--lib', '-n', '--python', python_version, template_dir],
         PdmInitError,
         cwd=project_dir,
     )

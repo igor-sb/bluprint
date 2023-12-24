@@ -14,13 +14,13 @@ def test_create_pyr_project(find_files_in_dir, tmp_path):
     template_dir = files('bluprint').joinpath('template')
     bp = cli.Bluprint()
     bp.create(
-        project_name='project',
+        project_name='placeholder_name',
         parent_dir=tmp_path,
         r_proj=True,
     )
     project_files = {
-        file_path.relative_to(tmp_path / 'project')
-        for file_path in find_files_in_dir(tmp_path / 'project')
+        file_path.relative_to(tmp_path / 'placeholder_name')
+        for file_path in find_files_in_dir(tmp_path / 'placeholder_name')
     }
     template_files = {
         file_path.relative_to(template_dir)
@@ -32,9 +32,9 @@ def test_create_pyr_project(find_files_in_dir, tmp_path):
         Path('renv.lock'),
         Path('.Rprofile'),
     ])
-    venv_dir = tmp_path / 'project' / '.venv'
+    venv_dir = tmp_path / 'placeholder_name' / '.venv'
     assert project_files == template_files
-    assert (tmp_path / 'project' / 'renv').exists()
+    assert (tmp_path / 'placeholder_name' / 'renv').exists()
     assert (venv_dir / 'pyvenv.cfg').exists()
 
 

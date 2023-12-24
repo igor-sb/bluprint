@@ -30,7 +30,7 @@ def initialize_project(
         python_version = default_python_version()
     template_dir = files('bluprint').joinpath('template')
     pdm_init(python_version, str(template_dir), str(project_dir))
-    (Path(project_dir) / 'project.Rproj').unlink()
+    (Path(project_dir) / 'placeholder_name.Rproj').unlink()
     replace_placeholder_name(
         Path(project_dir) / 'notebooks' / 'example_jupyternb.ipynb',
         project_name,
@@ -41,7 +41,7 @@ def initialize_project(
 def replace_placeholder_name(
     notebook_path: str | Path,
     project_name: str,
-    placeholder='{{project}}',
+    placeholder='placeholder_name',
 ) -> None:
     with open(notebook_path, 'r', encoding='utf-8') as in_notebook_file:
         notebook_content = nbformat.read(in_notebook_file, as_version=4)

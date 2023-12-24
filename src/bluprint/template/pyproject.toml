@@ -1,15 +1,20 @@
 [project]
-name = "project"
+name = "placeholder_name"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "", email = ""},
 ]
 dependencies = []
-requires-python = ">=3.11"
+requires-python = "==3.11.*"
 readme = "README.md"
 license = {text = "MIT"}
 
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
+
+[tool.setuptools]
+packages = ["conf", "data", "placeholder_name"]
+
+[tool.pdm]
+package-type = "library"

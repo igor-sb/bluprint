@@ -7,7 +7,7 @@ Python-only projects
 .. code-block:: bash
 
 	bluprint create myproj
-	
+
 
 
 Python/R projects
@@ -16,4 +16,3 @@ Python/R projects
 .. code-block:: bash
 
 	bluprint create myproj2 -r
-

@@ -1,3 +1,3 @@
-# Project name
+# placeholder_name
 
 Project description.

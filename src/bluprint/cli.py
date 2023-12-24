@@ -110,7 +110,8 @@ class Bluprint(object):
             isolation in RMarkdown notebooks.
 
         Raises:
-            ProjectExistsError: _description_
+            ProjectExistsError: Raised if pyproject.toml exists in the
+            `project_dir`.
         """
         if not project_dir:
             project_dir = getcwd()

@@ -40,7 +40,6 @@ dev = [
     "pylint>=3.0.2",
     "types-tqdm>=4.66.0.5",
     "flake8-pyproject>=1.2.3",
-    "sphinx-design>=0.5.0",
 ]
 
 [tool.pytest.ini_options]
@@ -54,6 +53,7 @@ profile = "wemake"
 line_length = 79
 
 [tool.flake8]
+max-module-members = 8
 ignore = [
 	'D101',  # D101 Missing docstring in public class
 	'D102',  # D102 Missing docstring in public method

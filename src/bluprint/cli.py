@@ -101,8 +101,7 @@ class Bluprint(object):
 
         project_name (str): Name of the project.
         python_version (str | None, optional): Python version to be used.
-            If not specified, uses the latest stable version from
-            `pyenv install -l`.
+            If not specified, uses `python --version`.
         project_dir (str | None, optional): Project directory where to
             initialize a new bluprint project. By default uses current working
             directory.

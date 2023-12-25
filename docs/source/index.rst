@@ -1,4 +1,4 @@
-.. image:: images/bluprint_wide.png
+.. image:: images/bluprint_logo.png
 
 .. include:: ../../README.rst
 	:start-line: 2

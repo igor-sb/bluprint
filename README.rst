@@ -23,7 +23,7 @@ Bluprint integrates `PDM <https://pdm-project.org/latest/>`_, `OmegaConf <https:
 Features
 --------
 
-* Say goodbye to copy/pasting and dealing with file paths within notebooks.
+* No more copy/pasting file paths within Python/R scripts and notebooks.
 
 * Configuration (*conf/*), data (*data/*) and shared code separated from notebooks.
 

@@ -20,4 +20,3 @@ which also installs renv. To get started with RStudio, load the .Rproj file whic
 
 Python/R projects
 -----------------
-

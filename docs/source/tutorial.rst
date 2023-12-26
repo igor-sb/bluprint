@@ -4,9 +4,17 @@ Getting started with bluprint
 Python-only projects
 --------------------
 
+Create a new directory ``myproj`` with the project template:
+
 .. code-block:: bash
 
 	bluprint create myproj
+
+
+
+
+Python/R projects
+-----------------
 
 or if you would like to setup a Python/R project:
 

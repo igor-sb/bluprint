@@ -3,7 +3,7 @@
 Bluprint
 ========
 
-Bluprint is a command line utility for streamlining exploratory data science projects using Jupyter and RMarkdown notebooks. Bluprint projects allow notebooks seamless access to configuration, data and shared code across directories in this type of structure::
+:program:`Bluprint` is a command line utility for streamlining exploratory data science projects using Jupyter and RMarkdown notebooks. Bluprint projects allow notebooks seamless access to configuration, data and shared code across directories in this type of structure::
 
     my_project
     ├── conf
@@ -85,6 +85,7 @@ Install `pipx <https://github.com/pypa/pipx>`_ and `PDM <https://pdm-project.org
     pipx install bluprint
 
 
----
+License
+-------
 
 Bluprint is released under `MIT license <LICENSE>`_.

@@ -6,7 +6,7 @@ src/bluprint/template/notebooks/example_quarto_files
 src/bluprint/detemplatemo/notebooks/example_quarto.html
 
 # MacOS
-**/.DS_Store
+.DS_Store
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

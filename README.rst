@@ -3,7 +3,7 @@
 Bluprint
 ========
 
-:program:`Bluprint` is a command line utility for streamlining exploratory data science projects using Jupyter and RMarkdown notebooks. Bluprint projects allow notebooks seamless access to configuration, data and shared code across directories in this type of structure::
+**Bluprint** is a command line utility for streamlining exploratory data science projects using Jupyter and RMarkdown notebooks. Bluprint projects allow notebooks seamless access to configuration, data and shared code across directories in this type of structure::
 
     my_project
     ├── conf
@@ -23,7 +23,7 @@ Bluprint integrates `PDM <https://pdm-project.org/latest/>`_, `OmegaConf <https:
 Features
 --------
 
-* No more copy/pasting file paths within Python/R scripts and notebooks.
+* File paths accessible as dictionary/list objects in Python/R scripts and notebooks.
 
 * Configuration (*conf/*), data (*data/*) and shared code separated from notebooks.
 
@@ -31,9 +31,9 @@ Features
 
 * Mix and match Python, R, Jupyter and RMarkdown notebooks.
 
-* Reproducibility by locking Python/R dependencies through integration with PDM and renv.
+* Locking Python and R dependencies using PDM and renv.
 
-* Support for simple notebook workflows.
+* Simple notebook workflows.
 
 
 Usage

@@ -1,10 +1,10 @@
-Getting started with bluprint
+Getting started with Bluprint
 =============================
 
 Python projects
 ---------------
 
-Create a new directory *myproj* with the project template:
+To create a new directory *myproj* with the project template in the current directory, run:
 
 .. code-block:: bash
 
@@ -33,7 +33,7 @@ This command:
   * *.venv* directory with Python virtual environment for this project
   * *.gitignore* with reasonable defaults - for example *.env* where secrets may be stored in plain text
 
-2. Installs the project as an "editable" Python package. This allows notebooks to access Python files in *myproj* as modules with ``from myproj.example import add_one``.
+2. Allows notebooks to access Python files in *myproj* as modules with ``from myproj.example import add_one`` by installing the project as a Python package in the project's virtual environment.
 
 3. Installs Python packages *bluprint_conf*, *ipykernel* and *pandas*.
 

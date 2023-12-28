@@ -17,19 +17,15 @@ Bluprint
     └── my_project
         └── common_code.py
 
-Bluprint integrates `PDM <https://pdm-project.org/latest/>`_, `OmegaConf <https://omegaconf.readthedocs.io/>`_, Python's native import system and R package `here <https://here.r-lib.org/>`_ to allow a user to use good coding practices even in exploratory projects that use notebooks.
-
-
-Features
---------
+Bluprint integrates `PDM <https://pdm-project.org/latest/>`_, `OmegaConf <https://omegaconf.readthedocs.io/>`_, Python's native import system and R package `here <https://here.r-lib.org/>`_ to allow the use good coding practices even in exploratory projects that use notebooks:
 
 * File paths accessible as dictionary/list objects in Python/R scripts and notebooks.
 
 * Configuration (*conf/*), data (*data/*) and shared code separated from notebooks.
 
-* `bluprint_conf <https://github.com/igor-sb/bluprint-confg>`_ facilitates sharing exploratory projects, for example: `demo project <https://github.com/igor-sb/bluprint-demo/>`_.
+* `bluprint_conf <https://github.com/igor-sb/bluprint-conf>`_ facilitates sharing exploratory projects, for example see `demo project <https://github.com/igor-sb/bluprint-demo/>`_.
 
-* Mix and match Python, R, Jupyter and RMarkdown notebooks.
+* Mix and match Python, R, Jupyter and RMarkdown.
 
 * Locking Python and R dependencies using PDM and renv.
 
@@ -39,7 +35,7 @@ Features
 Usage
 -----
 
-``bluprint create my_project`` creates a project with a structure similar to the example shown above. Add files and store all file paths relative to the *my_project/data* directory, in the *data.yaml*:
+``bluprint create my_project`` creates a project skeleton similar to the example shown above. Once created, we can add data files and store all file paths relative to the *my_project/data* directory, in the *data.yaml*:
 
 .. code:: yaml
 

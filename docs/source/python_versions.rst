@@ -48,3 +48,7 @@ Once a different Python version is install you can use it
 * globally using: ``pyenv global 3.13.0a2``
 
 * locally (whenever you are in the current directory) using ``pyenv local 3.13.0a2``
+
+.. note::
+
+	pyenv works on Linux, MacOS and Windows Subsystem for Linux. For native Windows consider `pyenv-win <https://github.com/pyenv-win/pyenv-win>`_.

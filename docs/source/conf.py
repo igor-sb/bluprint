@@ -62,7 +62,7 @@ html_theme_options = {
     "google_analytics_account": "UA-XXXXX",
     "html_minify": False,
     "html_prettify": True,
-    "css_minify": True,	
+    "css_minify": True,
 	'logo_icon': '&#xe41c',
 }
 

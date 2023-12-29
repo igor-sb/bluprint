@@ -67,6 +67,7 @@ ignore = [
 	'I003',  # I003 isort expected 1 blank line in imports, found 0
 	'DAR003',  # DAR003 Incorrect indentation: ~<
 	'DAR101',  # DAR101 Missing parameter(s) in Docstring: - repeated_bases_regex
+	'DAR103',  # DAR103 ... false positives
 	'DAR201',  # DAR201 Missing "Returns" in Docstring: - return
 	'RST201',  # RST201 Block quote ends without a blank line; unexpected unindent.
 	'RST301',  # RST301 Unexpected indentation.

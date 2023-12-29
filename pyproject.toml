@@ -43,6 +43,7 @@ dev = [
     "flake8-pyproject>=1.2.3",
     "sphinx-copybutton>=0.5.2",
     "sphinx-material @ git+https://github.com/bashtage/sphinx-material.git",
+    "sphinx-immaterial>=0.11.10",
 ]
 
 [tool.pytest.ini_options]

@@ -5,6 +5,11 @@
 	:end-line: 87
 
 .. toctree::
+   :hidden:
+
+   self
+
+.. toctree::
    :maxdepth: 1
    :caption: Usage
 

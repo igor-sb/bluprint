@@ -15,8 +15,9 @@ release = '0.1'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    "sphinx.ext.githubpages",
-	"sphinx_copybutton",
+    # 'sphinx.ext.githubpages',
+	# 'sphinx_copybutton',
+	'sphinx_immaterial',
 ]
 
 templates_path = ['_templates']
@@ -28,44 +29,76 @@ exclude_patterns = []
 
 # html_theme = 'sphinx_rtd_theme'
 # html_theme = 'sphinxawesome_theme'
-html_theme = 'sphinx_material'
+html_theme = 'sphinx_immaterial'
 html_static_path = ['_static']
-html_css_files = [
-    'css/custom.css',
-]
+# html_css_files = ['css/custom.css']
 
 html_theme_options = {
-
-    # Set the name of the project to appear in the navigation.
-    'nav_title': 'Bluprint',
-
-    # Specify a base_url used to generate sitemap.xml. If not
-    # specified, then no sitemap will be built.
-    'base_url': 'https://igor-sb.github.io/bluprint',
-
-    # Set the color and the accent color
-    'color_primary': 'blue',
-    'color_accent': 'light-blue',
-
     # Set the repo location to get a badge with stats
-    'repo_url': 'https://github.com/igor-sb/bluprint/',
-    'repo_name': 'Github',
-	'repo_type': 'github',
-
+	"site_url": "https://igor-sb.github.io/bluprint/",
+    "repo_url": "https://github.com/igor-sb/bluprint/",
+	"repo_name": "Bluprint Github",
+    "icon": {
+        "repo": "fontawesome/brands/github",
+        "edit": "material/file-edit-outline",
+    },
+    "palette": [
+        {
+            "media": "(prefers-color-scheme: light)",
+            "scheme": "default",
+            "primary": "blue",
+            "accent": "light-blue",
+            "toggle": {
+                "icon": "material/lightbulb-outline",
+                "name": "Switch to dark mode",
+            },
+        },
+        {
+            "media": "(prefers-color-scheme: dark)",
+            "scheme": "slate",
+            "primary": "blue",
+            "accent": "light-blue",
+            "toggle": {
+                "icon": "material/lightbulb",
+                "name": "Switch to light mode",
+            },
+        },
+    ],	
     # Visible levels of the global TOC; -1 means unlimited
-    'globaltoc_depth': 1,
+    # 'globaltoc_depth': 1,
     # If False, expand all TOC entries
-    'globaltoc_collapse': False,
-    # If True, show hidden TOC entries
-    'globaltoc_includehidden': False,
-
-    "google_analytics_account": "UA-XXXXX",
-    "html_minify": False,
-    # "html_prettify": True,
-    "css_minify": True,	
-	'logo_icon': '&#xe41c',
+    "globaltoc_collapse": True,
+    "features": [
+        "navigation.expand",
+        # "navigation.tabs",
+        # "toc.integrate",
+        "navigation.sections",
+        # "navigation.instant",
+        # "header.autohide",
+        "navigation.top",
+        # "navigation.tracking",
+        # "search.highlight",
+        "search.share",
+        "toc.follow",
+        "toc.sticky",
+        "content.tabs.link",
+        "announce.dismiss",
+    ],
+    # BEGIN: social icons
+    "social": [
+        {
+            "icon": "fontawesome/brands/github",
+            "link": "https://github.com/jbms/sphinx-immaterial",
+            "name": "Source on github.com",
+        },
+        {
+            "icon": "fontawesome/brands/python",
+            "link": "https://pypi.org/project/sphinx-immaterial/",
+        },
+    ],
+    # END: social icons	
 }
 
 html_sidebars = {
-    "**": ["globaltoc.html"]
+    "**": ['logo-test.html', 'globaltoc.html', 'localtoc.html'],
 }

@@ -48,7 +48,7 @@ report-coverage:
 
 docs:
 	@echo "\n${BLUE}Preparing Sphinx documentation...${NC}\n"
-	@cd docs; make html; make prepare-gh-pages
+	@cd docs; rm -rf build; make html; make prepare-gh-pages
 
 clean-docs:
 	@cd docs; rm -rf build; rm -rf html

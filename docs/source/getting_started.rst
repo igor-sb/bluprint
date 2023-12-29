@@ -10,42 +10,45 @@ To create a new directory *myproj* with the project template in the current dire
 
     bluprint create myproj
 
-This command:
+This creates the following directory tree:
 
-1. Creates the following directory tree::
+.. code-block:: none
 
-    myproj
-    ├── README.md
-    ├── conf
-    │   ├── config.yaml
-    │   ├── data.yaml
-    │   └── workflow.yaml
-    ├── data
-    │   └── example_data.csv
-    ├── notebooks
-    │   └── example_jupyternb.ipynb
-    ├── myproj
-    │   └── example.py
-    └── pyproject.toml
+  myproj
+  ├── README.md
+  ├── conf                            # yaml configuration files
+  │   ├── config.yaml
+  │   ├── data.yaml
+  │   └── workflow.yaml
+  ├── data                            # data such as csv, png, pdf
+  │   └── example_data.csv
+  ├── notebooks                       # jupyter notebooks
+  │   └── example_jupyternb.ipynb
+  ├── myproj                          # Python package of this project
+  │   └── example.py
+  └── pyproject.toml                  # Python package configuration
 
-  as well as:
+as well as:
 
-  * *.venv* directory with Python virtual environment for this project
-  * *.gitignore* with reasonable defaults - for example it ignores *.env* often used to store secrets
+* *.venv* directory with a Python virtual environment for this project
+* *.gitignore* with files and file patterns excluded from version control (for example, *.env* often used to store secrets).
 
-2. Allows notebooks to access Python files in *myproj* as modules with ``from myproj.example import add_one`` by installing the project as a Python package in the project's virtual environment.
+Allows notebooks to access Python files in *myproj* as modules with ``from myproj.example import add_one`` by installing the project as a Python package in the project's virtual environment.
 
-3. Installs Python packages *bluprint_conf*, *ipykernel* and *pandas*.
+Installs Python packages *bluprint_conf*, *ipykernel* and *pandas*.
+
+Configuration
+^^^^^^^^^^^^^
 
 *conf* directory has three files that have a special meaning:
 
-  1. *config.yaml*: any general configuration
-  2. *data.yaml*: paths to local or remote data (tables, images, etc.)
-  3. *workflow.yaml*: workflow definitions for executing multiple notebooks
+1. *config.yaml*: any general configuration
 
-*data*: place to store local data in any hierarchy
-*notebooks*: place to store notebooks in any hierarchy
-*myproj*: Python modules that can be loaded into notebooks
+2. *data.yaml*: paths to local or remote data (tables, images, etc.)
+
+3. *workflow.yaml*: workflow definitions for executing multiple notebooks
+
+
 
 Accessing configuration
 ^^^^^^^^^^^^^^^^^^^^^^^

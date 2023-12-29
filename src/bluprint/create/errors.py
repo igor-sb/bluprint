@@ -8,11 +8,11 @@ class PythonVersionError(StyledError):
 
 
 class PdmAddError(StyledError):
-    """Raises exception if poetry add fails."""
+    """Raises exception if PDM add fails."""
 
 
 class PdmInitError(StyledError):
-    """Raises exception if poetry init fails."""
+    """Raises exception if PDM init fails."""
 
 
 class RpackageMissingError(StyledError):

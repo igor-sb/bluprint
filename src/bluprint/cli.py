@@ -170,16 +170,25 @@ class Bluprint(object):
             notebook_dir=notebook_dir,
         )
 
-    def index(self, input_dir: str, output_yaml: str) -> None:
+    def index(
+        self,
+        input_dir: str,
+        output_yaml: str,
+        skip_dot_files: bool = True,
+    ) -> None:
         """Index all directory files to yaml config.
 
         Recursively iterates over all files in INPUT_DIR and creates a
         reasonable yaml config in OUTPUT_YAML. This command helps
         convert an existing data directory into a bluprint project.
 
+        Args:
+            input_dir (str): Directory to index.
+            output_yaml (str): Output yaml filepath.
+            skip_dot_files (bool, optional): Skip files starting with a dot.
         """
         styled_print(f'index {input_dir}/** ❯ {output_yaml}')
-        index_dir_to_config_yaml(input_dir, output_yaml)
+        index_dir_to_config_yaml(input_dir, output_yaml, skip_dot_files)
 
 
 def check_if_project_exists(project_name: str, parent_dir: str | None) -> None:

@@ -14,6 +14,7 @@ dependencies = [
     "omegaconf>=2.3.0",
     "tqdm>=4.66.1",
     "bluprint-conf>=0.1.0",
+    "nbstripout>=0.6.1",
 ]
 
 [project.scripts]
@@ -40,6 +41,8 @@ dev = [
     "pylint>=3.0.2",
     "types-tqdm>=4.66.0.5",
     "flake8-pyproject>=1.2.3",
+    "sphinx-copybutton>=0.5.2",
+    "sphinx-material @ git+https://github.com/bashtage/sphinx-material.git",
 ]
 
 [tool.pytest.ini_options]

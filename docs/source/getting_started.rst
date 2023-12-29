@@ -31,7 +31,7 @@ This command:
   as well as:
 
   * *.venv* directory with Python virtual environment for this project
-  * *.gitignore* with reasonable defaults - for example *.env* where secrets may be stored in plain text
+  * *.gitignore* with reasonable defaults - for example it ignores *.env* often used to store secrets
 
 2. Allows notebooks to access Python files in *myproj* as modules with ``from myproj.example import add_one`` by installing the project as a Python package in the project's virtual environment.
 
@@ -47,6 +47,28 @@ This command:
 *notebooks*: place to store notebooks in any hierarchy
 *myproj*: Python modules that can be loaded into notebooks
 
+Accessing configuration
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Access general configuration from *conf/config.yaml* files using:
+
+.. code-block:: python
+
+  from bluprint_conf import load_config_yaml
+
+  cfg = load_config_yaml()
+
+The first argument of ``load_config_yaml()`` has a default value ``conf/config.yaml`` so if you would like to load additional files or prefer a different name use:
+
+.. code-block:: python
+
+  cfg = load_config_yaml('conf/configuration.yaml')
+
+
+Access data
+^^^^^^^^^^^
+
+Access files in the *data/* directory by first listing them in  using ``load_data_yaml()``
 
 
 Python/R projects

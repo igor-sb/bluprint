@@ -6,17 +6,22 @@
 
 .. toctree::
    :maxdepth: 1
-   :caption: Contents:
+   :caption: Usage
 
-   tutorial
+   getting_started
    configuration
-   python_versions
+   indexing
+   workflows
 
 .. toctree::
    :maxdepth: 1
-   :caption: Existing projects:
+   :caption: Versioning
 
-   data_index
+   python_versions
+   r_versions
+   unit_testing
+   notebook_version_control
+   notebook_linting
 
 
 Indices and tables

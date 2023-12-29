@@ -17,7 +17,7 @@ Bluprint
     └── my_project
         └── common_code.py
 
-Bluprint integrates `PDM <https://pdm-project.org/latest/>`_, `OmegaConf <https://omegaconf.readthedocs.io/>`_, Python's native import system and R package `here <https://here.r-lib.org/>`_ to allow the use good coding practices even in exploratory projects that use notebooks:
+Bluprint integrates `PDM <https://pdm-project.org/latest/>`_, `OmegaConf <https://omegaconf.readthedocs.io/>`_, Python's native import system and R package `here <https://here.r-lib.org/>`_ to allow the use of good coding practices in notebooks:
 
 * File paths accessible as dictionary/list objects in Python/R scripts and notebooks.
 
@@ -40,9 +40,9 @@ Usage
 .. code:: yaml
 
     emailed:
-    - messy: 'emailed/messy.xlsx'
+        messy: 'emailed/messy.xlsx'
     user:
-    - processed: 'user_processed.csv'
+        processed: 'user_processed.csv'
 
 Then retrieve the automatically parsed full paths, for example in *process.ipynb* above:
 

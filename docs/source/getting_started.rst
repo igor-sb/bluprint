@@ -68,7 +68,7 @@ If you would like to setup a Python/R project that supports both Jupyter and RMa
 
     bluprint create myproj -r
 
-which also installs renv:
+which also sets up renv and RStudio Rproj file and an example notebook:
 
 .. code-block:: none
 
@@ -82,10 +82,25 @@ which also installs renv:
   │   └── workflow.yaml
   ├── data                            # data such as csv, png, pdf
   │   └── example_data.csv
-  ├── notebooks                       # jupyter notebooks
-  │   └── example_jupyternb.ipynb
+  ├── notebooks                       # Jupyter and RMarkdown notebooks
+  │   ├── example_jupyternb.ipynb
+  │   └── example_rmarkdown.Rmd
   ├── myproj                          # Python package of this project
   │   └── example.py
+  ├── myproj.Rproj                    # Rproj file for RStudio projects
+  ├── renv                            # Project's R environment
   └── pyproject.toml                  # Python package configuration
 
-To get started with RStudio, load the .Rproj file which also sets up project root directory as a working directory in R session.
+Python notebooks and code still work the same as in the Python-only project. R notebooks and code can load the configuration and data using {reticulate} and {here} packages that are pre-installed to the project's renv:
+
+.. code-block:: r
+
+  library(reticulate)
+  use_python(here::here('.venv/bin/python'))
+  bluprint_conf <- import('bluprint_conf')
+
+  # Load `example_data.csv`:
+  df <- bluprint_conf$load_data_yaml()
+
+  cfg <- bluprint_conf$load_config_yaml()
+  cfg$url  # "www.google.com"

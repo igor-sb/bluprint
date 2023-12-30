@@ -4,7 +4,7 @@ from pathlib import Path
 
 from bluprint.binary import rcmd, renv_init, renv_install
 from bluprint.create.errors import RpackageMissingError
-from bluprint.template import copy_rproj_file
+from bluprint.template import copy_rproj_files
 
 
 def initialize_r_project(
@@ -16,7 +16,7 @@ def initialize_r_project(
     project_dir = Path(parent_dir) / project_name
     renv_init(project_dir)
     renv_install(['reticulate', 'here'], project_dir)
-    copy_rproj_file(project_name, project_dir)
+    copy_rproj_files(project_name, project_dir)
 
 
 def check_if_r_package_is_installed(package: str) -> None:

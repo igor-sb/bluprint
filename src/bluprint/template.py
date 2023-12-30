@@ -24,7 +24,7 @@ def copy_template_files(
     )
 
 
-def copy_rproj_file(
+def copy_rproj_files(
     project_name: str,
     project_dir: str | Path,
 ) -> None:
@@ -32,4 +32,8 @@ def copy_rproj_file(
     shutil.copyfile(
         src=Path(template_path) / 'placeholder_name.Rproj',
         dst=Path(project_dir) / f'{project_name}.Rproj',
+    )
+    shutil.copyfile(
+        src=Path(template_path) / 'notebooks' / 'example_rmarkdown.Rmd',
+        dst=Path(project_dir) / 'notebooks' / 'example_rmarkdown.Rmd',
     )

@@ -4,7 +4,7 @@ Getting started with Bluprint
 Python projects
 ---------------
 
-To create a new directory *myproj* with the project template in the current directory, run:
+Create a project template in a new directory *myproj* using:
 
 .. code-block:: bash
 
@@ -15,6 +15,8 @@ This creates the following directory tree:
 .. code-block:: none
 
   myproj
+  ├── .gitignore                      # Files excluded from version control
+  ├── .venv                           # Project's Python virtual environment
   ├── README.md
   ├── conf                            # yaml configuration files
   │   ├── config.yaml
@@ -28,59 +30,62 @@ This creates the following directory tree:
   │   └── example.py
   └── pyproject.toml                  # Python package configuration
 
-as well as:
+It also creates a Python virtual environment in the *.venv* directory, sets up the Python files in the *myproj* directory accessible as ``from myproj.example import add_one`` in any notebook or Python script that uses this virtual environment and installs Python packages *bluprint_conf*, *ipykernel* and *pandas* in this virtual environment.
 
-* *.venv* directory with a Python virtual environment for this project
-* *.gitignore* with files and file patterns excluded from version control (for example, *.env* often used to store secrets).
+By default *conf/config.yaml* contains:
 
-Allows notebooks to access Python files in *myproj* as modules with ``from myproj.example import add_one`` by installing the project as a Python package in the project's virtual environment.
+.. literalinclude:: ../../src/bluprint/template/conf/config.yaml
+  :language: yaml
 
-Installs Python packages *bluprint_conf*, *ipykernel* and *pandas*.
+and *data/example_data.csv* contains:
 
-Configuration
-^^^^^^^^^^^^^
+.. literalinclude:: ../../src/bluprint/template/data/example_data.csv
 
-*conf* directory has three files that have a special meaning:
-
-1. *config.yaml*: any general configuration
-
-2. *data.yaml*: paths to local or remote data (tables, images, etc.)
-
-3. *workflow.yaml*: workflow definitions for executing multiple notebooks
-
-
-
-Accessing configuration
-^^^^^^^^^^^^^^^^^^^^^^^
-
-Access general configuration from *conf/config.yaml* files using:
+Access data from *conf/data.yaml* and general configuration from *conf/config.yaml* files using:
 
 .. code-block:: python
 
-  from bluprint_conf import load_config_yaml
+  from bluprint_conf import load_data_yaml, load_config_yaml
 
   cfg = load_config_yaml()
+  data = load_data_yaml()
 
-The first argument of ``load_config_yaml()`` has a default value ``conf/config.yaml`` so if you would like to load additional files or prefer a different name use:
+  # Load `example_data.csv`:
+  df = pd.read_csv(data.example_data)
 
-.. code-block:: python
+  # Read configuration
+  cfg.url   # "www.google.com"
 
-  cfg = load_config_yaml('conf/configuration.yaml')
-
-
-Access data
-^^^^^^^^^^^
-
-Access files in the *data/* directory by first listing them in  using ``load_data_yaml()``
+By default, these functions load *conf/data.yaml* and *conf/config.yaml* so if you have (additional) configuration in other files, specify them in the first argument.
 
 
 Python/R projects
 -----------------
 
-or if you would like to setup a Python/R project:
+If you would like to setup a Python/R project that supports both Jupyter and RMarkdown notebooks use:
 
 .. code-block:: bash
 
     bluprint create myproj -r
 
-which also installs renv. To get started with RStudio, load the .Rproj file which also sets up project root directory as a working directory in R session.
+which also installs renv:
+
+.. code-block:: none
+
+  myproj
+  ├── .gitignore                      # Files excluded from version control
+  ├── .venv                           # Project's Python virtual environment
+  ├── README.md
+  ├── conf                            # yaml configuration files
+  │   ├── config.yaml
+  │   ├── data.yaml
+  │   └── workflow.yaml
+  ├── data                            # data such as csv, png, pdf
+  │   └── example_data.csv
+  ├── notebooks                       # jupyter notebooks
+  │   └── example_jupyternb.ipynb
+  ├── myproj                          # Python package of this project
+  │   └── example.py
+  └── pyproject.toml                  # Python package configuration
+
+To get started with RStudio, load the .Rproj file which also sets up project root directory as a working directory in R session.

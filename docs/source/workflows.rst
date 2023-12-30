@@ -1,4 +1,4 @@
 Workflows
 =========
 
-Setting up workflows.
+Simple workflows can be setup for the purpose of 

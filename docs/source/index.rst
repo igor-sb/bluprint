@@ -16,7 +16,6 @@
    getting_started
    configuration
    indexing
-   workflows
 
 .. toctree::
    :maxdepth: 1

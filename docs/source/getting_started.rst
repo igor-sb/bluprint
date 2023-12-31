@@ -1,5 +1,5 @@
-Getting started with Bluprint
-=============================
+Getting started
+===============
 
 Python projects
 ---------------
@@ -30,9 +30,9 @@ This creates the following directory tree:
   │   └── example.py
   └── pyproject.toml                  # Python package configuration
 
-It also creates a Python virtual environment in the *.venv* directory, sets up the Python files in the *myproj* directory accessible as ``from myproj.example import add_one`` in any notebook or Python script that uses this virtual environment and installs Python packages *bluprint_conf*, *ipykernel* and *pandas* in this virtual environment.
+It also creates a Python virtual environment in the *.venv* directory, sets up the Python files in the *myproj* directory accessible as ``from myproj.example import add_one`` in any notebook or Python script that uses this virtual environment and installs Python packages *bluprint_conf*, *ipykernel* and *pandas*.
 
-By default *conf/config.yaml* contains:
+By default *conf/config.yaml* contains this placeholder:
 
 .. literalinclude:: ../../src/bluprint/template/conf/config.yaml
   :language: yaml

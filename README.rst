@@ -17,19 +17,19 @@ Bluprint
     └── my_project
         └── common_code.py
 
-Bluprint integrates `PDM <https://pdm-project.org/latest/>`_, `OmegaConf <https://omegaconf.readthedocs.io/>`_, Python's native import system and R package `here <https://here.r-lib.org/>`_ to allow the use of good coding practices in notebooks:
+Bluprint integrates `PDM <https://pdm-project.org/latest/>`_, `OmegaConf <https://omegaconf.readthedocs.io/>`_, Python's native import system and R packages `renv <https://rstudio.github.io/renv/>`_, `here <https://here.r-lib.org/>`_ and `reticulate <https://rstudio.github.io/reticulate/>`_ to allow the use of good coding practices in both Python and R notebooks:
 
-* File paths accessible as dictionary/list objects in Python/R scripts and notebooks.
+* File paths are easily accessible in Python dictionaries or R's named lists.
 
 * Configuration (*conf/*), data (*data/*) and shared code separated from notebooks.
 
-* `bluprint_conf <https://github.com/igor-sb/bluprint-conf>`_ facilitates sharing exploratory projects, for example see `demo project <https://github.com/igor-sb/bluprint-demo/>`_.
+* Exploratory projects can be easily shared; for example see `demo project <https://github.com/igor-sb/bluprint-demo/>`_.
 
 * Mix and match Python, R, Jupyter and RMarkdown.
 
-* Locking Python and R dependencies using PDM and renv.
+* Better reproducibility by version-locking Python and R dependencies.
 
-* Simple notebook workflows.
+* Notebook workflows help catch potential errors when all cells are run in order.
 
 
 Usage

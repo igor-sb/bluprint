@@ -1,5 +1,5 @@
-Indexing existing data
-======================
+data.yaml from existing data
+============================
 
 In pre-existing projects, you may already have a *data* directory populated with various files and organized in different subdirectories. Instead of manually writing down all file paths in a *conf/data.yaml*, you can use:
 

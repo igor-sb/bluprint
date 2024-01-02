@@ -4,6 +4,7 @@ src/bluprint/template/notebooks/example_rmarkdown_files
 src/bluprint/template/notebooks/example_rmarkdown.html
 src/bluprint/template/notebooks/example_quarto_files
 src/bluprint/detemplatemo/notebooks/example_quarto.html
+tests/workflow/fixtures/rtest/*.html
 
 # MacOS
 .DS_Store

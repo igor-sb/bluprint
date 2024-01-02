@@ -1,19 +1,36 @@
-"""Hacky RMarkdown notebook executor with a tdqm progress bar."""
+"""RMarkdown notebook executor with a tdqm progress bar."""
 
 import re
 import subprocess
 import sys
+from pathlib import Path
 
+from bluprint_conf import absolute_package_path
 from tqdm import tqdm
 
 from bluprint.notebook.progress import tqdm_format
 
 
-def execute_rmd(rmd_file: str) -> None:  # noqa: WPS210
+def run_rmarkdown_notebook(  # noqa: WPS210
+    notebook_file: str,
+    display_prefix: str,
+    notebook_dir: str = 'notebooks',
+) -> None:
+    if not Path(notebook_file).is_absolute():
+        notebook_file = (
+            Path(absolute_package_path(notebook_dir)) / notebook_file    
+        )
+
     progress_bar_re = re.compile(r'^[\s]*\|[\.\s]*\|[\s]*([0-9]+)%$')
-    with tqdm(total=100, bar_format=tqdm_format()) as tqdm_progress:
+    with (
+        tqdm(
+            total=100,
+            desc=display_prefix,
+            bar_format=tqdm_format(),
+        ) as tqdm_progress
+    ):
         rmd_out = subprocess.Popen(
-            ['Rscript', '-e', f'rmarkdown::render("{rmd_file}")'],
+            ['Rscript', '-e', f'rmarkdown::render("{notebook_file}")'],
             bufsize=1,
             universal_newlines=True,
             stdout=subprocess.PIPE,

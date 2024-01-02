@@ -8,6 +8,7 @@ from omegaconf import DictConfig, ListConfig
 from bluprint.colors import style_notebook, style_workflow, styled_print
 from bluprint.errors import InvalidNotebookTypeError, InvalidWorkflowError
 from bluprint.notebook.jupyter import run_jupyter_notebook
+from bluprint.notebook.rmarkdown import run_rmarkdown_notebook
 
 
 def run_workflow(
@@ -32,10 +33,14 @@ def run_workflow(
                 run_jupyter_notebook(
                     notebook_file=notebook_file,
                     display_prefix=graphical_prefix,
-                    notebook_dir=str(notebook_dir),
+                    notebook_dir=notebook_dir,
                 )
             case '.Rmd':
-                pass  # noqa: WPS420
+                run_rmarkdown_notebook(
+                    notebook_file=notebook_file,
+                    display_prefix=graphical_prefix,
+                    notebook_dir=notebook_dir,
+                )
             case '.qmd':
                 pass  # noqa: WPS420
             case nb_extension:

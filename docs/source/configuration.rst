@@ -1,12 +1,12 @@
 Project configuration
 =====================
 
-Bluprint project configuration is stored in yaml files within the project *conf* directory. Bluprint uses three types of yaml files for different purposes: *config.yaml*, *data.yaml* and *workflow.yaml*.
+Bluprint project configuration is stored in *conf/\*.yaml* files, three of them having special purposes: *config.yaml*, *data.yaml* and *workflow.yaml*.
 
 config.yaml
 -----------
 
-*config.yaml* is used to store any project configuration. This yaml file is loaded into an `OmegaConf dictionary <https://omegaconf.readthedocs.io/>`_ using ``load_config_yaml()`` function from the ``bluprint_conf`` package. OmegaConf dictionary behaves similar to a Python dictionary, but has extra functionality such as `variable interpolation <https://omegaconf.readthedocs.io/en/2.3_branch/usage.html#variable-interpolation>`_.
+*config.yaml* is used to store any project configuration in an arbitrary yaml structure. This yaml file is loaded as an `OmegaConf dictionary <https://omegaconf.readthedocs.io/>`_ using ``load_config_yaml()`` function from the ``bluprint_conf`` package. OmegaConf dictionary behaves similar to a standard Python dictionary, but with extra functionality such as `variable interpolation <https://omegaconf.readthedocs.io/en/2.3_branch/usage.html#variable-interpolation>`_.
 
 For example, this *conf/config.yaml*:
 
@@ -19,7 +19,7 @@ For example, this *conf/config.yaml*:
     url: "www.yahoo.com"
     port: 81
 
-is used like this in a Python script or Jupyter notebook:
+can be loaded in a Python script or Jupyter notebook using:
 
 .. code-block:: python
 
@@ -37,7 +37,45 @@ is used like this in a Python script or Jupyter notebook:
 data.yaml
 ---------
 
-*data.yaml* is used to store paths to various data files, from tables to images or other files. This file is loaded into a OmegaConf dictionary using ``load_data_yaml()`` from the ``bluprint_conf`` package. Paths in this file are either absolute or relative to the project's *data* directory. Relative paths are automatically parsed to obtain absolute paths in scripts or notebooks. 
+*data.yaml* is used to store paths to files such as tables, images or plots, in a yaml structure with arbitrary keys but where values are URIs, absolute paths or paths relative to the *<project>/data/* directory. For example, this project's *data/* directory:
+
+.. code-block:: none
+
+  myproj
+  ├── conf
+  │   ├── config.yaml
+  │   └── data.yaml
+  ├── data
+  │   ├── raw
+  │   │   └── user_data.csv
+  │   ├── preprocessed
+  │   │   └── user_data.csv
+  │   ├── final
+  │   │   └── user_data.csv  
+  │   └── metadata.csv
+  ...
+
+could be organized in the following *conf/data.yaml*:
+
+.. code-block:: yaml
+
+  user_data:
+    raw: raw/user_data.csv
+    preprocessed: preprocessed/user_data.csv
+    final: raw/user_data.csv
+  metadata: metadata.csv
+
+Once loaded with ``load_data_yaml()`` from ``bluprint_conf``, these relative paths are automatically parsed into absolute paths. Paths to other files that are stored outside of the project directory, can be added into *data.yaml* and will be loaded as-is. For example:
+
+.. code-block:: yaml
+
+  user_data:
+    raw: raw/user_data.csv
+    preprocessed: preprocessed/user_data.csv
+    final: raw/user_data.csv
+  metadata: metadata.csv
+  internal_binary: /absolute/path/to/local_binary
+  report: s3://path/to/final_report.ipynb 
 
 workflow.yaml
 -------------

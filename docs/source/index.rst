@@ -2,7 +2,10 @@
 
 .. include:: ../../README.rst
 	:start-line: 2
-	:end-line: 87
+	:end-line: 94
+
+Site Map
+--------
 
 .. toctree::
    :hidden:
@@ -26,11 +29,3 @@
    unit_testing
    notebook_version_control
    notebook_linting
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

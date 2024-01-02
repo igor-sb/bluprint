@@ -40,7 +40,6 @@ def initialize_project(
 
 def delete_r_files_from_template(project_dir: str | Path) -> None:
     (Path(project_dir) / 'placeholder_name.Rproj').unlink()
-    (Path(project_dir) / 'notebooks' / 'example_quarto.qmd').unlink()
     (Path(project_dir) / 'notebooks' / 'example_rmarkdown.Rmd').unlink()
 
 

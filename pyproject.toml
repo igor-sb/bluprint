@@ -36,13 +36,11 @@ dev = [
     "sphinx>=7.2.6",
     "mypy>=1.7.1",
     "pytest-snapshot>=0.9.0",
-    "sphinx-rtd-theme>=2.0.0",
     "argcomplete>=3.1.6",
     "pylint>=3.0.2",
     "types-tqdm>=4.66.0.5",
     "flake8-pyproject>=1.2.3",
     "sphinx-copybutton>=0.5.2",
-    "sphinx-material @ git+https://github.com/bashtage/sphinx-material.git",
     "sphinx-immaterial>=0.11.10",
 ]
 

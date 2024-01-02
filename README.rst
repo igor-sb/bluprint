@@ -80,6 +80,10 @@ Install `pipx <https://github.com/pypa/pipx>`_ and `PDM <https://pdm-project.org
 
     pipx install bluprint
 
+.. note::
+
+    For R projects, install `renv <https://rstudio.github.io/renv/>`_ before attempting to create a Bluprint project with R support.
+
 References
 ----------
 

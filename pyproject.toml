@@ -15,6 +15,7 @@ dependencies = [
     "tqdm>=4.66.1",
     "bluprint-conf>=0.1.0",
     "nbstripout>=0.6.1",
+    "nbqa>=1.7.1",
 ]
 
 [project.scripts]

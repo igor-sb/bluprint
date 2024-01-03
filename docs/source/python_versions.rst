@@ -5,7 +5,7 @@ You can use `pyenv <https://github.com/pyenv/pyenv#installation>`_ to manage
 Python versions. Once it is installed, use ``pyenv versions`` to see which
 Python versions are installed:
 
-.. code-block::bash
+.. code-block:: bash
 
 	pyenv versions
 	# system

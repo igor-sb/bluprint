@@ -17,9 +17,9 @@ Bluprint
     └── my_project
         └── common_code.py
 
-Bluprint integrates `PDM <https://pdm-project.org/latest/>`_, `OmegaConf <https://omegaconf.readthedocs.io/>`_, Python's native import system and R packages `renv <https://rstudio.github.io/renv/>`_, `here <https://here.r-lib.org/>`_ and `reticulate <https://rstudio.github.io/reticulate/>`_ to allow the use of good coding practices in both Python and R notebooks:
+Bluprint integrates `PDM <https://pdm-project.org/latest/>`_, `OmegaConf <https://omegaconf.readthedocs.io/>`_, Python's native import system and R packages `renv <https://rstudio.github.io/renv/>`_, `here <https://here.r-lib.org/>`_ and `reticulate <https://rstudio.github.io/reticulate/>`_ to allow the use of best coding practices in both Python and R notebooks:
 
-* File paths accessible through variables in Python/R/Jupyter/RMarkdown.
+* File paths are accessible through variables in Python/R/Jupyter/RMarkdown.
 
 * Configuration (*conf/*), data (*data/*) and shared code separated from notebooks.
 

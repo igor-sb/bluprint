@@ -2,7 +2,7 @@
 
 .. include:: ../../README.rst
 	:start-line: 2
-	:end-line: 94
+	:end-line: 98
 
 Site Map
 --------
@@ -26,6 +26,12 @@ Site Map
 
    python_versions
    r_versions
-   unit_testing
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Production-grade projects
+
    notebook_version_control
+   unit_testing
    notebook_linting
+   packaging_projects

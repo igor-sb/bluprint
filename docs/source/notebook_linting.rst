@@ -1,5 +1,5 @@
-Notebook linting
-================
+Linting & Code quality
+======================
 
 `nbqa <https://nbqa.readthedocs.io/en/latest/>`_
 

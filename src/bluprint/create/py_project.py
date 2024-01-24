@@ -38,6 +38,7 @@ def initialize_project(
         Path(project_dir) / 'notebooks' / 'example_jupyternb.ipynb',
         project_name=project_name,
     )
+    replace_git_account_name(project_dir)
     pdm_add(['bluprint_conf', 'ipykernel', 'pandas'], project_dir)
 
 
@@ -69,15 +70,18 @@ def replace_git_account_name(
     git_user = run(
         ['git', 'config', '--global', 'user.name'],
         GitUsernameError,
-    )
+    ).strip()
 
-    readme_file = Path(project_dir) / 'README.md'
-    with open(readme_file, 'r') as readme_r:
-        readme_content = readme_r.read()
-
-    readme_content = readme_content.replace('{{account_name}}', git_user)
-    with open(readme_file, 'w') as readme_w:
-        readme_w.write(readme_content)
+    if git_user:
+        readme_file = Path(project_dir) / 'README.md'
+        with open(readme_file, 'r') as readme_r:
+            readme_content = readme_r.read()
+        readme_content = readme_content.replace(
+            '{{git_account_name}}',
+            git_user,
+        )
+        with open(readme_file, 'w') as readme_w:
+            readme_w.write(readme_content)
 
 
 def default_python_version() -> str:

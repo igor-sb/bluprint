@@ -1,12 +1,13 @@
 """Create a bluprint project."""
 
+import re
 from pathlib import Path
 
 import nbformat
 from importlib_resources import files
 
 from bluprint.binary import pdm_add, pdm_init, run
-from bluprint.create.errors import GitUsernameError, PythonVersionError
+from bluprint.create.errors import GitError, PythonVersionError
 
 
 def create_project(
@@ -67,21 +68,26 @@ def replace_git_account_name(
     project_dir: str | Path,
 ) -> None:
 
-    git_user = run(
-        ['git', 'config', '--global', 'user.name'],
-        GitUsernameError,
-    ).strip()
-
-    if git_user:
-        readme_file = Path(project_dir) / 'README.md'
-        with open(readme_file, 'r') as readme_r:
-            readme_content = readme_r.read()
-        readme_content = readme_content.replace(
-            '{{git_account_name}}',
-            git_user,
+    readme_file = Path(project_dir) / 'README.md'
+    with open(readme_file, 'r') as readme_r:
+        readme_content = readme_r.read()
+    try:  # noqa: WPS229
+        git_user = run(['git', 'config', '--global', 'user.name'], GitError)
+        if git_user:
+            readme_content = readme_content.replace(
+                '{{git_account_name}}',
+                git_user.strip(),
+            )
+    except GitError:
+        # If there's no git, remove entire installation section
+        readme_content = re.sub(
+            re.compile(r'## Installation.*?(\n## |\Z)', re.DOTALL),
+            '',
+            readme_content,
         )
-        with open(readme_file, 'w') as readme_w:
-            readme_w.write(readme_content)
+
+    with open(readme_file, 'w') as readme_w:
+        readme_w.write(readme_content)
 
 
 def default_python_version() -> str:

@@ -31,5 +31,5 @@ class RenvSnapshotError(StyledError):
     """Raises exception if renv::snapshot() fails."""
 
 
-class GitUsernameError(StyledError):
+class GitError(StyledError):
     """Raises exception if git config --global user.name errors out."""

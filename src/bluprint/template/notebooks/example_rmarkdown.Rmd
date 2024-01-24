@@ -13,10 +13,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 library(reticulate)
-use_python(here::here('.venv/bin/python'))
+use_python(here::here(".venv/bin/python"))
 
-bluprint_conf <- import('bluprint_conf')
+bluprint_conf <- import("bluprint_conf")
 data <- bluprint_conf$load_data_yaml()
 
 data
+```
+
+```{r}
+df <- read.table(data["example"], sep = ",", header = TRUE)
+df
 ```

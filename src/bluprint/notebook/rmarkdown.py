@@ -17,8 +17,8 @@ def run_rmarkdown_notebook(  # noqa: WPS210
     notebook_dir: str = 'notebooks',
 ) -> None:
     if not Path(notebook_file).is_absolute():
-        notebook_file = (
-            Path(absolute_package_path(notebook_dir)) / notebook_file    
+        notebook_file = str(
+            Path(absolute_package_path(notebook_dir)) / notebook_file,
         )
 
     progress_bar_re = re.compile(r'^[\s]*\|[\.\s]*\|[\s]*([0-9]+)%$')

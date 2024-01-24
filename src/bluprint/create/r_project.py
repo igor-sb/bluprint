@@ -3,7 +3,7 @@
 from pathlib import Path
 
 from bluprint.binary import rcmd, renv_init, renv_install
-from bluprint.create.errors import RpackageMissingError
+from bluprint.create.errors import RenvSnapshotError, RpackageMissingError
 from bluprint.template import copy_rproj_files
 
 
@@ -15,7 +15,8 @@ def initialize_r_project(
         parent_dir = '.'
     project_dir = Path(parent_dir) / project_name
     renv_init(project_dir)
-    renv_install(['reticulate', 'here'], project_dir)
+    renv_install(['reticulate', 'here', 'knitr', 'rmarkdown'], project_dir)
+    rcmd('renv::snapshot()', RenvSnapshotError, cwd=project_dir)
     copy_rproj_files(project_name, project_dir)
 
 

@@ -1,6 +1,6 @@
 """Bluprint workflow orchestrator."""
 
-from pathlib import Path, PosixPath
+from pathlib import Path
 
 from bluprint_conf import load_config_yaml
 from omegaconf import DictConfig, ListConfig
@@ -14,7 +14,7 @@ from bluprint.notebook.rmarkdown import run_rmarkdown_notebook
 def run_workflow(
     workflow_name: str,
     workflow_cfg: DictConfig | ListConfig,
-    notebook_dir: str | PosixPath = 'notebooks',
+    notebook_dir: str = 'notebooks',
 ) -> None:
     if workflow_name not in workflow_cfg:
         raise InvalidWorkflowError(f'{workflow_name} does not exist.')
@@ -50,13 +50,13 @@ def run_workflow(
 
 
 def run_workflows(
-    workflow_yaml: str | PosixPath = 'conf/workflows.yaml',
-    notebook_dir: str | PosixPath = 'notebooks',
+    workflow_yaml: str | Path = 'conf/workflows.yaml',
+    notebook_dir: str | Path = 'notebooks',
 ):
     workflow_cfg = load_config_yaml(workflow_yaml)
     styled_print('run all workflows')
     for workflow_name in workflow_cfg.keys():
-        run_workflow(str(workflow_name), workflow_cfg, notebook_dir)
+        run_workflow(str(workflow_name), workflow_cfg, str(notebook_dir))
 
 
 def add_graphic_prefixes(notebooks: list[str]) -> list[str]:

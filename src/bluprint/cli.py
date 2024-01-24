@@ -2,7 +2,7 @@
 
 import sys
 from os import getcwd
-from pathlib import Path, PosixPath
+from pathlib import Path
 
 import fire
 from bluprint_conf import load_config_yaml
@@ -29,6 +29,7 @@ class Bluprint(object):
         project_name: str,
         python_version: str | None = None,
         parent_dir: str | None = None,
+        template_dir: str | None = None,
         r_proj: bool = False,
     ) -> None:
         """Create a directory with a bluprint project.
@@ -50,17 +51,22 @@ class Bluprint(object):
         Args:
 
         project_name (str): Name of the project, also the name of the main
-        project directory.
+            project directory.
 
         python_version (str | None, optional): Python version to be used. If
-        not specified, uses the latest stable version from `pyenv install -l`.
+            not specified, uses the latest stable version from
+            `pyenv install -l`.
 
         parent_dir (str | None, optional): Parent directory to create a
-        PROJECT_NAME directory in. If not specific PARENT_DIR is a current
-        directory.
+            PROJECT_NAME directory in. If not specific PARENT_DIR is a current
+            directory.
+
+        template_dir (str | None, optional): Path to a directory with a
+            Bluprint or PDM template. If not specified (default), uses Bluprint
+            default built-in template.
 
         r_proj (bool, optional): Setup R library using renv to support package
-        isolation in RMarkdown notebooks.
+            isolation in RMarkdown notebooks.
 
         """
         styled_print(
@@ -71,7 +77,7 @@ class Bluprint(object):
             endline='',
         )
         self.check_project(project_name, parent_dir, r_proj)
-        create_project(project_name, python_version, parent_dir)
+        create_project(project_name, python_version, parent_dir, template_dir)
         if r_proj:
             initialize_r_project(project_name, parent_dir)
         styled_print('Ok', print_bluprint=False)
@@ -93,6 +99,7 @@ class Bluprint(object):
         project_name: str,
         python_version: str | None = None,
         project_dir: str | None = None,
+        template_dir: str | None = None,
         r_proj: bool = False,
     ) -> None:
         """Initialize a bluprint project in existing directory.
@@ -105,6 +112,9 @@ class Bluprint(object):
         project_dir (str | None, optional): Project directory where to
             initialize a new bluprint project. By default uses current working
             directory.
+        template_dir (str | None, optional): Path to a directory with a
+            Bluprint or PDM template. If not specified (default), uses Bluprint
+            default built-in template.
         r_proj (bool): Setup R library using renv to support package
             isolation in RMarkdown notebooks.
 
@@ -126,7 +136,12 @@ class Bluprint(object):
                 f'pyproject.toml already exists in {project_dir}: '
                 + 'cannot initialize new bluprint project',
             )
-        initialize_project(project_name, python_version, Path(project_dir))
+        initialize_project(
+            project_name,
+            python_version,
+            Path(project_dir),
+            template_dir,
+        )
         if r_proj:
             initialize_r_project(project_name)
         styled_print('Ok', print_bluprint=False)
@@ -134,8 +149,8 @@ class Bluprint(object):
     def workflow(
         self,
         workflow_name: str,
-        workflow_yaml: str | PosixPath = 'conf/workflows.yaml',
-        notebook_dir: str | PosixPath = 'notebooks',
+        workflow_yaml: str | Path = 'conf/workflows.yaml',
+        notebook_dir: str = 'notebooks',
     ) -> None:
         """Run a single workflow.
 

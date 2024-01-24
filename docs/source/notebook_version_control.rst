@@ -1,5 +1,9 @@
-Version control
-===============
+Notebook version control
+------------------------
 
-Bluprint uses Python package
-`nbstripout <https://github.com/kynan/nbstripout>`_ to automatically setup convenient version control for Jupyter notebooks.
+Python package `nbstripout <https://github.com/kynan/nbstripout>`_ can be used
+to automatically setup convenient version control for Jupyter notebooks:
+
+.. code-block:: bash
+
+  

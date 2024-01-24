@@ -18,12 +18,12 @@ from bluprint.notebook.progress import progress
 def run_jupyter_notebook(
     notebook_file: str,
     display_prefix: str,
-    notebook_dir: str = 'notebooks',    
+    notebook_dir: str = 'notebooks',
 ) -> None:
     os.environ['PYDEVD_DISABLE_FILE_VALIDATION'] = '1'
     if not Path(notebook_file).is_absolute():
-        notebook_file = (
-            Path(absolute_package_path(notebook_dir)) / notebook_file    
+        notebook_file = str(
+            Path(absolute_package_path(notebook_dir)) / notebook_file,
         )
 
     executor = ExecutorWithProgressBar()

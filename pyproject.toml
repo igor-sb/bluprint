@@ -57,6 +57,7 @@ line_length = 79
 
 [tool.flake8]
 max-module-members = 8
+max-arguments = 6
 ignore = [
 	'D101',  # D101 Missing docstring in public class
 	'D102',  # D102 Missing docstring in public method

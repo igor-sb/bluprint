@@ -1,0 +1,4 @@
+Bluprint: run workflow rmd_workflow
+rmd_workflow
+├─── rtest/test5.Rmd   0% ─ 0/100 cells ─├─── rtest/test5.Rmd   0% ─ 0/100 cells ─
+└─── rtest/test6.Rmd   0% ─ 0/100 cells ─└─── rtest/test6.Rmd   0% ─ 0/100 cells ─

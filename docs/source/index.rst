@@ -24,14 +24,12 @@ Site Map
    :maxdepth: 1
    :caption: Versioning
 
-   python_versions
-   r_versions
+   versions_python
+   versions_r
 
 .. toctree::
    :maxdepth: 1
    :caption: Production-grade projects
 
-   notebook_version_control
-   unit_testing
-   notebook_linting
-   packaging_projects
+   prod_notebooks
+   prod_projects

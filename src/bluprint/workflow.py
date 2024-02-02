@@ -28,25 +28,36 @@ def run_workflow(
         add_graphic_prefixes(workflow_notebooks),
     )
     for notebook_file, graphical_prefix in workflow_notebooks_with_prefixes:
-        match Path(notebook_file).suffix:
-            case '.ipynb':
-                run_jupyter_notebook(
-                    notebook_file=notebook_file,
-                    display_prefix=graphical_prefix,
-                    notebook_dir=notebook_dir,
-                )
-            case '.Rmd':
-                run_rmarkdown_notebook(
-                    notebook_file=notebook_file,
-                    display_prefix=graphical_prefix,
-                    notebook_dir=notebook_dir,
-                )
-            case '.qmd':
-                pass  # noqa: WPS420
-            case nb_extension:
-                raise InvalidNotebookTypeError(
-                    f'Invalid extension {nb_extension} in {notebook_file}',
-                )
+        run_notebook(notebook_file, notebook_dir, graphical_prefix)
+
+
+def run_notebook(
+    notebook_file: str | Path,
+    notebook_dir: str | Path | None = None,
+    graphical_prefix: str = '',
+) -> None:
+    if not notebook_dir:
+        notebook_dir = Path(notebook_file).parent
+        notebook_file = Path(notebook_file).name
+    match Path(notebook_file).suffix:
+        case '.ipynb':
+            run_jupyter_notebook(
+                notebook_file=notebook_file,
+                display_prefix=graphical_prefix,
+                notebook_dir=notebook_dir,
+            )
+        case '.Rmd':
+            run_rmarkdown_notebook(
+                notebook_file=notebook_file,
+                display_prefix=graphical_prefix,
+                notebook_dir=notebook_dir,
+            )
+        case '.qmd':
+            pass  # noqa: WPS420
+        case nb_extension:
+            raise InvalidNotebookTypeError(
+                f'Invalid extension {nb_extension} in {notebook_file}',
+            )
 
 
 def run_workflows(

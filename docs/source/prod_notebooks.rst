@@ -1,30 +1,28 @@
 Production-grade projects
 =========================
 
-There are a number of external tools that can be used to productionize your Jupyter notebooks. They can be run easily within bluprint projects.
+This page summarizes some of the external tools for productionizing Jupyter notebooks - and can be run easily within bluprint projects.
 
 Version control
 ---------------
 
-It may be convenient to the changes in metadata, for example cell timestamps and execution counts, as well as cell outputs in notebooks for the purposes of version control. Python package `nbstripout <https://github.com/kynan/nbstripout>`_ can be used to automatically do this for version controlling Jupyter notebooks using ``git``.
-
-To install `nbstripout` package in your project, run this one-time setup:
+We can omit certain metadata, such as cell timestamps and execution counts, or cell output in Jupyter notebooks for the purposes of version control using `nbstripout <https://github.com/kynan/nbstripout>`_. To install `nbstripout` package in your project, run this one-time setup:
 
 .. code-block:: bash
 
   pdm add nbstripout
 
-instead of running ``pip install``. Then setup this special Jupyter notebook version control with:
+and then install a git filter:
 
 .. code-block:: bash
 
   pdm run nbstripout --install
 
-For more details see nbstripout `instructions <https://github.com/kynan/nbstripout>`_. After this, you can commit notebooks as usual in your project.
+Adding the ``--keep-output`` argument to the last command will keep cell output under version control. For more details see nbstripout `instructions <https://github.com/kynan/nbstripout>`_. After this, you can commit notebooks as usual in your project.
 
 
-Writing quality code
---------------------
+Best coding practices
+---------------------
 
 Install `nbqa <https://nbqa.readthedocs.io/en/latest/>`_ with:
 
@@ -39,34 +37,36 @@ production-grade code in notebooks.
 Linting
 ^^^^^^^
 
-Flake8 is a linter, which is tool used to analyze and detect potential errors, bugs, and code style violations. To run flake8 on a ``notebooks/example_jupyter.ipynb`` notebook run:
+Flake8 is a linter, which is tool used to analyze and detect potential errors, bugs, and code style violations. To run flake8 on a ``notebooks/example_jupyter.ipynb`` notebook, run:
 
 .. code-block:: bash
 
   pdm run nbqa flake8 notebooks/example_jupyter.ipynb
 
 You can check the details of each of the violations on
-`wemake-python-styleguide <https://wemake-python-styleguide.readthedocs.io/en/latest/pages/usage/violations/best_practices.html>`_ by searching them in the search box on the left.
+`wemake-python-styleguide <https://wemake-python-styleguide.readthedocs.io/en/latest/pages/usage/violations/best_practices.html>`_ by using the search box on the left.
 
-There are few ways to setup exceptions for exceptions. For example, for violating WPS221 exception, we can make flake8 ignore it one-time with this special comment:
+There are few ways to ignore violations:
 
-.. code-block:: python
+1. Ignoring them in one specific line (for example for WPS221 violation), use:
 
-  <python code that violates WPS211>  # noqa: WPS221
+   .. code-block:: python
 
-Or add this to ``pyproject.toml`` in the root directory of your project:
+     <python code that violates WPS211>  # noqa: WPS221
 
-.. code-block:: toml
+2. Ignoring them across the entire file; to achieve this add the following to ``pyproject.toml``:
 
-  [tool.flake8]
-  per-file-ignores = ['notebooks/example_jupyter.ipynb: WPS211']
+   .. code-block:: toml
 
-Alternatively, we can ignore it for entire project by adding this to ``pyproject.toml``:
+     [tool.flake8]
+     per-file-ignores = ['notebooks/example_jupyter.ipynb: WPS211']
 
-.. code-block:: toml
+3. Ignoring them in the entire project; for this add this to ``pyproject.toml``:
 
-  [tool.flake8]
-  ignore = ['WPS211']
+   .. code-block:: toml
+
+     [tool.flake8]
+     ignore = ['WPS211']
 
 For more details check the `flake8 documentation <https://flake8.pycqa.org/en/latest/>`_.
 
@@ -89,8 +89,8 @@ Since notebooks tend to have a lot of functions, objects or modules imported, I 
 
 This will update your notebook in-place.
 
-QA on Python scripts
---------------------
+Python scripts
+^^^^^^^^^^^^^^
 
 You can run flake8, isort, etc. on Python scripts as well, just omit ``nbqa`` from commands above. For example, to run a flake8 linter:
 
@@ -98,3 +98,9 @@ You can run flake8, isort, etc. on Python scripts as well, just omit ``nbqa`` fr
 
   pdm run flake8 project_name/example.py
 
+Testing
+-------
+
+
+
+For more-than-basic workflows for Jupyter notebooks that come with bluprint, check `ploomber <https://docs.ploomber.io/en/latest/get-started/what-is.html>`. Ploomber can be used within bluprint projects.

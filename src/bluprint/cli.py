@@ -16,7 +16,7 @@ from bluprint.create.r_project import (
 )
 from bluprint.errors import ProjectExistsError
 from bluprint.index import index_dir_to_config_yaml
-from bluprint.workflow import run_workflow
+from bluprint.workflow import run_workflow, run_notebook
 
 sys.tracebacklimit = 0
 
@@ -76,23 +76,11 @@ class Bluprint(object):
             ),
             endline='',
         )
-        self.check_project(project_name, parent_dir, r_proj)
+        check_if_project_can_be_created(project_name, parent_dir, r_proj)
         create_project(project_name, python_version, parent_dir, template_dir)
         if r_proj:
             initialize_r_project(project_name, parent_dir)
         styled_print('Ok', print_bluprint=False)
-
-    def check_project(
-        self,
-        project_name: str,
-        parent_dir: str | None = None,
-        r_proj: bool = False,
-    ) -> None:
-        check_if_project_exists(project_name, parent_dir)
-        check_if_executable_is_installed('pdm')
-        if r_proj:
-            check_if_executable_is_installed('Rscript')
-            check_if_r_package_is_installed('renv')
 
     def init(
         self,
@@ -145,6 +133,18 @@ class Bluprint(object):
         if r_proj:
             initialize_r_project(project_name)
         styled_print('Ok', print_bluprint=False)
+
+    def notebook(
+        self,
+        notebook_file: str | Path,
+    ) -> None:
+        """Run a single Jupyter/Rmarkdown notebook.
+
+        Args:
+            notebook_file (str | Path): Notebook filename.
+        """
+        styled_print(f'run notebook {notebook_file}')
+        run_notebook(notebook_file)
 
     def workflow(
         self,
@@ -204,6 +204,18 @@ class Bluprint(object):
         """
         styled_print(f'index {input_dir}/** ❯ {output_yaml}')
         index_dir_to_config_yaml(input_dir, output_yaml, skip_dot_files)
+
+
+def check_if_project_can_be_created(
+    project_name: str,
+    parent_dir: str | None = None,
+    r_proj: bool = False,
+) -> None:
+    check_if_project_exists(project_name, parent_dir)
+    check_if_executable_is_installed('pdm')
+    if r_proj:
+        check_if_executable_is_installed('Rscript')
+        check_if_r_package_is_installed('renv')
 
 
 def check_if_project_exists(project_name: str, parent_dir: str | None) -> None:

@@ -7,7 +7,7 @@ from tqdm import tqdm
 from bluprint.colors import Style
 
 
-def tqdm_format() -> str:
+def tqdm_format_with_total() -> str:
     sep = f'{Style.cyan}─{Style.end}'
     return (
         '{desc} {percentage:3.0f}% '
@@ -16,5 +16,13 @@ def tqdm_format() -> str:
     )
 
 
+def tqdm_format_without_total() -> str:
+    sep = f'{Style.cyan}─{Style.end}'
+    return (
+        '{desc} {percentage:3.0f}% '
+        + sep + ' Elapsed: {elapsed}'
+    )
+
+
 def progress(iterable: Iterable, name: str) -> Iterable:
-    return tqdm(iterable, desc=name, bar_format=tqdm_format())
+    return tqdm(iterable, desc=name, bar_format=tqdm_format_with_total())

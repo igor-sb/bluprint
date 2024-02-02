@@ -36,9 +36,6 @@ def run_notebook(
     notebook_dir: str | Path | None = None,
     graphical_prefix: str = '',
 ) -> None:
-    if not notebook_dir:
-        notebook_dir = Path(notebook_file).parent
-        notebook_file = Path(notebook_file).name
     match Path(notebook_file).suffix:
         case '.ipynb':
             run_jupyter_notebook(

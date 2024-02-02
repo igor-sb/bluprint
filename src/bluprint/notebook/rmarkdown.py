@@ -8,25 +8,26 @@ from pathlib import Path
 from bluprint_conf import absolute_package_path
 from tqdm import tqdm
 
-from bluprint.notebook.progress import tqdm_format
+from bluprint.notebook.progress import tqdm_format_without_total
 
 
 def run_rmarkdown_notebook(  # noqa: WPS210
     notebook_file: str,
     display_prefix: str,
-    notebook_dir: str = 'notebooks',
+    notebook_dir: str | None = 'notebooks',
 ) -> None:
-    if not Path(notebook_file).is_absolute():
+    if not Path(notebook_file).is_absolute() and notebook_dir is not None:
         notebook_file = str(
             Path(absolute_package_path(notebook_dir)) / notebook_file,
         )
 
-    progress_bar_re = re.compile(r'^[\s]*\|[\.\s]*\|[\s]*([0-9]+)%$')
+    progress_bar_pct = re.compile(r'^[\s]*\|[\.]*[\s]*\|[\s]*([0-9]+)%.*$')
+    progress_bar_frac = re.compile(r'^([0-9]+)/([0-9]+)\s.*$')
     with (
         tqdm(
             total=100,
             desc=display_prefix,
-            bar_format=tqdm_format(),
+            bar_format=tqdm_format_without_total(),
         ) as tqdm_progress
     ):
         rmd_out = subprocess.Popen(
@@ -38,9 +39,14 @@ def run_rmarkdown_notebook(  # noqa: WPS210
         )
         last_percent = 0
         for line in rmd_out.stdout:  # type: ignore
-            if progress_bar_re.match(line):
-                current_percent = int(progress_bar_re.sub(r'\1', line))
-                tqdm_progress.update(current_percent - last_percent)
-                sys.stdout.flush()
-                last_percent = current_percent
+            if progress_bar_pct.match(line):
+                current_percent = int(progress_bar_pct.sub(r'\1', line))
+            elif progress_bar_frac.match(line):
+                current_cell = int(progress_bar_frac.sub(r'\1', line))
+                total_cells = int(progress_bar_frac.sub(r'\2', line))
+                current_percent = 100 * current_cell // total_cells
+            tqdm_progress.update(current_percent - last_percent)
+            sys.stdout.flush()
+            last_percent = current_percent
+                
         rmd_out.stdout.close()  # type: ignore

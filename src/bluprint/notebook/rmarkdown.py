@@ -12,9 +12,9 @@ from bluprint.notebook.progress import tqdm_format_without_total
 
 
 def run_rmarkdown_notebook(  # noqa: WPS210
-    notebook_file: str,
+    notebook_file: str | Path,
     display_prefix: str,
-    notebook_dir: str | None = 'notebooks',
+    notebook_dir: str | Path | None = 'notebooks',
 ) -> None:
     if not Path(notebook_file).is_absolute() and notebook_dir is not None:
         notebook_file = str(
@@ -48,5 +48,5 @@ def run_rmarkdown_notebook(  # noqa: WPS210
             tqdm_progress.update(current_percent - last_percent)
             sys.stdout.flush()
             last_percent = current_percent
-                
+
         rmd_out.stdout.close()  # type: ignore

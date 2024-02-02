@@ -16,9 +16,9 @@ from bluprint.notebook.progress import progress
 
 
 def run_jupyter_notebook(
-    notebook_file: str,
+    notebook_file: str | Path,
     display_prefix: str,
-    notebook_dir: str | None = 'notebooks',
+    notebook_dir: str | Path | None = 'notebooks',
 ) -> None:
     os.environ['PYDEVD_DISABLE_FILE_VALIDATION'] = '1'
     if not Path(notebook_file).is_absolute() and notebook_dir is not None:

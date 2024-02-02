@@ -16,7 +16,7 @@ from bluprint.create.r_project import (
 )
 from bluprint.errors import ProjectExistsError
 from bluprint.index import index_dir_to_config_yaml
-from bluprint.workflow import run_workflow, run_notebook
+from bluprint.workflow import run_notebook, run_workflow
 
 sys.tracebacklimit = 0
 

@@ -1,7 +1,7 @@
 Managing R versions
 ===================
 
-Posit created a tool called `rig <https://github.com/r-lib/rig>`_ that is used to manage various versions of R (not its packages).
+R versions can be managed using a CLI tool `rig <https://github.com/r-lib/rig>`_ created by Posit.
 
 .. note::
 

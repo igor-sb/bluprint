@@ -77,6 +77,8 @@ Once loaded with ``load_data_yaml()`` from ``bluprint_conf``, these relative pat
   internal_binary: /absolute/path/to/local_binary
   report: s3://path/to/final_report.ipynb 
 
+.. _config-workflows:
+
 workflow.yaml
 -------------
 

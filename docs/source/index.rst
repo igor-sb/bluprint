@@ -2,7 +2,7 @@
 
 .. include:: ../../README.rst
 	:start-line: 2
-	:end-line: 98
+	:end-line: 120
 
 Site Map
 --------
@@ -29,7 +29,7 @@ Site Map
 
 .. toctree::
    :maxdepth: 1
-   :caption: Production-grade projects
+   :caption: Production
 
    prod_notebooks
    prod_projects

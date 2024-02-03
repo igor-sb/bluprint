@@ -3,7 +3,7 @@
 Bluprint
 ========
 
-**Bluprint** is a command line utility for streamlined exploratory data science projects. Bluprint projects allow Jupyter and RMarkdown notebooks seamless access to configuration, data and shared code across directories in this type of project structure::
+**Bluprint** is a command line utility for streamlined exploratory data science projects. Bluprint projects allow Jupyter and RMarkdown notebooks seamless access to configuration, data and shared code, using best coding practices, in this type of project structure::
 
     my_project
     ├── conf
@@ -15,21 +15,26 @@ Bluprint
     ├── notebooks
     │   └── process.ipynb
     └── my_project
-        └── common_code.py
+        └── shared_code.py
 
-Bluprint integrates `PDM <https://pdm-project.org/latest/>`_, `OmegaConf <https://omegaconf.readthedocs.io/>`_, Python's native import system and R packages `renv <https://rstudio.github.io/renv/>`_, `here <https://here.r-lib.org/>`_ and `reticulate <https://rstudio.github.io/reticulate/>`_ to allow the use of best coding practices in both Python and R notebooks:
+Features
+--------
 
-* File paths are accessible through variables in Python/R/Jupyter/RMarkdown.
+* Separation of configuration (*conf/*), data (*data/*), shared code (Python or R scripts) from notebooks.
 
-* Configuration (*conf/*), data (*data/*) and shared code separated from notebooks.
+* Mixing of any or all Python/R scripts and Jupyter/RMarkdown notebooks within the project.
 
-* Exploratory projects can be easily shared; for example see `demo project <https://github.com/igor-sb/bluprint-demo/>`_.
+* Consistent access to configuration and data, e.g. ``data.emailed.messy`` (Python) or ``data$emailed$messy`` (R) resolves absolute path to *messy.xlsx* anywhere inside the project.
 
-* Mix and match any Python/R/Jupyter/RMarkdown scripts/notebooks.
+* Consistent access to project modules, e.g. ``from my_project import shared_code`` (Python) or ``shared_code <- import("myproject.shared_code")`` (R) imports *my_project/shared_code.py* in a notebook in any location within the project.
 
-* Better reproducibility by version-locking Python and R dependencies.
+* Simple project sharing: copy the project directory and run ``pdm install``.
 
-* Notebook workflows help catch potential errors when all cells are run in order.
+* Python and R dependencies are version locked to ensure reproducibility.
+
+* Support for external tools enabling production-grade notebooks (linting, testing, CI/CD, workflows).
+
+* Bluprint projects are also Python packages, so shared code can be installed elsewhere simply as ``pip install /path/to/my_project``.
 
 
 Usage
@@ -48,8 +53,9 @@ Then retrieve the automatically parsed full paths, for example in *process.ipynb
 
 .. code:: python
 
+    # bluprint_conf is a helper package for loading configs 
     from bluprint_conf import load_data_yaml
-    from my_project.common_code import process_data
+    from my_project.shared_code import process_data
     import pandas as pd
 
     data = load_data_yaml() # default arg: conf/data.yaml
@@ -87,8 +93,18 @@ Install `pipx <https://github.com/pypa/pipx>`_ and `PDM <https://pdm-project.org
 References
 ----------
 
-Bluprint is heavily inspired by:
+Bluprint integrates:
 
+* `PDM <https://pdm-project.org/latest/>`_
+* `OmegaConf <https://omegaconf.readthedocs.io/>`_
+* Python's native import system
+* R package `renv <https://rstudio.github.io/renv/>`_
+* R package `here <https://here.r-lib.org/>`_ 
+* R package `reticulate <https://rstudio.github.io/reticulate/>`_
+
+Bluprint is heavily inspired by these resources:
+
+* Author's own frustration of dealing with malfunctioning notebooks for over a decade.
 * `Cookiecutter Data Science <https://drivendata.github.io/cookiecutter-data-science/>`_
 * `RStudio Projects <https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects>`_
 * `Ploomber <https://github.com/ploomber/ploomber>`_

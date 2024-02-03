@@ -1,5 +1,5 @@
-Production-grade projects
-=========================
+Production-grade notebooks
+==========================
 
 This page summarizes some of the external tools for productionizing Jupyter notebooks - and can be run easily within bluprint projects.
 
@@ -72,11 +72,7 @@ For more details check the `flake8 documentation <https://flake8.pycqa.org/en/la
 
 .. note::
 
-  Flake8 imposes a very strict set of rules that most authors do not follow to
-  the letter - keeop this in mind especially with notebooks. However, I would
-  still highly encouring using it as a tool to teach you write better code
-  and preventing the need to rewrite the notebook code in separate Python
-  scripts / packages.
+  Flake8 imposes a very strict set of rules that most authors do not follow to the letter - keep this in mind - more over with notebooks. However, it is still a valuable tool that can be used to write better code and preventing the need to rewrite the notebook code in separate Python scripts / packages.
 
 Sorting imports
 ^^^^^^^^^^^^^^^
@@ -101,6 +97,18 @@ You can run flake8, isort, etc. on Python scripts as well, just omit ``nbqa`` fr
 Testing
 -------
 
+Notebooks can be tested by ensuring all cells execute without an error, when ran in the order in which they appear. For this purpose, ``bluprint notebook`` can be used to run a notebook:
 
+.. code-block:: bash
 
-For more-than-basic workflows for Jupyter notebooks that come with bluprint, check `ploomber <https://docs.ploomber.io/en/latest/get-started/what-is.html>`. Ploomber can be used within bluprint projects.
+  bluprint notebook notebooks/example_jupyternb.ipynb
+
+Notebook workflows can be tested by specifying yaml workflow file, e.g. ``workflow.yaml``, naming a workflow (e.g. ``example_workflow``) then running:
+
+.. code-block:: bash
+
+  blurpint workflow example_workflow \
+    --workflow_yaml=example_workflow \
+    --notebook_dir=notebooks
+
+For Jupyter notebook workflows with more features, check `ploomber <https://docs.ploomber.io/en/latest/get-started/what-is.html>`_.

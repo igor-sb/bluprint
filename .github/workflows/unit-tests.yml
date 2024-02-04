@@ -32,7 +32,7 @@ jobs:
 
       - name: Debug unit tests
         run: |
-          Rscript -e 'rmarkdown::render("/home/runner/work/bluprint/tests/workflow/fixtures/rtest/test5.Rmd")'
+          Rscript -e 'rmarkdown::render("/home/runner/work/bluprint/bluprint/tests/workflow/fixtures/rtest/test5.Rmd")'
 
       - name: Run unit tests
         run: |

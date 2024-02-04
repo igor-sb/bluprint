@@ -4,7 +4,6 @@ import os
 from pathlib import Path
 from typing import Any
 
-from bluprint_conf import absolute_package_path
 from jupyter_client.manager import KernelManager
 from nbclient import NotebookClient
 from nbconvert import NotebookExporter
@@ -18,13 +17,8 @@ from bluprint.notebook.progress import progress
 def run_jupyter_notebook(
     notebook_file: str | Path,
     display_prefix: str,
-    notebook_dir: str | Path | None = 'notebooks',
 ) -> None:
     os.environ['PYDEVD_DISABLE_FILE_VALIDATION'] = '1'
-    if not Path(notebook_file).is_absolute() and notebook_dir is not None:
-        notebook_file = str(
-            Path(absolute_package_path(notebook_dir)) / notebook_file,
-        )
 
     executor = ExecutorWithProgressBar()
     notebook_results = executor.run_all_cells(

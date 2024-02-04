@@ -5,7 +5,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-from bluprint_conf import absolute_package_path
 from tqdm import tqdm
 
 from bluprint.notebook.progress import tqdm_format_without_total
@@ -16,11 +15,6 @@ def run_rmarkdown_notebook(  # noqa: WPS210
     display_prefix: str,
     notebook_dir: str | Path | None = 'notebooks',
 ) -> None:
-    if not Path(notebook_file).is_absolute() and notebook_dir is not None:
-        notebook_file = str(
-            Path(absolute_package_path(notebook_dir)) / notebook_file,
-        )
-
     progress_bar_pct = re.compile(r'^[\s]*\|[\.]*[\s]*\|[\s]*([0-9]+)%.*$')
     progress_bar_frac = re.compile(r'^([0-9]+)/([0-9]+)\s.*$')
     with (

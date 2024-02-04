@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from bluprint_conf import load_config_yaml
+from bluprint_conf import absolute_package_path, load_config_yaml
 from omegaconf import DictConfig, ListConfig
 
 from bluprint.colors import style_notebook, style_workflow, styled_print
@@ -33,21 +33,27 @@ def run_workflow(
 
 def run_notebook(
     notebook_file: str | Path,
-    notebook_dir: str | Path | None = None,
+    notebook_dir: str = 'notebooks',
     graphical_prefix: str = '',
 ) -> None:
+    if not Path(notebook_file).is_absolute() and notebook_dir is not None:
+        if Path(notebook_dir).is_absolute():
+            notebook_file = Path(notebook_dir) / notebook_file
+        else:
+            notebook_file = str(
+                Path(absolute_package_path(notebook_dir)) / notebook_file,
+            )
+
     match Path(notebook_file).suffix:
         case '.ipynb':
             run_jupyter_notebook(
                 notebook_file=notebook_file,
                 display_prefix=graphical_prefix,
-                notebook_dir=notebook_dir,
             )
         case '.Rmd':
             run_rmarkdown_notebook(
                 notebook_file=notebook_file,
                 display_prefix=graphical_prefix,
-                notebook_dir=notebook_dir,
             )
         case '.qmd':
             pass  # noqa: WPS420

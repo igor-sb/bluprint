@@ -6,5 +6,5 @@ output: html_document
 ---
 
 ```{r}
-print('Hello from test4!')
+print('Hello from test6!')
 ```

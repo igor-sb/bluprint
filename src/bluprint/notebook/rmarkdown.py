@@ -40,7 +40,7 @@ def run_rmarkdown_notebook(  # noqa: WPS210
                 total_cells = int(progress_bar_frac.sub(r'\2', line))
                 current_percent = 100 * current_cell // total_cells
             else: # debug
-                print(line)
+                sys.stderr.write(line)
             tqdm_progress.update(current_percent - last_percent)
             sys.stdout.flush()
             last_percent = current_percent

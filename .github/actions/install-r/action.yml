@@ -14,5 +14,5 @@ runs:
 
     - name: Install R packages
       run: |
-        Rscript -e 'install.packages(c("renv", "yaml", "reticulate"), repos="https://packagemanager.posit.co/cran/__linux__/focal/2023-12-01")'
+        Rscript -e 'install.packages(c("rmarkdown", "renv", "yaml", "reticulate"), repos="https://packagemanager.posit.co/cran/__linux__/focal/2023-12-01")'
       shell: bash

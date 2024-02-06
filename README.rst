@@ -17,6 +17,7 @@ Bluprint
     └── my_project
         └── shared_code.py
 
+
 Features
 --------
 
@@ -76,6 +77,12 @@ Then retrieve the automatically parsed full paths, for example in *process.ipynb
     processed_df.to_csv(data.user.processed)
 
 For a working demonstration of a shareable project https://github.com/igor-sb/bluprint-demo/.
+
+Documentation
+-------------
+
+Full documentation available at: https://igor-sb.github.io/bluprint/.
+
 
 Installation
 ------------

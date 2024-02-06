@@ -20,21 +20,21 @@ Bluprint
 Features
 --------
 
-* Separation of configuration (*conf/*), data (*data/*), shared code (Python or R scripts) from notebooks.
+* Configuration, data and shared code (Python/R scripts) separated from notebooks.
 
-* Mixing of any or all Python/R scripts and Jupyter/RMarkdown notebooks within the project.
+* Mixing of any or all Python/R scripts and Jupyter/RMarkdown notebooks.
 
-* Consistent access to configuration and data, e.g. ``data.emailed.messy`` (Python) or ``data$emailed$messy`` (R) resolves absolute path to *messy.xlsx* anywhere inside the project.
+* Consistent access to configuration and data, e.g. ``data.emailed.messy`` (Python) automatically resolves to */path/to/my_project/data/emailed/messy.xlsx*.
 
-* Consistent access to project modules, e.g. ``from my_project import shared_code`` (Python) or ``shared_code <- import("myproject.shared_code")`` (R) imports *my_project/shared_code.py* in a notebook in any location within the project.
+* Consistent access to project modules, e.g. ``from my_project import shared_code`` in any notebook in any sub-directory.
 
-* Simple project sharing: copy the project directory and run ``pdm install``.
+* Share project easily; just copy the project directory and run ``pdm install``.
 
-* Python and R dependencies are version locked to ensure reproducibility.
+* Reproducibility: Python and R dependencies are version locked.
 
-* Support for external tools enabling production-grade notebooks (linting, testing, CI/CD, workflows).
+* Works with tools for notebook linting, testing, CI/CD and workflows.
 
-* Bluprint projects are also Python packages, so shared code can be installed elsewhere simply as ``pip install /path/to/my_project``.
+* Bluprint projects are Python packages; use ``pip install /path/to/my_project`` to reuse shared code across projects.
 
 
 Usage

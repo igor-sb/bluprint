@@ -1,13 +1,13 @@
 Sharing projects
 ================
 
-Bluprint projects can be shared and reused directly out-of-the-box. You can push or pull bluprint projects from Github or even just copy and paste them into a directory of your choice. To run notebooks and code from a bluprint project, you only need `PDM <https://pdm-project.org/latest/>`_ 
+Bluprint projects can be shared and reused directly out-of-the-box. Simply copy the project folder (or pull from Github) and run ``pdm install``. The only pre-requisite is having `PDM <https://pdm-project.org/latest/>`_ installed.
 
 .. note:
 
   Existing bluprint projects can be run without ``bluprint``. 
 
-For example, you can download and test the demo project:
+For example, to download and test the demo project:
 
 .. code-block:: bash
 
@@ -17,4 +17,10 @@ For example, you can download and test the demo project:
 
 This will clone the demo project, install all necessary dependencies and setup the Python/R environments to be identical to the ones from a creator of the project.
 
-Bluprint can be used to package and store your projects on Github, so that code outside of notebooks can be reused by other people. Projects can be shared by pushing them to Github or simply copying the 
+Bluprint can be used to package and store your projects on Github, so that Python code outside of notebooks can be reused by other people. For example, if you want to reuse a Python code from a project ``my_project``, which lives in */path/to/my_project* in a new project */path/to/new_project*, run this from */path/to/new_project*:
+
+.. code-block:: bash
+
+	pdm add /path/to/my_project
+	# or if you prefer pip / manage virtual env. yourself:
+	pip install /path/to/my_project

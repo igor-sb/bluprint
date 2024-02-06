@@ -18,7 +18,18 @@ and then install a git filter:
 
   pdm run nbstripout --install
 
-Adding the ``--keep-output`` argument to the last command will keep cell output under version control. For more details see nbstripout `instructions <https://github.com/kynan/nbstripout>`_. After this, you can commit notebooks as usual in your project.
+To keep cell output under version control, add ``--keep-output`` argument to *.git/config*:
+
+.. code-block:: bash
+
+  ...
+  [filter "nbstripout"]
+    clean = \"/path/to/project/.venv/bin/python\" -m nbstripout --keep-output
+    smudge = cat
+  [diff "ipynb"]
+    textconv = \"/path/to/project/.venv/bin/python\" -m nbstripout --keep-output -t
+
+For more details see nbstripout `instructions <https://github.com/kynan/nbstripout>`_. 
 
 
 Best coding practices

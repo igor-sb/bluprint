@@ -2,7 +2,7 @@
 
 import sys
 from os import getcwd
-from pathlib import Path, PosixPath
+from pathlib import Path
 
 import fire
 from bluprint_conf import load_config_yaml
@@ -16,7 +16,7 @@ from bluprint.create.r_project import (
 )
 from bluprint.errors import ProjectExistsError
 from bluprint.index import index_dir_to_config_yaml
-from bluprint.workflow import run_workflow
+from bluprint.workflow import run_notebook, run_workflow
 
 sys.tracebacklimit = 0
 
@@ -29,6 +29,7 @@ class Bluprint(object):
         project_name: str,
         python_version: str | None = None,
         parent_dir: str | None = None,
+        template_dir: str | None = None,
         r_proj: bool = False,
     ) -> None:
         """Create a directory with a bluprint project.
@@ -50,17 +51,22 @@ class Bluprint(object):
         Args:
 
         project_name (str): Name of the project, also the name of the main
-        project directory.
+            project directory.
 
         python_version (str | None, optional): Python version to be used. If
-        not specified, uses the latest stable version from `pyenv install -l`.
+            not specified, uses the latest stable version from
+            `pyenv install -l`.
 
         parent_dir (str | None, optional): Parent directory to create a
-        PROJECT_NAME directory in. If not specific PARENT_DIR is a current
-        directory.
+            PROJECT_NAME directory in. If not specific PARENT_DIR is a current
+            directory.
+
+        template_dir (str | None, optional): Path to a directory with a
+            Bluprint or PDM template. If not specified (default), uses Bluprint
+            default built-in template.
 
         r_proj (bool, optional): Setup R library using renv to support package
-        isolation in RMarkdown notebooks.
+            isolation in RMarkdown notebooks.
 
         """
         styled_print(
@@ -70,29 +76,18 @@ class Bluprint(object):
             ),
             endline='',
         )
-        self.check_project(project_name, parent_dir, r_proj)
-        create_project(project_name, python_version, parent_dir)
+        check_if_project_can_be_created(project_name, parent_dir, r_proj)
+        create_project(project_name, python_version, parent_dir, template_dir)
         if r_proj:
             initialize_r_project(project_name, parent_dir)
         styled_print('Ok', print_bluprint=False)
-
-    def check_project(
-        self,
-        project_name: str,
-        parent_dir: str | None = None,
-        r_proj: bool = False,
-    ) -> None:
-        check_if_project_exists(project_name, parent_dir)
-        check_if_executable_is_installed('pdm')
-        if r_proj:
-            check_if_executable_is_installed('Rscript')
-            check_if_r_package_is_installed('renv')
 
     def init(
         self,
         project_name: str,
         python_version: str | None = None,
         project_dir: str | None = None,
+        template_dir: str | None = None,
         r_proj: bool = False,
     ) -> None:
         """Initialize a bluprint project in existing directory.
@@ -101,11 +96,13 @@ class Bluprint(object):
 
         project_name (str): Name of the project.
         python_version (str | None, optional): Python version to be used.
-            If not specified, uses the latest stable version from
-            `pyenv install -l`.
+            If not specified, uses `python --version`.
         project_dir (str | None, optional): Project directory where to
             initialize a new bluprint project. By default uses current working
             directory.
+        template_dir (str | None, optional): Path to a directory with a
+            Bluprint or PDM template. If not specified (default), uses Bluprint
+            default built-in template.
         r_proj (bool): Setup R library using renv to support package
             isolation in RMarkdown notebooks.
 
@@ -127,16 +124,33 @@ class Bluprint(object):
                 f'pyproject.toml already exists in {project_dir}: '
                 + 'cannot initialize new bluprint project',
             )
-        initialize_project(project_name, python_version, Path(project_dir))
+        initialize_project(
+            project_name,
+            python_version,
+            Path(project_dir),
+            template_dir,
+        )
         if r_proj:
             initialize_r_project(project_name)
         styled_print('Ok', print_bluprint=False)
 
+    def notebook(
+        self,
+        notebook_file: str | Path,
+    ) -> None:
+        """Run a single Jupyter/Rmarkdown notebook.
+
+        Args:
+            notebook_file (str | Path): Notebook filename.
+        """
+        styled_print(f'run notebook {notebook_file}')
+        run_notebook(notebook_file)
+
     def workflow(
         self,
         workflow_name: str,
-        workflow_yaml: str | PosixPath = 'conf/workflows.yaml',
-        notebook_dir: str | PosixPath = 'notebooks',
+        workflow_yaml: str | Path = 'conf/workflows.yaml',
+        notebook_dir: str = 'notebooks',
     ) -> None:
         """Run a single workflow.
 
@@ -171,16 +185,37 @@ class Bluprint(object):
             notebook_dir=notebook_dir,
         )
 
-    def index(self, input_dir: str, output_yaml: str) -> None:
+    def index(
+        self,
+        input_dir: str,
+        output_yaml: str,
+        skip_dot_files: bool = True,
+    ) -> None:
         """Index all directory files to yaml config.
 
         Recursively iterates over all files in INPUT_DIR and creates a
         reasonable yaml config in OUTPUT_YAML. This command helps
         convert an existing data directory into a bluprint project.
 
+        Args:
+            input_dir (str): Directory to index.
+            output_yaml (str): Output yaml filepath.
+            skip_dot_files (bool, optional): Skip files starting with a dot.
         """
         styled_print(f'index {input_dir}/** ❯ {output_yaml}')
-        index_dir_to_config_yaml(input_dir, output_yaml)
+        index_dir_to_config_yaml(input_dir, output_yaml, skip_dot_files)
+
+
+def check_if_project_can_be_created(
+    project_name: str,
+    parent_dir: str | None = None,
+    r_proj: bool = False,
+) -> None:
+    check_if_project_exists(project_name, parent_dir)
+    check_if_executable_is_installed('pdm')
+    if r_proj:
+        check_if_executable_is_installed('Rscript')
+        check_if_r_package_is_installed('renv')
 
 
 def check_if_project_exists(project_name: str, parent_dir: str | None) -> None:

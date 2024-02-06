@@ -15,3 +15,8 @@ def reference_test_log_file():
 @pytest.fixture()
 def reference_xtest_log_file():
     return str(snapshot_path / 'xtest.log')
+
+
+@pytest.fixture()
+def reference_rtest_log_file():
+    return str(snapshot_path / 'rtest.log')

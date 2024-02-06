@@ -1,0 +1,10 @@
+---
+title: "unit_test_rmd"
+author: "Igor Segota"
+date: "2023-11-26"
+output: html_document
+---
+
+```{r}
+print('Hello from test6!')
+```

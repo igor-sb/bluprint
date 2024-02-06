@@ -25,6 +25,8 @@ def test_create_py_project(find_files_in_dir, tmp_path):
         Path('pdm.lock'),
     ])
     template_files.remove(Path('placeholder_name.Rproj'))  # Python-only test
+    template_files.remove(Path('notebooks/example_rmarkdown.Rmd'))
+
     venv_dir = project_dir / '.venv'
     assert project_files == template_files
     assert (venv_dir / 'bin').exists()

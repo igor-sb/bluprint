@@ -8,11 +8,11 @@ class PythonVersionError(StyledError):
 
 
 class PdmAddError(StyledError):
-    """Raises exception if poetry add fails."""
+    """Raises exception if PDM add fails."""
 
 
 class PdmInitError(StyledError):
-    """Raises exception if poetry init fails."""
+    """Raises exception if PDM init fails."""
 
 
 class RpackageMissingError(StyledError):
@@ -25,3 +25,11 @@ class RenvInitError(StyledError):
 
 class RenvInstallError(StyledError):
     """Raises exception if renv::install() fails."""
+
+
+class RenvSnapshotError(StyledError):
+    """Raises exception if renv::snapshot() fails."""
+
+
+class GitError(StyledError):
+    """Raises exception if git config --global user.name errors out."""

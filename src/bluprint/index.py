@@ -49,8 +49,9 @@ def _create_config_from_indexed_files(  # noqa: WPS210
 def index_dir_to_config_yaml(
     input_dir: str | PosixPath,
     output_yaml: str | PosixPath,
+    skip_dot_files: bool = True,
 ) -> int:
-    indexed_files = _index_files_in_dir(input_dir)
+    indexed_files = _index_files_in_dir(input_dir, skip_dot_files)
     OmegaConf.save(
         _create_config_from_indexed_files(indexed_files),
         output_yaml,

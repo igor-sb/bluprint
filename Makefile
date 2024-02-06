@@ -3,7 +3,7 @@ FOLDERS= src
 PROJ= src
 NC=\033[0m # No Color
 
-.PHONY: install autolint lint lint-flake8 shell precommit poetry-precommit \
+.PHONY: install autolint lint lint-flake8 shell precommit pdm-precommit \
 		install-dev test report-coverage docs lint-mypy build
 
 test:
@@ -36,9 +36,9 @@ lint-mypy:
 		@echo "\n${BLUE}Running mypy...${NC}\n"
 		${PDM_RUN} mypy --show-error-codes ${PROJ}
 
-precommit: poetry-precommit lint
+precommit: pdm-precommit lint
 
-poetry-precommit:
+pdm-precommit:
 		${PDM_RUN} pre-commit run --all-files
 
 report-coverage:
@@ -48,7 +48,7 @@ report-coverage:
 
 docs:
 	@echo "\n${BLUE}Preparing Sphinx documentation...${NC}\n"
-	@cd docs; make html; make prepare-gh-pages
+	@cd docs; rm -rf build; make html; make prepare-gh-pages
 
 clean-docs:
 	@cd docs; rm -rf build; rm -rf html

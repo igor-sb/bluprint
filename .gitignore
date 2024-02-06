@@ -4,9 +4,10 @@ src/bluprint/template/notebooks/example_rmarkdown_files
 src/bluprint/template/notebooks/example_rmarkdown.html
 src/bluprint/template/notebooks/example_quarto_files
 src/bluprint/detemplatemo/notebooks/example_quarto.html
+tests/workflow/fixtures/rtest/*.html
 
 # MacOS
-**/.DS_Store
+.DS_Store
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -68,7 +69,7 @@ cover/
 *.pot
 
 # Django stuff:
-*.log
+# *.log
 local_settings.py
 db.sqlite3
 db.sqlite3-journal

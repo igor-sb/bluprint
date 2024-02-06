@@ -1,10 +1,9 @@
-"""Jupyter's notebook executor but with a tqdm progress bar."""
+"""Jupyter's notebook executor with a tqdm progress bar."""
 
 import os
 from pathlib import Path
 from typing import Any
 
-from bluprint_conf import absolute_package_path
 from jupyter_client.manager import KernelManager
 from nbclient import NotebookClient
 from nbconvert import NotebookExporter
@@ -16,21 +15,19 @@ from bluprint.notebook.progress import progress
 
 
 def run_jupyter_notebook(
-    notebook_file: str,
+    notebook_file: str | Path,
     display_prefix: str,
-    notebook_dir: str = 'notebooks',
-    timeout: int = -1,
 ) -> None:
     os.environ['PYDEVD_DISABLE_FILE_VALIDATION'] = '1'
-    project_path = absolute_package_path(notebook_dir)
-    executor = ExecutorWithProgressBar(timeout=timeout)
+
+    executor = ExecutorWithProgressBar()
     notebook_results = executor.run_all_cells(
-        Path(project_path) / notebook_file,
+        notebook_file,
         display_prefix,
         {'metadata': {'path': '.'}},
     )
     exporter = NotebookExporter()
-    with open(Path(project_path) / notebook_file, 'w') as notebook:
+    with open(notebook_file, 'w') as notebook:
         notebook.write(exporter.from_notebook_node(notebook_results[0])[0])
 
 

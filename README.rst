@@ -66,13 +66,13 @@ allows you access them in a Python script or Jupyter notebook anywhere within th
 Features
 --------
 
-- Use configs to write portable notebooks using `load_data_yaml() <https://igor-sb.github.io/bluprint-conf/html/reference.html#bluprint_conf.data.load_data_yaml>`_ and `load_config_yaml() <https://igor-sb.github.io/bluprint-conf/html/reference.html#bluprint_conf.config.load_config_yaml>`_
+- Write portable notebooks by loading configs with `load_data_yaml() <https://igor-sb.github.io/bluprint-conf/html/reference.html#bluprint_conf.data.load_data_yaml>`_ and `load_config_yaml() <https://igor-sb.github.io/bluprint-conf/html/reference.html#bluprint_conf.config.load_config_yaml>`_
 - R/Python packages automatically version-locked using `renv <https://rstudio.github.io/renv/>`_ and `PDM <https://pdm-project.org/latest/>`_
-- Import shared code as Python modules, e.g. ``from myproject import shared_code``
-- Install shared code across projects with ``pip install /path/to/my_project`` then ``import my_project``
-- Use both Python and R notebooks in a single project (`Python/R projects </https://igor-sb.github.io/bluprint/getting_started.html#python-r-projects>`_)
-- Share projects by publishing online (e.g. Github) or simply copy project directory and run ``pdm install``
-- Works with common IDEs (RStudio, VSCode), notebook tools for linting (`nbqa <https://nbqa.readthedocs.io/en/latest/>`_) or workflows (`Ploomber <https://github.com/ploomber/ploomber>`_)
+- Import shared code as Python modules
+- Install shared code across projects with `pip install <https://igor-sb.github.io/bluprint/prod_projects.html>`_
+- Use both Python and R notebooks in a single project (see `Python/R projects </https://igor-sb.github.io/bluprint/getting_started.html#python-r-projects>`_)
+- Share projects by copying a project directory and running *pdm install*
+- Works with common IDEs (RStudio, VSCode), notebook tools for linting (`nbqa <https://nbqa.readthedocs.io/en/latest/>`_), notebook version control (`nbstripout <https://github.com/kynan/nbstripout>`_) or workflows (`Ploomber <https://github.com/ploomber/ploomber>`_)
 
 
 Usage
@@ -137,9 +137,7 @@ Bluprint integrates:
 * `PDM <https://pdm-project.org/latest/>`_
 * `OmegaConf <https://omegaconf.readthedocs.io/>`_
 * Python's native import system
-* R package `renv <https://rstudio.github.io/renv/>`_
-* R package `here <https://here.r-lib.org/>`_ 
-* R package `reticulate <https://rstudio.github.io/reticulate/>`_
+* R packages `{renv} <https://rstudio.github.io/renv/>`_, `{here} <https://here.r-lib.org/>`_ and `{reticulate} <https://rstudio.github.io/reticulate/>`_
 
 Bluprint is heavily inspired by these resources:
 

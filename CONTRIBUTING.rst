@@ -1,17 +1,17 @@
 How to contribute
 =================
 
-*Reporting a bug?*
+**Reporting a bug?**
 
 Check if the bug was already reported under `issues <https://github.com/igor-sb/bluprint/issues>`_. If you are not able to find an open issue addressing the problem, open a `new issue <https://github.com/igor-sb/bluprint/issues/new>`_.
 
-*Did you write a patch that fixes a bug?*
+**Did you write a patch that fixes a bug?**
 
 * Fork the repo, make changes, then create a Pull Request with the patch.
 * Ensure the PR description clearly describes the problem and a solution. Link the relevant issue if any.
 * See code guidelines below.
 
-*Do you intend to add a new feature or change an existing one?*
+**Do you intend to add a new feature or change an existing one?**
 
 * Suggest your change as an `issue <https://github.com/igor-sb/bluprint/issues>`_.
 * See code guidelines below.

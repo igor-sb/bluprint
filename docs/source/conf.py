@@ -30,7 +30,7 @@ exclude_patterns = []
 # html_theme = 'sphinx_rtd_theme'
 # html_theme = 'sphinxawesome_theme'
 html_theme = 'sphinx_immaterial'
-html_static_path = ['_static']
+# html_static_path = ['_static']
 # html_css_files = ['css/custom.css']
 
 html_theme_options = {

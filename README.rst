@@ -3,7 +3,7 @@
 Bluprint
 ========
 
-**Bluprint** is a command line utility for streamlined exploratory data science projects. Bluprint allows seamless access to configuration, data and shared code in this type of project structure::
+**Bluprint** is a command line utility for streamlined exploratory data science projects. Bluprint allows seamless access to configuration, data and shared code in this type of project structure created by ``bluprint create my_project``::
 
     my_project
     ├── conf
@@ -74,42 +74,6 @@ Features
 - Share projects by copying a project directory and running *pdm install*
 - Works with common IDEs (RStudio, VSCode), notebook tools for linting (`nbqa <https://nbqa.readthedocs.io/en/latest/>`_), notebook version control (`nbstripout <https://github.com/kynan/nbstripout>`_) or workflows (`Ploomber <https://github.com/ploomber/ploomber>`_)
 
-
-Usage
------
-
-``bluprint create my_project`` creates a project skeleton similar to the example shown above. Once created, we can add data files and store all file paths relative to the *my_project/data* directory, in the *data.yaml*:
-
-
-
-Then retrieve the automatically parsed full paths, for example in *process.ipynb* above:
-
-.. code:: python
-
-    # bluprint_conf is a helper package for loading configs 
-    from bluprint_conf import load_data_yaml
-    from my_project.shared_code import process_data
-    import pandas as pd
-
-    data = load_data_yaml() # default arg: conf/data.yaml
-    print(data)
-    #> {
-    #>   'emailed': {
-    #>     'messy': '/path/to/my_project/data/emailed/messy.xlsx'
-    #>   },
-    #>   'user': {
-    #> 	   'processed': '/path/to/my_project/data/user_processed.csv'
-    #>   }
-    #> }
-
-    messy_df = pd.read_xlsx(data.emailed.messy)
-
-    processed_df = process_data(messy_df)
-
-    processed_df.to_csv(data.user.processed)
-
-
-
 Documentation
 -------------
 
@@ -136,7 +100,7 @@ Bluprint integrates:
 
 * `PDM <https://pdm-project.org/latest/>`_
 * `OmegaConf <https://omegaconf.readthedocs.io/>`_
-* Python's native import system
+* Python's native import system `importlib <https://docs.python.org/3/library/importlib.html>`_
 * R packages `{renv} <https://rstudio.github.io/renv/>`_, `{here} <https://here.r-lib.org/>`_ and `{reticulate} <https://rstudio.github.io/reticulate/>`_
 
 Bluprint is heavily inspired by these resources:

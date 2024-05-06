@@ -29,7 +29,7 @@ To keep cell output under version control, add ``--keep-output`` argument to *.g
   [diff "ipynb"]
     textconv = \"/path/to/project/.venv/bin/python\" -m nbstripout --keep-output -t
 
-For more details see nbstripout `instructions <https://github.com/kynan/nbstripout>`_. 
+For more details see nbstripout `instructions <https://github.com/kynan/nbstripout>`_.
 
 
 Best coding practices

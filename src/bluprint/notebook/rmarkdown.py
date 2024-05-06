@@ -32,6 +32,7 @@ def run_rmarkdown_notebook(  # noqa: WPS210
             stderr=subprocess.PIPE,
         )
         last_percent = 0
+        current_percent = 0
         for line in rmd_out.stdout:  # type: ignore
             if progress_bar_pct.match(line):
                 current_percent = int(progress_bar_pct.sub(r'\1', line))

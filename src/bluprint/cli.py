@@ -9,7 +9,11 @@ from bluprint_conf import load_config_yaml
 
 from bluprint.binary import check_if_executable_is_installed
 from bluprint.colors import styled_print
-from bluprint.create.py_project import create_project, initialize_project
+from bluprint.create.py_project import (
+    check_python_version,
+    create_project,
+    initialize_project,
+)
 from bluprint.create.r_project import (
     check_if_r_package_is_installed,
     initialize_r_project,
@@ -54,8 +58,9 @@ class Bluprint(object):
             project directory.
 
         python_version (str | None, optional): Python version to be used. If
-            not specified, uses the latest stable version from
-            `pyenv install -l`.
+            not specified, uses either the latest stable version from
+            `pyenv install -l` or 3.11 (whichever is greater). Bluprint requires
+            Python >= 3.11.
 
         parent_dir (str | None, optional): Parent directory to create a
             PROJECT_NAME directory in. If not specific PARENT_DIR is a current
@@ -77,6 +82,7 @@ class Bluprint(object):
             endline='',
         )
         check_if_project_can_be_created(project_name, parent_dir, r_proj)
+        check_python_version(python_version)
         create_project(project_name, python_version, parent_dir, template_dir)
         if r_proj:
             initialize_r_project(project_name, parent_dir)
@@ -95,20 +101,27 @@ class Bluprint(object):
         Args:
 
         project_name (str): Name of the project.
-        python_version (str | None, optional): Python version to be used.
-            If not specified, uses `python --version`.
+
+        python_version (str | None, optional): Python version to be used. If
+            not specified, uses either the latest stable version from
+            `pyenv install -l` or 3.11 (whichever is greater). Bluprint requires
+            Python >= 3.11.
+
         project_dir (str | None, optional): Project directory where to
             initialize a new bluprint project. By default uses current working
             directory.
+
         template_dir (str | None, optional): Path to a directory with a
             Bluprint or PDM template. If not specified (default), uses Bluprint
             default built-in template.
+
         r_proj (bool): Setup R library using renv to support package
             isolation in RMarkdown notebooks.
 
         Raises:
-            ProjectExistsError: Raised if pyproject.toml exists in the
-            `project_dir`.
+
+            ProjectExistsError: Raised if pyproject.toml exists in
+                the `project_dir`.
         """
         if not project_dir:
             project_dir = getcwd()
@@ -119,11 +132,8 @@ class Bluprint(object):
             ),
             endline='',
         )
-        if (Path(project_dir) / 'pyproject.toml').exists():
-            raise ProjectExistsError(
-                f'pyproject.toml already exists in {project_dir}: '
-                + 'cannot initialize new bluprint project',
-            )
+        check_if_pyproject_toml_exists(project_dir)
+        check_python_version(python_version)
         initialize_project(
             project_name,
             python_version,
@@ -223,6 +233,14 @@ def check_if_project_exists(project_name: str, parent_dir: str | None) -> None:
         parent_dir = '.'
     if (Path(parent_dir) / project_name).is_dir():
         raise ProjectExistsError(f'{project_name} directory exists.')
+
+
+def check_if_pyproject_toml_exists(project_dir: str) -> None:
+    if (Path(project_dir) / 'pyproject.toml').exists():
+        raise ProjectExistsError(
+            f'pyproject.toml already exists in {project_dir}: '
+            + 'cannot initialize new bluprint project',
+        )
 
 
 def main():

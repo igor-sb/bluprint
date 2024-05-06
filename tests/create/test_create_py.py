@@ -1,8 +1,12 @@
 """Test creating a new Python project."""
 
 from pathlib import Path
+
+import pytest
 from importlib_resources import files
+
 from bluprint import cli
+from bluprint.create.errors import LowPythonVersionError
 
 
 def test_create_py_project(find_files_in_dir, tmp_path):
@@ -33,3 +37,8 @@ def test_create_py_project(find_files_in_dir, tmp_path):
     assert (venv_dir / 'lib').exists()
     assert (venv_dir / 'share').exists()
     assert (venv_dir / 'pyvenv.cfg').exists()
+
+
+def test_low_python_version():
+    with pytest.raises(LowPythonVersionError):
+        cli.check_python_version('3.10')

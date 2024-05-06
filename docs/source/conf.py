@@ -63,7 +63,7 @@ html_theme_options = {
                 "name": "Switch to light mode",
             },
         },
-    ],	
+    ],
     # Visible levels of the global TOC; -1 means unlimited
     # 'globaltoc_depth': 1,
     # If False, expand all TOC entries
@@ -96,7 +96,7 @@ html_theme_options = {
             "link": "https://pypi.org/project/sphinx-immaterial/",
         },
     ],
-    # END: social icons	
+    # END: social icons
 }
 
 html_sidebars = {

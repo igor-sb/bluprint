@@ -7,6 +7,10 @@ class PythonVersionError(StyledError):
     """Raises exception if python --version fails."""
 
 
+class LowPythonVersionError(StyledError):
+    """Raises exception if user-provided Python version is < 3.11."""
+
+
 class PdmAddError(StyledError):
     """Raises exception if PDM add fails."""
 

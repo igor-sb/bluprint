@@ -5,7 +5,7 @@ Bluprint projects can be shared and reused directly out-of-the-box. Simply copy 
 
 .. note:
 
-  Existing bluprint projects can be run without ``bluprint``. 
+  Existing bluprint projects can be run without ``bluprint``.
 
 For example, to download and test the demo project:
 

@@ -34,6 +34,13 @@ def test_run_workflows(reference_test_log_file, snapshot):
     )
     for pattern in (' Elapsed: [0-9:]+', r'\x1b[^m]*m', r'\r'):
         workflow_log = re.sub(pattern, '', workflow_log)
+    # Remove all progress updated before 100%, since R markdown parsing
+    # varies by platform
+    workflow_log = re.sub(
+        r'\n.*(├|└)(─── rtest/test[0-9]+\.Rmd 100% ─)',
+        r'\n\1\2',
+        workflow_log,
+    )
 
     snapshot.snapshot_dir = os.path.dirname(reference_test_log_file)
     snapshot.assert_match(

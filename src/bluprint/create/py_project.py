@@ -5,9 +5,16 @@ from pathlib import Path
 
 import nbformat
 from importlib_resources import files
+from packaging.version import Version
 
 from bluprint.binary import pdm_add, pdm_init, run
-from bluprint.create.errors import GitError, PythonVersionError
+from bluprint.create.errors import (
+    GitError,
+    LowPythonVersionError,
+    PythonVersionError,
+)
+
+MIN_PYTHON_VERSION = '3.11'
 
 
 def create_project(
@@ -90,6 +97,17 @@ def replace_git_account_name(
         readme_w.write(readme_content)
 
 
-def default_python_version() -> str:
+def default_python_version(min_version: str = MIN_PYTHON_VERSION) -> str:
     python_out = run(['python', '--version'], PythonVersionError)
-    return python_out.strip().replace('Python ', '')
+    py_version = python_out.strip().replace('Python ', '')
+    if Version(py_version) >= Version(min_version):
+        return py_version
+    return min_version
+
+
+def check_python_version(
+    python_version: str | None,
+) -> None:
+    if python_version:
+        if Version(python_version) < Version(MIN_PYTHON_VERSION):
+            raise LowPythonVersionError('Bluprint requires Python >= 3.11.')

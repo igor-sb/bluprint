@@ -1,6 +1,6 @@
 [project]
 name = "bluprint"
-version = "0.1.3"
+version = "0.1.4"
 description = ""
 authors = [
 	{name = "igor-sb"},
@@ -52,11 +52,12 @@ filterwarnings = [
 
 [tool.isort]
 profile = "wemake"
-line_length = 79
+line_length = 80
 
 [tool.flake8]
 max-module-members = 8
 max-arguments = 6
+max-line-length = 80
 ignore = [
 	'D101',  # D101 Missing docstring in public class
 	'D102',  # D102 Missing docstring in public method

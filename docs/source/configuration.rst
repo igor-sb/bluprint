@@ -51,7 +51,7 @@ data.yaml
   │   ├── preprocessed
   │   │   └── user_data.csv
   │   ├── final
-  │   │   └── user_data.csv  
+  │   │   └── user_data.csv
   │   └── metadata.csv
   ...
 
@@ -75,7 +75,7 @@ Once loaded with ``load_data_yaml()`` from ``bluprint_conf``, these relative pat
     final: raw/user_data.csv
   metadata: metadata.csv
   internal_binary: /absolute/path/to/local_binary
-  report: s3://path/to/final_report.ipynb 
+  report: s3://path/to/final_report.ipynb
 
 .. _config-workflows:
 

@@ -17,4 +17,4 @@ build-backend = "pdm.backend"
 packages = ["conf", "data", "placeholder_name"]
 
 [tool.pdm]
-package-type = "library"
+distribution = true

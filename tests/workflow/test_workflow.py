@@ -64,6 +64,11 @@ def test_run_workflow_cli(
     )
     for pattern in (' Elapsed: [0-9:]+', r'\x1b[^m]*m', r'\r'):
         workflow_log = re.sub(pattern, '', workflow_log)
+    workflow_log = re.sub(
+        r'\n.*(├|└)(─── rtest/test[0-9]+\.Rmd 100% ─)',
+        r'\n\1\2',
+        workflow_log,
+    )
 
     snapshot.snapshot_dir = os.path.dirname(reference_xtest_log_file)
     snapshot.assert_match(

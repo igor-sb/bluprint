@@ -11,12 +11,12 @@ class LowPythonVersionError(StyledError):
     """Raises exception if user-provided Python version is < 3.11."""
 
 
-class PdmAddError(StyledError):
-    """Raises exception if PDM add fails."""
+class UvAddError(StyledError):
+    """Raises exception if uv add fails."""
 
 
-class PdmInitError(StyledError):
-    """Raises exception if PDM init fails."""
+class UvInitError(StyledError):
+    """Raises exception if uv init fails."""
 
 
 class RpackageMissingError(StyledError):

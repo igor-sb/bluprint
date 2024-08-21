@@ -83,7 +83,7 @@ Full documentation available at: https://igor-sb.github.io/bluprint/.
 Installation
 ------------
 
-Install `pipx <https://github.com/pypa/pipx>`_ and `PDM <https://pdm-project.org/latest/>`_. Then run:
+Install Python 3.11.* (e.g. using `pyenv <https://github.com/pyenv/pyenv>`_), `pipx <https://github.com/pypa/pipx>`_ and `PDM <https://pdm-project.org/latest/>`_. Then run:
 
 .. code:: shell
 
@@ -92,6 +92,12 @@ Install `pipx <https://github.com/pypa/pipx>`_ and `PDM <https://pdm-project.org
 .. note::
 
     For R projects, install `renv <https://rstudio.github.io/renv/>`_ before attempting to create a Bluprint project with R support.
+
+If pipx has an issue finding Python 3.11, manually pass the full path to Python 3.11 binary. For example:
+
+.. code:: shell
+
+    pipx install bluprint --python $(pyenv local 3.11 & pyenv which python)
 
 References
 ----------

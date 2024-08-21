@@ -1,4 +1,4 @@
-PDM_RUN := pdm run
+UV_RUN := uv run
 FOLDERS= src
 PROJ= src
 NC=\033[0m # No Color
@@ -7,12 +7,12 @@ NC=\033[0m # No Color
 		install-dev test report-coverage docs lint-mypy build
 
 test:
-		${PDM_RUN} coverage erase
-		${PDM_RUN} coverage run --branch -m pytest tests ${PROJ} \
+		${UV_RUN} coverage erase
+		${UV_RUN} coverage run --branch -m pytest tests ${PROJ} \
 				--junitxml=junit/test-results.xml -v
 
 install: install-dev
-		pdm install
+		uv install
 
 lint:
 		make autolint
@@ -24,27 +24,27 @@ install-dev:
 		chmod +x .git/hooks/pre-commit
 
 autolint:
-		@${PDM_RUN} autopep8 -r -i ${FOLDERS}
-		@${PDM_RUN} unify -r -i ${FOLDERS}
-		@${PDM_RUN} isort ${FOLDERS}
+		@${UV_RUN} autopep8 -r -i ${FOLDERS}
+		@${UV_RUN} unify -r -i ${FOLDERS}
+		@${UV_RUN} isort ${FOLDERS}
 
 lint-flake8:
 		@echo "\n${BLUE}Running flake8...${NC}\n"
-		@${PDM_RUN} flake8 .
+		@${UV_RUN} flake8 .
 
 lint-mypy:
 		@echo "\n${BLUE}Running mypy...${NC}\n"
-		${PDM_RUN} mypy --show-error-codes ${PROJ}
+		${UV_RUN} mypy --show-error-codes ${PROJ}
 
 precommit: pdm-precommit lint
 
 pdm-precommit:
-		${PDM_RUN} pre-commit run --all-files
+		${UV_RUN} pre-commit run --all-files
 
 report-coverage:
-		${PDM_RUN} coverage report
-		${PDM_RUN} coverage html
-		${PDM_RUN} coverage xml
+		${UV_RUN} coverage report
+		${UV_RUN} coverage html
+		${UV_RUN} coverage xml
 
 docs:
 	@echo "\n${BLUE}Preparing Sphinx documentation...${NC}\n"
@@ -67,4 +67,4 @@ clean:
 	rm -rf tests/__pycache__
 
 build:
-	@rm -rf build; pdm build
+	@rm -rf build; uv build

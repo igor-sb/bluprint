@@ -7,7 +7,7 @@ import nbformat
 from importlib_resources import files
 from packaging.version import Version
 
-from bluprint.binary import pdm_add, pdm_init, run
+from bluprint.binary import uv_add, uv_init, run
 from bluprint.create.errors import (
     GitError,
     LowPythonVersionError,
@@ -40,14 +40,14 @@ def initialize_project(
         python_version = default_python_version()
     if not template_dir:
         template_dir = files('bluprint').joinpath('template')
-    pdm_init(python_version, str(template_dir), str(project_dir))
+    uv_init(python_version, str(template_dir), str(project_dir))
     delete_r_files_from_template(project_dir)
     replace_placeholder_name(
         Path(project_dir) / 'notebooks' / 'example_jupyternb.ipynb',
         project_name=project_name,
     )
     replace_git_account_name(project_dir)
-    pdm_add(['bluprint_conf', 'ipykernel', 'pandas'], project_dir)
+    uv_add(['bluprint_conf', 'ipykernel', 'pandas'], project_dir)
 
 
 def delete_r_files_from_template(project_dir: str | Path) -> None:

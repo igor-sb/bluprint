@@ -6,8 +6,8 @@ from pathlib import Path
 from typing import TypeVar
 
 from bluprint.create.errors import (
-    PdmAddError,
-    PdmInitError,
+    UvAddError,
+    UvInitError,
     RenvInitError,
     RenvInstallError,
 )
@@ -28,7 +28,7 @@ def run(command: list[str], exception: type[Error], **kwargs) -> str:
     return command_out.stdout.decode('utf-8')
 
 
-def pdm(
+def uv(
     command: str | list[str],
     exception: type[Error],
     cwd: str | Path,
@@ -36,19 +36,19 @@ def pdm(
 ) -> str:
     if isinstance(command, str):
         command = [command]
-    return run(['pdm', *command], exception, cwd=cwd, **kwargs)
+    return run(['uv', *command], exception, cwd=cwd, **kwargs)
 
 
-def pdm_init(python_version: str, template_dir: str, project_dir: str) -> str:
-    return pdm(
-        ['init', '--lib', '-n', '--python', python_version, template_dir],
-        PdmInitError,
+def uv_init(python_version: str, template_dir: str, project_dir: str) -> str:
+    return uv(
+        ['init', '--no-workspace', '--python', python_version, template_dir],
+        UvInitError,
         cwd=project_dir,
     )
 
 
-def pdm_add(packages: list[str], project_dir: str | Path) -> str:
-    return pdm(['add', *packages], PdmAddError, cwd=project_dir)
+def uv_add(packages: list[str], project_dir: str | Path) -> str:
+    return uv(['add', *packages], UvAddError, cwd=project_dir)
 
 
 def rcmd(rscript: str, exception: type[Error], **kwargs) -> str:

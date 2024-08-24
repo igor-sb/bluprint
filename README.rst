@@ -58,12 +58,13 @@ This allows writing notebooks without hard-coding file paths, like this:
 Features
 --------
 
-- Write portable notebooks by loading configs with `load_data_yaml() <https://igor-sb.github.io/bluprint-conf/html/reference.html#bluprint_conf.data.load_data_yaml>`_ and `load_config_yaml() <https://igor-sb.github.io/bluprint-conf/html/reference.html#bluprint_conf.config.load_config_yaml>`_
-- R/Python packages automatically version-locked using `renv <https://rstudio.github.io/renv/>`_ and `uv <https://docs.astral.sh/uv/>`_
-- Import shared code as Python modules
-- Install shared code across projects with `pip install <https://igor-sb.github.io/bluprint/prod_projects.html>`_
+- Write portable notebooks by storing all file paths to yaml configs and load
+  them with `load_data_yaml() <https://igor-sb.github.io/bluprint-conf/html/reference.html#bluprint_conf.data.load_data_yaml>`_ and `load_config_yaml() <https://igor-sb.github.io/bluprint-conf/html/reference.html#bluprint_conf.config.load_config_yaml>`_
+- R/Python packages are version-locked with `renv <https://rstudio.github.io/renv/>`_ and `uv <https://docs.astral.sh/uv/>`_
+- Import packaged code as Python modules
+- Packaged code can be shared across projects with `pip install <https://igor-sb.github.io/bluprint/prod_projects.html>`_
 - Use both Python and R notebooks in a single project (see `Python/R projects </https://igor-sb.github.io/bluprint/getting_started.html#python-r-projects>`_)
-- Share projects by copying a project directory and running *uv install*
+- Share entire projects by copying a project directory and running *uv venv && uv sync*
 - Works with common IDEs (RStudio, VSCode), notebook tools for linting (`nbqa <https://nbqa.readthedocs.io/en/latest/>`_), notebook version control (`nbstripout <https://github.com/kynan/nbstripout>`_) or workflows (`Ploomber <https://github.com/ploomber/ploomber>`_)
 
 Documentation
@@ -75,28 +76,22 @@ Full documentation available at: https://igor-sb.github.io/bluprint/.
 Installation
 ------------
 
-Install Python 3.11.* (e.g. using `pyenv <https://github.com/pyenv/pyenv>`_), `pipx <https://github.com/pypa/pipx>`_ and `PDM <https://pdm-project.org/latest/>`_. Then run:
+Install Python 3.11.* (e.g. using `pyenv <https://github.com/pyenv/pyenv>`_) and `uv <https://docs.astral.sh/uv/>`_. Then run:
 
 .. code:: shell
 
-    pipx install bluprint
+    uv tool install bluprint
 
 .. note::
 
     For R projects, install `renv <https://rstudio.github.io/renv/>`_ before attempting to create a Bluprint project with R support.
-
-If pipx has an issue finding Python 3.11, manually pass the full path to Python 3.11 binary. For example:
-
-.. code:: shell
-
-    pipx install bluprint --python $(pyenv local 3.11 & pyenv which python)
 
 References
 ----------
 
 Bluprint integrates:
 
-* `PDM <https://pdm-project.org/latest/>`_
+* `uv <https://docs.astral.sh/uv/>`_
 * `OmegaConf <https://omegaconf.readthedocs.io/>`_
 * Python's native import system `importlib <https://docs.python.org/3/library/importlib.html>`_
 * R packages `{renv} <https://rstudio.github.io/renv/>`_, `{here} <https://here.r-lib.org/>`_ and `{reticulate} <https://rstudio.github.io/reticulate/>`_

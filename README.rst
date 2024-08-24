@@ -19,7 +19,8 @@ data and shared code in this type of structure::
     └── my_project                 # Local Python package used by my_project
         └── shared_code.py
 
-Configuration *conf/data.yaml* contains paths relative to the *my_project/data/*:
+Configuration *conf/data.yaml* contains either absolute paths or paths relative
+to the *my_project/data/*::
 
 .. code:: yaml
 

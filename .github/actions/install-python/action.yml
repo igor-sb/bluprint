@@ -1,5 +1,5 @@
 name: Install Python
-description: Action for installing Python and PDM
+description: Action for installing Python and uv
 
 inputs:
   PYTHON_VERSION:
@@ -14,8 +14,8 @@ runs:
       with:
         python-version: ${{ inputs.PYTHON_VERSION }}
 
-    - name: Install PDM and package dependencies
+    - name: Install uv and package dependencies
       run: |
-        pip install pdm
+        curl -LsSf https://astral.sh/uv/install.sh | sh
         make install
       shell: bash

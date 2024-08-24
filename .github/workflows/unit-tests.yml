@@ -20,7 +20,7 @@ jobs:
           ref: ${{ inputs.git_ref }}
           lfs: True
 
-      - name: Install and setup Python, PDM, virtual env
+      - name: Install and setup Python, uv, virtual env
         uses: ./.github/actions/install-python
         with:
           PYTHON_VERSION: ${{ env.PYTHON_VERSION }}
@@ -40,7 +40,7 @@ jobs:
           echo "$PATH"
           export PATH=$PATH:/home/runner/.pyenv/bin
           export JUPYTER_PLATFORM_DIRS=1
-          pdm run jupyter --paths
+          uv run jupyter --paths
           make test
         env:
           PY_COLORS: 1

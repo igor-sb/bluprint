@@ -1,4 +1,4 @@
-"""List of all errors used within bluprint."""  # noqa: WPS202
+"""List of all errors used within bluprint."""
 
 from dataclasses import dataclass
 

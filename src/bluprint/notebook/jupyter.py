@@ -33,7 +33,7 @@ def run_jupyter_notebook(
 
 class ExecutorWithProgressBar(ExecutePreprocessor):
 
-    def run_all_cells(  # noqa: WPS210
+    def run_all_cells(
         self,
         notebook_path: str | Path,
         prefix: str,
@@ -44,7 +44,7 @@ class ExecutorWithProgressBar(ExecutePreprocessor):
         with open(notebook_path, 'r') as notebook_handle:
             notebook = read_notebook(notebook_handle, as_version=4)
 
-        NotebookClient.__init__(self, notebook, km)  # noqa: WPS609
+        NotebookClient.__init__(self, notebook, km)
         self.reset_execution_trackers()
         self._check_assign_resources(resources)
 

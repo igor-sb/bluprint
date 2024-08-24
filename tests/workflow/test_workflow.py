@@ -16,10 +16,10 @@ def capture_stderr(func, *args, **kwargs):
     buffer = StringIO()
     original_stderr = sys.stderr
 
-    try:  # noqa: WPS501, WPS229
+    try:
         sys.stderr = buffer
         func(*args, **kwargs)
-        return buffer.getvalue()  # noqa: WPS331
+        return buffer.getvalue()
 
     finally:
         sys.stderr = original_stderr

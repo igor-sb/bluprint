@@ -28,7 +28,7 @@ def test_create_pyr_project(find_files_in_dir, tmp_path):
     }
     template_files.update([
         Path('pyproject.toml'),
-        Path('pdm.lock'),
+        Path('uv.lock'),
         Path('renv.lock'),
         Path('.Rprofile'),
     ])

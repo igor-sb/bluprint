@@ -67,3 +67,14 @@ def styled_print(
         ),
     )
     sys.stderr.flush()
+
+
+def progress_log(log_message: str) -> Callable:
+    def decorate(func: Callable) -> Callable:
+        @functools.wraps(func)
+        def print_wrapper(*args, **kwargs) -> None:
+            styled_print(log_message, endline='')
+            func(*args, **kwargs)
+            styled_print(' Ok.', print_bluprint=False)
+        return print_wrapper
+    return decorate

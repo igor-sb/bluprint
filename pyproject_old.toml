@@ -1,6 +1,6 @@
 [project]
 name = "bluprint"
-version = "0.2.0"
+version = "0.1.5"
 description = ""
 authors = [
 	{name = "igor-sb"},
@@ -17,8 +17,14 @@ dependencies = [
     "nbstripout>=0.6.1",
 ]
 
-[tool.uv]
-dev-dependencies = [
+[project.scripts]
+bluprint = "bluprint.cli:main"
+
+[tool.pdm.scripts]
+bluprint = {call = "bluprint.cli:main"}
+
+[tool.pdm.dev-dependencies]
+dev = [
     "pytest>=7.4.3",
     "pytest-mock>=3.12.0",
     "autopep8>=2.0.4",
@@ -36,18 +42,7 @@ dev-dependencies = [
     "flake8-pyproject>=1.2.3",
     "sphinx-copybutton>=0.5.2",
     "sphinx-immaterial>=0.11.10",
-    "ruff>=0.6.2",
 ]
-
-[tool.uv.workspace]
-members = ["tmp/tmp2"]
-
-[project.scripts]
-bluprint = "bluprint.cli:main"
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
 
 [tool.pytest.ini_options]
 # Fire library throws this warning
@@ -58,44 +53,54 @@ filterwarnings = [
 [tool.isort]
 profile = "wemake"
 line_length = 80
-# lines_between_sections = 0
 
-[tool.ruff]
-line-length = 80
-
-[tool.ruff.format]
-quote-style = "single"
-
-[tool.ruff.lint]
-select = ['D', 'I', 'S', 'RUF', 'TCH', 'TID', 'SIM']
+[tool.flake8]
+max-module-members = 8
+max-arguments = 6
+max-line-length = 80
 ignore = [
-	'D100',  # Missing docstring in public module
 	'D101',  # D101 Missing docstring in public class
 	'D102',  # D102 Missing docstring in public method
 	'D103',  # D103 Missing docstring in public function
 	'D104',  # Missing docstring in public package
 	'D107',  # D107 Missing docstring in __init__
 	'D412',  # No blank lines allowed between a section header and its content
-	'D407',  # Missing dashed underline after section
-	'D413',  # Missing blank line after last section
-	'D212',  # `multi-line-summary-first-line
-	'D213',
-	'D203', # one-blank-line-before-class`
-	#'I003',  # I003 isort expected 1 blank line in imports, found 0
-	# 'DAR003',  # DAR003 Incorrect indentation: ~<
-	# 'DAR101',  # DAR101 Missing parameter(s) in Docstring: - repeated_bases_regex
-	#'DAR103',  # DAR103 ... false positives
-	# 'DAR201',  # DAR201 Missing "Returns" in Docstring: - return
-	#'RST201',  # RST201 Block quote ends without a blank line; unexpected unindent.
-	#'RST301',  # RST301 Unexpected indentation.
+	'I003',  # I003 isort expected 1 blank line in imports, found 0
+	'DAR003',  # DAR003 Incorrect indentation: ~<
+	'DAR101',  # DAR101 Missing parameter(s) in Docstring: - repeated_bases_regex
+	'DAR103',  # DAR103 ... false positives
+	'DAR201',  # DAR201 Missing "Returns" in Docstring: - return
+	'RST201',  # RST201 Block quote ends without a blank line; unexpected unindent.
+	'RST301',  # RST301 Unexpected indentation.
 	'S311',  # S311 Standard pseudo-random generators are not suitable for security/cryptographic purposes.
 	'S404',  # Consider possible security implications associated with the subprocess module.
 	'S603',  # subprocess call - check for execution of untrusted input.
 	'S607',  # Starting a process with a partial executable path
-	#'WPS348',  # WPS348 Found a line that starts with a dot
-	#'WPS226',  # WPS226 Found string literal over-use: count > 3
-	#'WPS305',  # WPS305 Found `f` string
-	#'W503',  # line break before binary operator
+	'WPS348',  # WPS348 Found a line that starts with a dot
+	'WPS226',  # WPS226 Found string literal over-use: count > 3
+	'WPS305',  # WPS305 Found `f` string
+	'W503',  # line break before binary operator
+]
+per-file-ignores = [
+	# S101 Use of assert detected.
+	# S403 Consider possible security implications associated with pickle module.
+	'tests/*: S101, S403',
+	# WPS202 Found too many module members
+    'tests/**/conftest.py: WPS202',
+	# D100 Missing docstring in public module
+	# WPS421 Found wrong function call: print
+	# WPS428 Found statement that has no effect
+	# WPS432 Found magic number: 13
+	"""
+	tmp/**:
+		D100,
+		WPS421,
+		WPS428,
+		WPS432,
+		I004
+	""",
+	# WPS202 Found too many module members
+	'**/errors.py: WPS202',
 ]
 exclude = [
 	'docs',
@@ -107,20 +112,6 @@ exclude = [
 	'src/bluprint/template',
 ]
 
-[tool.ruff.lint.per-file-ignores]
-# S101 Use of assert detected.
-# S403 Consider possible security implications associated with pickle module.
-"tests/*" = ["S101", "S403"]
-# WPS202 Found too many module members
-# "tests/**/conftest.py" = ["WPS202"]
-# D100 Missing docstring in public module
-# WPS421 Found wrong function call: print
-# WPS428 Found statement that has no effect
-# WPS432 Found magic number: 13
-"tmp/**" = ["D100"]
-# WPS202 Found too many module members
-# "**/errors.py" = ["WPS202"]
-
 [tool.mypy]
 [[tool.mypy.overrides]]
 module = [
@@ -130,3 +121,6 @@ module = [
 	"bluprint_conf.*",
 ]
 ignore_missing_imports = true
+
+[tool.uv.workspace]
+members = ["tmp/example"]

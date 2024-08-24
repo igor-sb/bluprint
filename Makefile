@@ -12,11 +12,11 @@ test:
 				--junitxml=junit/test-results.xml -v
 
 install: install-dev
-		uv install
+		uv sync
 
 lint:
 		make autolint
-		make lint-flake8
+		make lint-ruff
 		make lint-mypy
 
 install-dev:
@@ -31,6 +31,10 @@ autolint:
 lint-flake8:
 		@echo "\n${BLUE}Running flake8...${NC}\n"
 		@${UV_RUN} flake8 .
+
+lint-ruff:
+		@echo "\n${BLUE}Running ruff...${NC}\n"
+		@${UV_RUN} ruff check
 
 lint-mypy:
 		@echo "\n${BLUE}Running mypy...${NC}\n"

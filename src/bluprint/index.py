@@ -12,7 +12,7 @@ def _index_files_in_dir(
 ) -> list[tuple[str, ...]]:
     indexed_files = []
     for root, _, files in os.walk(index_dir):
-        for file in files:  # noqa: WPS110
+        for file in files:
             file_path = Path(root) / file
             if file.startswith('.') and skip_dot_files:
                 continue
@@ -22,7 +22,7 @@ def _index_files_in_dir(
     return sorted(indexed_files)
 
 
-def _create_config_from_indexed_files(  # noqa: WPS210
+def _create_config_from_indexed_files(
     indexed_files: list[tuple[str, ...]],
 ) -> DictConfig:
     config_dotlist = []

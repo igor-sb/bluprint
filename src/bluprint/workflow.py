@@ -56,7 +56,7 @@ def run_notebook(
                 display_prefix=graphical_prefix,
             )
         case '.qmd':
-            pass  # noqa: WPS420
+            pass
         case nb_extension:
             raise InvalidNotebookTypeError(
                 f'Invalid extension {nb_extension} in {notebook_file}',
@@ -69,7 +69,7 @@ def run_workflows(
 ):
     workflow_cfg = load_config_yaml(workflow_yaml)
     styled_print('run all workflows')
-    for workflow_name in workflow_cfg.keys():
+    for workflow_name in workflow_cfg:
         run_workflow(str(workflow_name), workflow_cfg, str(notebook_dir))
 
 

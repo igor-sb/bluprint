@@ -5,11 +5,12 @@ import subprocess
 from pathlib import Path
 from typing import TypeVar
 
+from bluprint.colors import progress_log
 from bluprint.create.errors import (
-    UvAddError,
-    UvInitError,
     RenvInitError,
     RenvInstallError,
+    UvAddError,
+    UvInitError,
 )
 from bluprint.errors import MissingExecutableError, StyledError
 
@@ -39,9 +40,9 @@ def uv(
     return run(['uv', *command], exception, cwd=cwd, **kwargs)
 
 
-def uv_init(python_version: str, template_dir: str, project_dir: str) -> str:
+def uv_init(python_version: str, project_dir: str) -> str:
     return uv(
-        ['init', '--no-workspace', '--python', python_version, template_dir],
+        ['init', '--no-workspace', '--no-readme', '--python', python_version],
         UvInitError,
         cwd=project_dir,
     )
@@ -59,7 +60,10 @@ def renv_init(project_dir: str | Path) -> str:
     return rcmd('renv::init()', RenvInitError, cwd=project_dir)
 
 
-def renv_install(packages: str | list[str], project_dir: str | Path) -> str:
+def renv_install(
+    packages: str | list[str] | tuple[str, ...],
+    project_dir: str | Path,
+) -> str:
     if isinstance(packages, str):
         packages = [packages]
     return rcmd(

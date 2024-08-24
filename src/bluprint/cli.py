@@ -8,7 +8,7 @@ import fire
 from bluprint_conf import load_config_yaml
 
 from bluprint.binary import check_if_executable_is_installed
-from bluprint.colors import styled_print
+from bluprint.colors import progress_log, styled_print
 from bluprint.create.py_project import (
     check_python_version,
     create_project,
@@ -67,7 +67,7 @@ class Bluprint(object):
             directory.
 
         template_dir (str | None, optional): Path to a directory with a
-            Bluprint or PDM template. If not specified (default), uses Bluprint
+            Bluprint template. If not specified (default), uses Bluprint
             default built-in template.
 
         r_proj (bool, optional): Setup R library using renv to support package
@@ -75,18 +75,17 @@ class Bluprint(object):
 
         """
         styled_print(
-            'creating Python{with_r} project {project_name}... '.format(
+            'creating Python{with_r} project {project_name} '.format(
                 project_name=project_name,
                 with_r='/R' if r_proj else '',
             ),
-            endline='',
         )
         check_if_project_can_be_created(project_name, parent_dir, r_proj)
         check_python_version(python_version)
         create_project(project_name, python_version, parent_dir, template_dir)
         if r_proj:
             initialize_r_project(project_name, parent_dir)
-        styled_print('Ok', print_bluprint=False)
+        styled_print(f'project `{project_name}` created.')
 
     def init(
         self,
@@ -112,7 +111,7 @@ class Bluprint(object):
             directory.
 
         template_dir (str | None, optional): Path to a directory with a
-            Bluprint or PDM template. If not specified (default), uses Bluprint
+            Bluprint template. If not specified (default), uses Bluprint
             default built-in template.
 
         r_proj (bool): Setup R library using renv to support package
@@ -142,7 +141,7 @@ class Bluprint(object):
         )
         if r_proj:
             initialize_r_project(project_name)
-        styled_print('Ok', print_bluprint=False)
+        styled_print(f'project `{project_name}` created.')
 
     def notebook(
         self,
@@ -212,17 +211,18 @@ class Bluprint(object):
             output_yaml (str): Output yaml filepath.
             skip_dot_files (bool, optional): Skip files starting with a dot.
         """
-        styled_print(f'index {input_dir}/** ❯ {output_yaml}')
+        styled_print(f'index {input_dir}/** ❯ {output_yaml}')  # noqa: RUF001
         index_dir_to_config_yaml(input_dir, output_yaml, skip_dot_files)
 
 
+@progress_log('checking if project can be created...')
 def check_if_project_can_be_created(
     project_name: str,
     parent_dir: str | None = None,
     r_proj: bool = False,
 ) -> None:
     check_if_project_exists(project_name, parent_dir)
-    check_if_executable_is_installed('pdm')
+    check_if_executable_is_installed('uv')
     if r_proj:
         check_if_executable_is_installed('Rscript')
         check_if_r_package_is_installed('renv')

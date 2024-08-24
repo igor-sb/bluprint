@@ -1,7 +1,9 @@
 """Test creating a new Python project."""
 
 from pathlib import Path
+
 from importlib_resources import files
+
 from bluprint import cli
 
 
@@ -23,7 +25,7 @@ def test_create_init_project(find_files_in_dir, tmp_path):
     }
     template_files.update([
         Path('pyproject.toml'),
-        Path('pdm.lock'),
+        Path('uv.lock'),
     ])
     template_files.remove(Path('placeholder_name.Rproj'))  # Python-only test
     template_files.remove(Path('notebooks/example_rmarkdown.Rmd'))

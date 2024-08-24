@@ -1,6 +1,6 @@
 ---
 title: "example_rmarkdown"
-author: "Igor Segota"
+author: "Albert Einstein"
 date: "2023-11-26"
 output: html_document
 ---

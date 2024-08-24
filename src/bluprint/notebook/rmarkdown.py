@@ -10,7 +10,7 @@ from tqdm import tqdm
 from bluprint.notebook.progress import tqdm_format_without_total
 
 
-def run_rmarkdown_notebook(  # noqa: WPS210
+def run_rmarkdown_notebook(
     notebook_file: str | Path,
     display_prefix: str,
     notebook_dir: str | Path | None = 'notebooks',

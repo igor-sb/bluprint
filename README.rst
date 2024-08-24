@@ -20,7 +20,7 @@ data and shared code in this type of structure::
         └── shared_code.py
 
 Configuration *conf/data.yaml* contains either absolute paths or paths relative
-to the *my_project/data/*::
+to the *my_project/data/*:
 
 .. code:: yaml
 
@@ -29,7 +29,7 @@ to the *my_project/data/*::
     user:
         processed: 'user_processed.csv'
 
-This allows writing notebooks without hard-coding file paths, like this::
+This allows writing notebooks without hard-coding file paths, like this:
 
 .. code:: python
 

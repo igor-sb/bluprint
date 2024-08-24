@@ -3,21 +3,23 @@
 Bluprint
 ========
 
-**Bluprint** is a command line utility for streamlined exploratory data science projects. Bluprint allows seamless access to configuration, data and shared code in this type of project structure created by ``bluprint create my_project``::
+**Bluprint** is a command line utility for creating data science project
+templates, allowing R and Jupyter notebooks seamless access to configuration,
+data and shared code in this type of structure::
 
     my_project
     ├── conf
-    │   └── data.yaml
-    ├── data
+    │   └── data.yaml              # YAML config with data paths
+    ├── data                       # Store smaller data  
     │   ├── emailed
     │   │   └── messy.xlsx
     │   └── user_processed.csv
-    ├── notebooks
+    ├── notebooks                  # Notebooks 
     │   └── process.ipynb
-    └── my_project
+    └── my_project                 # Local Python package used by my_project
         └── shared_code.py
 
-Storing paths relative to the *my_project* directory in *conf/data.yaml*:
+Configuration *conf/data.yaml* contains paths relative to the *my_project/data/*:
 
 .. code:: yaml
 
@@ -26,25 +28,13 @@ Storing paths relative to the *my_project* directory in *conf/data.yaml*:
     user:
         processed: 'user_processed.csv'
 
-allows you access them in a Python script or Jupyter notebook anywhere within the project:
+This allows writing notebooks without hard-coding file paths, like this::
 
 .. code:: python
 
     from bluprint_conf import load_data_yaml
 
-    data = load_data_yaml() # By default loads conf/data.yaml
-    print(data)
-    #> {
-    #>   'emailed': {
-    #>     'messy': '/path/to/my_project/data/emailed/messy.xlsx'
-    #>   },
-    #>   'user': {
-    #> 	   'processed': '/path/to/my_project/data/user_processed.csv'
-    #>   },
-    #>   'remote': {
-    #>     'extras': 's3://path/to/extra_data.csv'
-    #>   },
-    #> }
+    data = load_data_yaml()  # By default loads conf/data.yaml
 
     # Load data in a portable manner
     import pandas as pd
@@ -52,6 +42,7 @@ allows you access them in a Python script or Jupyter notebook anywhere within th
     extras_df = pd.read_xlsx(data.remote.extras)
 
     # Load shared code functions as Python modules
+    # in any notebook anywhere in this project.
     from my_project.shared_code import transform_data
     transformed_df = transform_data(messy_df, extras_df)
 
@@ -67,11 +58,11 @@ Features
 --------
 
 - Write portable notebooks by loading configs with `load_data_yaml() <https://igor-sb.github.io/bluprint-conf/html/reference.html#bluprint_conf.data.load_data_yaml>`_ and `load_config_yaml() <https://igor-sb.github.io/bluprint-conf/html/reference.html#bluprint_conf.config.load_config_yaml>`_
-- R/Python packages automatically version-locked using `renv <https://rstudio.github.io/renv/>`_ and `PDM <https://pdm-project.org/latest/>`_
+- R/Python packages automatically version-locked using `renv <https://rstudio.github.io/renv/>`_ and `uv <https://docs.astral.sh/uv/>`_
 - Import shared code as Python modules
 - Install shared code across projects with `pip install <https://igor-sb.github.io/bluprint/prod_projects.html>`_
 - Use both Python and R notebooks in a single project (see `Python/R projects </https://igor-sb.github.io/bluprint/getting_started.html#python-r-projects>`_)
-- Share projects by copying a project directory and running *pdm install*
+- Share projects by copying a project directory and running *uv install*
 - Works with common IDEs (RStudio, VSCode), notebook tools for linting (`nbqa <https://nbqa.readthedocs.io/en/latest/>`_), notebook version control (`nbstripout <https://github.com/kynan/nbstripout>`_) or workflows (`Ploomber <https://github.com/ploomber/ploomber>`_)
 
 Documentation

@@ -4,15 +4,19 @@ PROJ= src
 NC=\033[0m # No Color
 
 .PHONY: install autolint lint lint-flake8 shell precommit pdm-precommit \
-		install-dev test report-coverage docs lint-mypy build
+		install-dev test test-update-snapshots report-coverage docs lint-mypy \
+		build publish
 
 test:
 		${UV_RUN} coverage erase
 		${UV_RUN} coverage run --branch -m pytest tests ${PROJ} \
 				--junitxml=junit/test-results.xml -v
 
+test-update-snapshots:
+		${UV_RUN} coverage run --branch -m pytest --snapshot-update tests/workflow src
+
 install: install-dev
-		uv sync
+		${UV_RUN} sync
 
 lint:
 		make autolint
@@ -71,4 +75,7 @@ clean:
 	rm -rf tests/__pycache__
 
 build:
-	@rm -rf build; uv build
+	@rm -rf dist; uvx --from build pyproject-build --installer uv
+
+publish:
+	@uvx twine upload dist/*

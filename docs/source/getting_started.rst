@@ -15,6 +15,22 @@ This creates the following directory tree:
 .. code-block:: none
 
   myproj
+  ├── conf
+  │   ├── config.yaml
+  │   ├── data.yaml
+  │   └── workflows.yaml
+  ├── data
+  │   └── example_data.csv
+  ├── notebooks
+  │   ├── example_jupyternb.ipynb
+  │   └── example_quarto.qmd
+  ├── myproj
+  │   ├── __init__.py
+  │   └── example.py
+  ├── README.md
+  └── pyproject.toml
+
+  myproj
   ├── .gitignore                      # Files excluded from version control
   ├── .venv                           # Project's Python virtual environment
   ├── README.md

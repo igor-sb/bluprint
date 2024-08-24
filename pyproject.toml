@@ -39,9 +39,6 @@ dev-dependencies = [
     "ruff>=0.6.2",
 ]
 
-[tool.uv.workspace]
-members = ["tmp/tmp2"]
-
 [project.scripts]
 bluprint = "bluprint.cli:main"
 

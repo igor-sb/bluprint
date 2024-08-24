@@ -16,6 +16,6 @@ runs:
 
     - name: Install uv and package dependencies
       run: |
-        curl -LsSf https://astral.sh/uv/install.sh | sh
+        curl --proto '=https' --tlsv1.2 -LsSf https://github.com/astral-sh/uv/releases/download/${{ inputs.UV_VERSION }}/uv-installer.sh | sh
         make install
       shell: bash

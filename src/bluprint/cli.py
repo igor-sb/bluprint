@@ -179,9 +179,6 @@ class Bluprint(object):
 
         workflow_yaml (str | PosixPath, optional): Workflow YAML filename.
 
-        workflow_yaml_dir (str | PosixPath, optional): Root directory
-        containing workflow YAML.
-
         notebook_dir (str | PosixPath, optional): Root directory containing
         all the notebooks.
 

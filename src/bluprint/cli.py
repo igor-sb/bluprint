@@ -6,21 +6,19 @@ from pathlib import Path
 import fire
 from bluprint_conf import load_config_yaml
 
-from bluprint.binary import check_if_executable_is_installed
-from bluprint.colors import progress_log, styled_print
+from bluprint.colors import styled_print
 from bluprint.create.py_project import (
     check_python_version,
     create_python_project,
     get_current_working_dir,
     initialize_python_project,
 )
-from bluprint.create.r_project import (
-    check_if_r_package_is_installed,
-    create_r_project,
-    initialize_r_project,
-)
-from bluprint.errors import ProjectExistsError
+from bluprint.create.r_project import create_r_project, initialize_r_project
 from bluprint.index import index_dir_to_config_yaml
+from bluprint.project import (
+    check_if_project_can_be_created,
+    check_if_project_files_exist,
+)
 from bluprint.workflow import run_notebook, run_workflow
 
 sys.tracebacklimit = 0
@@ -119,6 +117,7 @@ class Bluprint(object):
         template_dir: str | None = None,
         r_project: bool = False,
         add_examples: bool = True,
+        overwrite: bool = False,
     ) -> None:
         """Initialize a bluprint project in an existing directory.
 
@@ -145,7 +144,9 @@ class Bluprint(object):
             isolation in RMarkdown notebooks.
 
         add_examples (bool, optional): Add example data and notebooks in the new
-            project. (Default: True)            
+            project.
+
+        overwrite (bool, optional): Overwrite existing files.
 
         Raises:
 
@@ -160,7 +161,7 @@ class Bluprint(object):
         )
         if not project_dir:
             project_dir = get_current_working_dir()
-        check_if_pyproject_toml_exists(project_dir)
+        check_if_project_files_exist(project_name, project_dir, overwrite)
         check_python_version(python_version)
         initialize_python_project(
             project_name=project_name,
@@ -241,34 +242,6 @@ class Bluprint(object):
         """
         styled_print(f'index {input_dir}/** ❯ {output_yaml}')  # noqa: RUF001
         index_dir_to_config_yaml(input_dir, output_yaml, skip_dot_files)
-
-
-@progress_log('checking if project can be created...')
-def check_if_project_can_be_created(
-    project_name: str,
-    parent_dir: str | None = None,
-    r_project: bool = False,
-) -> None:
-    check_if_project_exists(project_name, parent_dir)
-    check_if_executable_is_installed('uv')
-    if r_project:
-        check_if_executable_is_installed('Rscript')
-        check_if_r_package_is_installed('renv')
-
-
-def check_if_project_exists(project_name: str, parent_dir: str | None) -> None:
-    if not parent_dir:
-        parent_dir = get_current_working_dir()
-    if (Path(parent_dir) / project_name).is_dir():
-        raise ProjectExistsError(f'{project_name} directory exists.')
-
-
-def check_if_pyproject_toml_exists(project_dir: str) -> None:
-    if (Path(project_dir) / 'pyproject.toml').exists():
-        raise ProjectExistsError(
-            f'pyproject.toml already exists in {project_dir}: '
-            + 'cannot initialize new bluprint project',
-        )
 
 
 def main():

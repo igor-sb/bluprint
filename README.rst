@@ -61,7 +61,7 @@ Features
 
 - Write portable notebooks by storing all file paths to yaml configs and load
   them with `load_data_yaml() <https://igor-sb.github.io/bluprint-conf/html/\
-  reference.html#bluprint_conf.data.load_data_yaml>`_ and `load_config_yaml() \
+reference.html#bluprint_conf.data.load_data_yaml>`_ and `load_config_yaml() \
   <https://igor-sb.github.io/bluprint-conf/html/reference.html#\
   bluprint_conf.config.load_config_yaml>`_
 - R/Python packages are version-locked with `renv \
@@ -70,7 +70,7 @@ Features
 - Packaged code can be shared across projects with `pip install \
   <https://igor-sb.github.io/bluprint/prod_projects.html>`_
 - Use both Python and R notebooks in a single project (see `Python/R projects \
-  </https://igor-sb.github.io/bluprint/getting_started.html#python-r-projects>`_)
+</https://igor-sb.github.io/bluprint/getting_started.html#python-r-projects>`_)
 - Share entire projects by copying a project directory and running
   *uv venv && uv sync*
 - Works with common IDEs (RStudio, VSCode), notebook tools for linting (`nbqa \
@@ -110,17 +110,17 @@ Bluprint integrates:
   importlib.html>`_
 * R packages `{renv} <https://rstudio.github.io/renv/>`_, `{here} \
   <https://here.r-lib.org/>`_ and `{reticulate} <https://rstudio.github.io/\
-  reticulate/>`_
+reticulate/>`_
 
 Bluprint is inspired by these resources:
 
 * `Cookiecutter Data Science <https://drivendata.github.io/cookiecutter-data-\
-  science/>`_
+science/>`_
 * `RStudio Projects <https://support.posit.co/hc/en-us/articles/\
-  200526207-Using-RStudio-Projects>`_
+200526207-Using-RStudio-Projects>`_
 * `Ploomber <https://github.com/ploomber/ploomber>`_
 * `Microsoft Team Data Science Process <https://learn.microsoft.com/en-us/\
-  azure/architecture/data-science-process/overview>`_
+azure/architecture/data-science-process/overview>`_
 * `R for Data Science (2e): 6. Workflow: scripts and projects \
   <https://r4ds.hadley.nz/workflow-scripts.html>`_
 * `Vincent D. Warmerdam: Untitled12.ipynb | PyData Eindhoven 2019 \

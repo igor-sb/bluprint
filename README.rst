@@ -61,9 +61,10 @@ Features
 
 - Write portable notebooks by storing all file paths to yaml configs and load
   them with `load_data_yaml() <https://igor-sb.github.io/bluprint-conf/html/\
-  reference.html#bluprint_conf.data.load_data_yaml>`_ and `load_config_yaml() \
+reference.html#bluprint_conf.data.load_data_yaml>`_ and `load_config_yaml() \
   <https://igor-sb.github.io/bluprint-conf/html/reference.html#\
-  bluprint_conf.config.load_config_yaml>`_
+bluprint_conf.config.load_config_yaml>`_
+
 - R/Python packages are version-locked with `renv \
   <https://rstudio.github.io/renv/>`_ and `uv <https://docs.astral.sh/uv/>`_
 - Import packaged code as Python modules

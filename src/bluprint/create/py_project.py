@@ -66,6 +66,10 @@ def initialize_project(
         Path(project_dir) / 'pyproject.toml',
         project_name,
     )
+    replace_placeholder_name_in_file(
+        Path(project_dir) / 'notebooks' / 'example_quarto.qmd',
+        project_name,
+    )
     replace_placeholder_name_in_notebook(
         Path(project_dir) / 'notebooks' / 'example_jupyternb.ipynb',
         project_name,

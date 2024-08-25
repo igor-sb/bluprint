@@ -15,42 +15,26 @@ This creates the following directory tree:
 .. code-block:: none
 
   myproj
-  ├── conf
-  │   ├── config.yaml
-  │   ├── data.yaml
-  │   └── workflows.yaml
-  ├── data
+  ├── .venv                           # Project's Python virtual environment
+  ├── conf                            # Yaml configuration files
+  │   ├── config.yaml                 #   Accessible using load_config_yaml()
+  │   ├── data.yaml                   #   Accessible using load_data_yaml()
+  │   └── workflow.yaml               #   Used by bluprint workflow
+  ├── data                            # Local data (e.g. csv, png, pdf)
   │   └── example_data.csv
-  ├── notebooks
+  ├── notebooks                       # Jupyter/R/Quarto notebooks
   │   ├── example_jupyternb.ipynb
   │   └── example_quarto.qmd
-  ├── myproj
-  │   ├── __init__.py
-  │   └── example.py
-  ├── README.md
-  └── pyproject.toml
-
-  myproj
-  ├── .gitignore                      # Files excluded from version control
-  ├── .venv                           # Project's Python virtual environment
-  ├── README.md
-  ├── conf                            # yaml configuration files
-  │   ├── config.yaml
-  │   ├── data.yaml
-  │   └── workflow.yaml
-  ├── data                            # data such as csv, png, pdf
-  │   └── example_data.csv
-  ├── notebooks                       # jupyter notebooks
-  │   └── example_jupyternb.ipynb
   ├── myproj                          # Python package of this project
-  │   └── example.py
-  └── pyproject.toml                  # Python package configuration
+  │   └── example.py                  #   Modules within myproj package
+  ├── .gitignore                      # File list excluded from version control
+  ├── README.md                       # Readme file describing the project
+  ├── pyproject.toml                  # Project configuration
+  └── uv.lock                         # Locked version of Python dependencies
 
-It also creates a Python virtual environment in the *.venv* directory, sets up
-the Python files in the *myproj* directory accessible as
+and sets up the Python scripts in the *myproj* directory accessible as
 ``from myproj.example import add_one`` in any notebook or Python script that
-uses this virtual environment and installs Python packages *bluprint_conf*,
-*ipykernel* and *pandas*.
+uses this virtual environment and *bluprint_conf*.
 
 By default *conf/config.yaml* contains this placeholder:
 
@@ -84,7 +68,6 @@ argument.
 
 Python/R projects
 -----------------
-
 If you would like to setup a Python/R project that supports both Jupyter and
 RMarkdown notebooks use:
 

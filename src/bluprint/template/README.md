@@ -9,7 +9,7 @@ Install [uv](https://github.com/astral-sh/uv), then run:
 ```sh
 git clone https://github.com/{{git_account_name}}/{{placeholder_name}}.git
 cd {{placeholder_name}}
-pdm install
+uv venv && uv sync
 ```
 
 ## Running notebooks

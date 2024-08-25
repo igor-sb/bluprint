@@ -6,6 +6,8 @@ then you don't need to do anything. *uv* will automatically handle installing
 necessary Python versions; see `uv - Installing Python <https://docs.astral.sh/uv/guides/install-python/>`_
 for details.
 
+Switching between Python versions
+---------------------------------
 
 You can use `pyenv <https://github.com/pyenv/pyenv#installation>`_ to manage
 Python versions. Once it is installed, use ``pyenv versions`` to see which

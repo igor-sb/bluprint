@@ -20,7 +20,7 @@ Contributing code guidelines
 ----------------------------
 
 1. Fork and clone the repo.
-2. Ensure you have a development environment setup. This includes correct versions of Python, PDM as well as R and it's relevant packages if you intend to change R project code. Run ``pdm install --dev`` to install all dependencies, including those in the development group in *pyproject.toml*.
+2. Ensure you have a development environment setup. This includes correct versions of Python, uv as well as R and it's relevant packages if you intend to change R project code. Run ``pdm install --dev`` to install all dependencies, including those in the development group in *pyproject.toml*.
 3. After creating a new code, ensure it passes linting and static typing checks; run ``make lint``.
 4. Add appropriate unit tests and ensure it passes all unit tests; run ``make test``. Add ``export JUPYTER_PLATFORM_DIRS=1`` to your *.bashrc* or *.zshrc* to silence a Jupyter deprecation warning.
 5. If you make changes to the documentation, you can build it locally using ``make docs``, then open *docs/build/index.html* file in your browser.

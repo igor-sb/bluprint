@@ -46,7 +46,11 @@ This creates the following directory tree:
   │   └── example.py
   └── pyproject.toml                  # Python package configuration
 
-It also creates a Python virtual environment in the *.venv* directory, sets up the Python files in the *myproj* directory accessible as ``from myproj.example import add_one`` in any notebook or Python script that uses this virtual environment and installs Python packages *bluprint_conf*, *ipykernel* and *pandas*.
+It also creates a Python virtual environment in the *.venv* directory, sets up
+the Python files in the *myproj* directory accessible as
+``from myproj.example import add_one`` in any notebook or Python script that
+uses this virtual environment and installs Python packages *bluprint_conf*,
+*ipykernel* and *pandas*.
 
 By default *conf/config.yaml* contains this placeholder:
 
@@ -57,7 +61,8 @@ and *data/example_data.csv* contains:
 
 .. literalinclude:: ../../src/bluprint/template/data/example_data.csv
 
-Access data from *conf/data.yaml* and general configuration from *conf/config.yaml* files using:
+Access data from *conf/data.yaml* and general configuration from
+*conf/config.yaml* files using:
 
 .. code-block:: python
 
@@ -72,13 +77,16 @@ Access data from *conf/data.yaml* and general configuration from *conf/config.ya
   # Read configuration
   cfg.url   # "www.google.com"
 
-By default, these functions load *conf/data.yaml* and *conf/config.yaml* so if you have (additional) configuration in other files, specify them in the first argument.
+By default, these functions load *conf/data.yaml* and *conf/config.yaml* so if
+you have (additional) configuration in other files, specify them in the first
+argument.
 
 
 Python/R projects
 -----------------
 
-If you would like to setup a Python/R project that supports both Jupyter and RMarkdown notebooks use:
+If you would like to setup a Python/R project that supports both Jupyter and
+RMarkdown notebooks use:
 
 .. code-block:: bash
 
@@ -107,7 +115,9 @@ which also sets up renv and RStudio Rproj file and an example notebook:
   ├── renv                            # Project's R environment
   └── pyproject.toml                  # Python package configuration
 
-Python notebooks and code still work the same as in the Python-only project. R notebooks and code can load the configuration and data using {reticulate} and {here} packages that are pre-installed to the project's renv:
+Python notebooks and code still work the same as in the Python-only project. R
+notebooks and code can load the configuration and data using {reticulate} and
+{here} packages that are pre-installed to the project's renv:
 
 .. code-block:: r
 

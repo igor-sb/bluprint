@@ -3,7 +3,7 @@ FOLDERS= src
 PROJ= src
 NC=\033[0m # No Color
 
-.PHONY: install autolint lint lint-flake8 shell precommit pdm-precommit \
+.PHONY: install autolint lint lint-flake8 shell precommit uv-precommit \
 		install-dev test test-update-snapshots report-coverage docs lint-mypy \
 		build publish
 
@@ -44,9 +44,9 @@ lint-mypy:
 		@echo "\n${BLUE}Running mypy...${NC}\n"
 		${UV_RUN} mypy --show-error-codes ${PROJ}
 
-precommit: pdm-precommit lint
+precommit: uv-precommit lint
 
-pdm-precommit:
+uv-precommit:
 		${UV_RUN} pre-commit run --all-files
 
 report-coverage:

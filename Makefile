@@ -51,8 +51,8 @@ uv-precommit:
 
 report-coverage:
 		${UV_RUN} coverage report --include="src/**"
-		${UV_RUN} coverage html
-		${UV_RUN} coverage xml
+		${UV_RUN} coverage html  --include="src/**"
+		${UV_RUN} coverage xml  --include="src/**"
 
 docs:
 	@echo "\n${BLUE}Preparing Sphinx documentation...${NC}\n"

@@ -35,22 +35,31 @@ class Bluprint(object):
         parent_dir: str | None = None,
         template_dir: str | None = None,
         r_proj: bool = False,
+        add_examples: bool = True,
     ) -> None:
-        """Create a directory with a bluprint project.
+        """Create a directory with a bluprint project:
 
-        Creates a project directory structure:
-        - .venv/: virtual environment
-        - conf/: yaml configurations
-        - data/: tables and other data files
-        - PROJECT_NAME/: source (non-notebook) code for this project
-        - notebooks/: Jupyter notebooks
-        - pyproject.toml: project package configuration
-        - README.md: readme file
+        .
+        ├── .venv                         Project's Python virtual environment
+        ├── conf                          Yaml configuration files
+        │   ├── config.yaml                 Accessible using load_config_yaml()
+        │   ├── data.yaml                   Accessible using load_data_yaml()
+        │   └── workflow.yaml               Used by bluprint workflow
+        ├── data                          Local data (e.g. csv, png, pdf)
+        │   └── example_data.csv
+        ├── notebooks                     Jupyter/R/Quarto notebooks
+        │   ├── example_jupyternb.ipynb
+        │   └── example_quarto.qmd
+        ├── myproj                        Python package of this project
+        │   └── example.py                  Modules within myproj package
+        ├── .gitignore                    Files excluded from version control
+        ├── README.md                     Readme file describing the project
+        ├── pyproject.toml                Project configuration
+        └── uv.lock                       Locked version of Python dependencies
 
-        Also, initalizes, a python package PROJECT_NAME in editable mode. This
-        means that files within PROJECT_NAME/ are accessible in notebooks
-        as a Python package, without a need to `pip install` them each time
-        there is a change.
+        Bluprint also makes all files within PROJECT_NAME/ accessible to
+        notebooks as an editable Python package: after changing the files re-run
+        the notebook for changes to update.
 
         Args:
 
@@ -73,6 +82,9 @@ class Bluprint(object):
         r_proj (bool, optional): Setup R library using renv to support package
             isolation in RMarkdown notebooks.
 
+        add_examples (bool, optional): Add example data and notebooks in the new
+            project.
+
         """
         styled_print(
             'creating Python{with_r} project {project_name} '.format(
@@ -82,9 +94,15 @@ class Bluprint(object):
         )
         check_if_project_can_be_created(project_name, parent_dir, r_proj)
         check_python_version(python_version)
-        create_project(project_name, python_version, parent_dir, template_dir)
+        create_project(
+            project_name,
+            python_version,
+            parent_dir,
+            template_dir,
+            add_examples,
+        )
         if r_proj:
-            initialize_r_project(project_name, parent_dir)
+            initialize_r_project(project_name, parent_dir, add_examples)
         styled_print(f'project `{project_name}` created.')
 
     def init(
@@ -94,8 +112,11 @@ class Bluprint(object):
         project_dir: str | None = None,
         template_dir: str | None = None,
         r_proj: bool = False,
+        add_examples: bool = True,
     ) -> None:
         """Initialize a bluprint project in existing directory.
+
+        Same functionality as `bluprint create` but from an existing directory.
 
         Args:
 
@@ -116,6 +137,9 @@ class Bluprint(object):
 
         r_proj (bool): Setup R library using renv to support package
             isolation in RMarkdown notebooks.
+
+        add_examples (bool, optional): Add example data and notebooks in the new
+            project. (Default: True)            
 
         Raises:
 
@@ -138,9 +162,10 @@ class Bluprint(object):
             python_version,
             Path(project_dir),
             template_dir,
+            add_examples,
         )
         if r_proj:
-            initialize_r_project(project_name)
+            initialize_r_project(project_name, add_examples=add_examples)
         styled_print(f'project `{project_name}` created.')
 
     def notebook(

@@ -5,12 +5,14 @@ from pathlib import Path
 from bluprint.binary import rcmd, renv_init, renv_install
 from bluprint.colors import styled_print
 from bluprint.create.errors import RenvSnapshotError, RpackageMissingError
+from bluprint.create.template_setup import delete_r_examples_from_project
 from bluprint.template import copy_rproj_files
 
 
 def initialize_r_project(
     project_name: str,
     parent_dir: str | None = None,
+    add_examples: bool = True,
 ) -> None:
     r_packages = ('reticulate', 'here', 'knitr', 'rmarkdown')
     if not parent_dir:
@@ -26,6 +28,8 @@ def initialize_r_project(
     styled_print('installing reticulate, here, knitr...', endline='')
     rcmd('renv::snapshot()', RenvSnapshotError, cwd=project_dir)
     copy_rproj_files(project_name, project_dir)
+    if not add_examples:
+        delete_r_examples_from_project(project_dir)
 
 
 def check_if_r_package_is_installed(package: str) -> None:

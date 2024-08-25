@@ -4,20 +4,19 @@ import os
 import shutil
 from pathlib import Path
 
-from importlib_resources import files
 from packaging.version import Version
 
 from bluprint.binary import run, uv_add, uv_init
 from bluprint.colors import progress_log
 from bluprint.create.errors import LowPythonVersionError, PythonVersionError
-from bluprint.create.template_setup import (
+from bluprint.template import (
+    default_template_dir,
     delete_examples_from_project,
     delete_r_files_from_project,
     replace_git_account_name,
     replace_placeholder_name_in_file,
     replace_placeholder_name_in_notebook,
 )
-from bluprint.template import default_template_dir
 
 MIN_PYTHON_VERSION = '3.11'
 

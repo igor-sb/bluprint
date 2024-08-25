@@ -23,7 +23,7 @@ from bluprint.errors import ProjectExistsError
 from bluprint.index import index_dir_to_config_yaml
 from bluprint.workflow import run_notebook, run_workflow
 
-# sys.tracebacklimit = 0
+sys.tracebacklimit = 0
 
 
 class Bluprint(object):

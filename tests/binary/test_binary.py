@@ -8,7 +8,6 @@ import pytest
 from bluprint.binary import (
     MissingExecutableError,
     check_if_executable_is_installed,
-    renv_install,
     uv,
 )
 

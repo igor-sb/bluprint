@@ -2,8 +2,6 @@
 
 from pathlib import Path
 
-from importlib_resources import files
-
 from bluprint import cli
 from bluprint.template import default_template_dir
 

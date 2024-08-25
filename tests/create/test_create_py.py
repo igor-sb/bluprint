@@ -7,8 +7,7 @@ from importlib_resources import files
 
 from bluprint import cli
 from bluprint.create.errors import LowPythonVersionError
-from bluprint.create.template_setup import example_files
-from bluprint.template import default_template_dir
+from bluprint.template import default_template_dir, example_files
 
 
 def test_create_py_project(find_files_in_dir, tmp_path):

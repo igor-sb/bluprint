@@ -42,3 +42,7 @@ def test_create_py_project(find_files_in_dir, tmp_path):
 def test_low_python_version():
     with pytest.raises(LowPythonVersionError):
         cli.check_python_version('3.10')
+
+
+def test_create_py_project_without_examples():
+    pass

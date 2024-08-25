@@ -65,16 +65,14 @@ Features
 - R/Python packages are version-locked with `renv <https://rstudio.github.io/renv/>`_
   and `uv <https://docs.astral.sh/uv/>`_
 - Import packaged code as Python modules
-- Packaged code can be shared across projects with `pip install \
-  <https://igor-sb.github.io/bluprint/prod_projects.html>`_
-- Use both Python and R notebooks in a single project (see `Python/R projects \
-</https://igor-sb.github.io/bluprint/getting_started.html#python-r-projects>`_)
+- Packaged code can be shared across projects with `pip install <https://igor-sb.github.io/bluprint/prod_projects.html>`_
+- Use both Python and R notebooks in a single project (see
+  `Python/R projects </https://igor-sb.github.io/bluprint/getting_started.html#python-r-projects>`_)
 - Share entire projects by copying a project directory and running
   *uv venv && uv sync*
-- Works with common IDEs (RStudio, VSCode), notebook tools for linting (`nbqa \
-  <https://nbqa.readthedocs.io/en/latest/>`_), notebook version control 
-  (`nbstripout <https://github.com/kynan/nbstripout>`_) or workflows (`Ploomber\
-  <https://github.com/ploomber/ploomber>`_)
+- Works with common IDEs (RStudio, VSCode), notebook tools for linting (`nbqa <https://nbqa.readthedocs.io/en/latest/>`_),
+  notebook version control (`nbstripout <https://github.com/kynan/nbstripout>`_)
+  or workflows (`Ploomber <https://github.com/ploomber/ploomber>`_)
 
 Documentation
 -------------
@@ -104,25 +102,18 @@ Bluprint integrates:
 
 * `uv <https://docs.astral.sh/uv/>`_
 * `OmegaConf <https://omegaconf.readthedocs.io/>`_
-* Python's native import system `importlib <https://docs.python.org/3/library/\
-  importlib.html>`_
-* R packages `{renv} <https://rstudio.github.io/renv/>`_, `{here} \
-  <https://here.r-lib.org/>`_ and `{reticulate} <https://rstudio.github.io/\
-reticulate/>`_
+* Python's native import system `importlib <https://docs.python.org/3/library/importlib.html>`_
+* R packages `{renv} <https://rstudio.github.io/renv/>`_, `{here} <https://here.r-lib.org/>`_
+  and `{reticulate} <https://rstudio.github.io/reticulate/>`_
 
 Bluprint is inspired by these resources:
 
-* `Cookiecutter Data Science <https://drivendata.github.io/cookiecutter-data-\
-science/>`_
-* `RStudio Projects <https://support.posit.co/hc/en-us/articles/\
-200526207-Using-RStudio-Projects>`_
+* `Cookiecutter Data Science <https://drivendata.github.io/cookiecutter-data-science/>`_
+* `RStudio Projects <https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects>`_
 * `Ploomber <https://github.com/ploomber/ploomber>`_
-* `Microsoft Team Data Science Process <https://learn.microsoft.com/en-us/\
-azure/architecture/data-science-process/overview>`_
-* `R for Data Science (2e): 6. Workflow: scripts and projects \
-  <https://r4ds.hadley.nz/workflow-scripts.html>`_
-* `Vincent D. Warmerdam: Untitled12.ipynb | PyData Eindhoven 2019 \
-  <https://www.youtube.com/watch?v=yXGCKqo5cEY>`_
+* `Microsoft Team Data Science Process <https://learn.microsoft.com/en-us/azure/architecture/data-science-process/overview>`_
+* `R for Data Science (2e): 6. Workflow: scripts and projects <https://r4ds.hadley.nz/workflow-scripts.html>`_
+* `Vincent D. Warmerdam: Untitled12.ipynb | PyData Eindhoven 2019 <https://www.youtube.com/watch?v=yXGCKqo5cEY>`_
 
 License
 -------

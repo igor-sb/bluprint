@@ -50,7 +50,7 @@ uv-precommit:
 		${UV_RUN} pre-commit run --all-files
 
 report-coverage:
-		${UV_RUN} coverage report
+		${UV_RUN} coverage report --include="src/**"
 		${UV_RUN} coverage html
 		${UV_RUN} coverage xml
 

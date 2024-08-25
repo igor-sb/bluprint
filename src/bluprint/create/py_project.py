@@ -12,53 +12,57 @@ from bluprint.colors import progress_log
 from bluprint.create.errors import LowPythonVersionError, PythonVersionError
 from bluprint.create.template_setup import (
     delete_examples_from_project,
-    delete_r_files_from_template,
+    delete_r_files_from_project,
     replace_git_account_name,
     replace_placeholder_name_in_file,
     replace_placeholder_name_in_notebook,
 )
+from bluprint.template import default_template_dir
 
 MIN_PYTHON_VERSION = '3.11'
 
 
-def create_project(
+def create_python_project(
     project_name: str,
     python_version: str | None = None,
     parent_dir: str | None = None,
     template_dir: str | None = None,
+    keep_r_files: bool = False,
     add_examples: bool = True,
 ) -> None:
     if not parent_dir:
         parent_dir = '.'
     project_dir = Path(parent_dir) / project_name
     project_dir.mkdir(parents=True)
-    initialize_project(
-        project_name,
-        python_version,
-        project_dir,
-        template_dir,
-        add_examples,
+    initialize_python_project(
+        project_name=project_name,
+        python_version=python_version,
+        project_dir=project_dir,
+        template_dir=template_dir,
+        keep_r_files=keep_r_files,
+        add_examples=add_examples,
     )
 
 
-@progress_log('initializing project...')
-def initialize_project(
+@progress_log('initializing Python project', print_ok=False)
+def initialize_python_project(
     project_name: str,
     python_version: str | None = None,
     project_dir: str | Path = '.',
     template_dir: str | None = None,
+    keep_r_files: bool = False,
     add_examples: bool = True,
 ) -> None:
     if not python_version:
         python_version = default_python_version()
     if not template_dir:
-        template_dir = files('bluprint').joinpath('template')
+        template_dir = default_template_dir()
     uv_init(python_version, str(project_dir))
     os.remove(Path(project_dir) / 'src' / project_name / '__init__.py')
     os.rmdir(Path(project_dir) / 'src' / project_name)
     os.rmdir(Path(project_dir) / 'src')
     shutil.copytree(
-        template_dir,  # type: ignore
+        template_dir,
         project_dir,
         dirs_exist_ok=True,
     )
@@ -66,7 +70,8 @@ def initialize_project(
         Path(project_dir) / 'placeholder_name',
         Path(project_dir) / project_name,
     )
-    delete_r_files_from_template(project_dir)
+    if not keep_r_files:
+        delete_r_files_from_project(project_dir)
     replace_placeholder_name_in_file(
         Path(project_dir) / 'README.md',
         project_name,
@@ -103,3 +108,7 @@ def check_python_version(
 ) -> None:
     if python_version and (Version(python_version) < Version(MIN_PYTHON_VERSION)):
         raise LowPythonVersionError('Bluprint requires Python >= 3.11.')
+
+
+def get_current_working_dir() -> str:
+    return os.getcwd()

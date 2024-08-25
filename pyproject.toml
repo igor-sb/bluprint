@@ -72,12 +72,14 @@ ignore = [
 	'D103',  # D103 Missing docstring in public function
 	'D104',  # Missing docstring in public package
 	'D107',  # D107 Missing docstring in __init__
-	'D412',  # No blank lines allowed between a section header and its content
-	'D407',  # Missing dashed underline after section
-	'D413',  # Missing blank line after last section
 	'D212',  # `multi-line-summary-first-line
 	'D213',
 	'D203', # one-blank-line-before-class`
+	'D400',  # First line should end with period
+	'D407',  # Missing dashed underline after section
+	'D412',  # No blank lines allowed between a section header and its content
+	'D413',  # Missing blank line after last section
+	'D415',  # First line should end with a period, question mark, or exclamation point
 	#'I003',  # I003 isort expected 1 blank line in imports, found 0
 	# 'DAR003',  # DAR003 Incorrect indentation: ~<
 	# 'DAR101',  # DAR101 Missing parameter(s) in Docstring: - repeated_bases_regex

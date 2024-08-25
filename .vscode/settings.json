@@ -10,5 +10,6 @@
 		"titleBar.activeBackground": "#00c8ff",
 		"titleBar.inactiveBackground": "#00c8ff"
 	},
-	"r.lsp.promptToInstall": false
+	"r.lsp.promptToInstall": false,
+	"editor.renderWhitespace": "all"
 }

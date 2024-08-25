@@ -1,35 +1,37 @@
 """Create an R project for bluprint."""
 
+import os
 from pathlib import Path
 
-from bluprint.binary import rcmd, renv_init, renv_install
-from bluprint.colors import styled_print
-from bluprint.create.errors import RenvSnapshotError, RpackageMissingError
-from bluprint.create.template_setup import delete_r_examples_from_project
-from bluprint.template import copy_rproj_files
+from bluprint.binary import rcmd, renv_create_snapshot, renv_init, renv_install
+from bluprint.colors import progress_log
+from bluprint.create.errors import RpackageMissingError
 
 
-def initialize_r_project(
+@progress_log('creating R project', print_ok=False)
+def create_r_project(
     project_name: str,
     parent_dir: str | None = None,
-    add_examples: bool = True,
 ) -> None:
-    r_packages = ('reticulate', 'here', 'knitr', 'rmarkdown')
     if not parent_dir:
         parent_dir = '.'
     project_dir = Path(parent_dir) / project_name
-    styled_print('initalizing renv...', endline='')
+    initialize_r_project(project_name, project_dir)
+
+
+@progress_log('initializing R project', print_ok=False)
+def initialize_r_project(
+    project_name: str,
+    project_dir: str | Path = '.',
+) -> None:
+    r_packages = ('reticulate', 'here', 'knitr', 'rmarkdown')
     renv_init(project_dir)
-    styled_print(' Ok.', print_bluprint=False)
-    # Use Rstudio package manager for faster install
-    styled_print('installing reticulate, here, knitr...', endline='')
     renv_install(r_packages, project_dir)
-    styled_print(' Ok.', print_bluprint=False)
-    styled_print('installing reticulate, here, knitr...', endline='')
-    rcmd('renv::snapshot()', RenvSnapshotError, cwd=project_dir)
-    copy_rproj_files(project_name, project_dir)
-    if not add_examples:
-        delete_r_examples_from_project(project_dir)
+    renv_create_snapshot(project_dir)
+    os.rename(
+        Path(project_dir) / 'placeholder_name.Rproj',
+        Path(project_dir) / f'{project_name}.Rproj',
+    )
 
 
 def check_if_r_package_is_installed(package: str) -> None:

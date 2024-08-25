@@ -1,7 +1,6 @@
 """Command-line interface for bluprint."""
 
 import sys
-from os import getcwd
 from pathlib import Path
 
 import fire
@@ -11,18 +10,20 @@ from bluprint.binary import check_if_executable_is_installed
 from bluprint.colors import progress_log, styled_print
 from bluprint.create.py_project import (
     check_python_version,
-    create_project,
-    initialize_project,
+    create_python_project,
+    get_current_working_dir,
+    initialize_python_project,
 )
 from bluprint.create.r_project import (
     check_if_r_package_is_installed,
+    create_r_project,
     initialize_r_project,
 )
 from bluprint.errors import ProjectExistsError
 from bluprint.index import index_dir_to_config_yaml
 from bluprint.workflow import run_notebook, run_workflow
 
-sys.tracebacklimit = 0
+# sys.tracebacklimit = 0
 
 
 class Bluprint(object):
@@ -34,7 +35,7 @@ class Bluprint(object):
         python_version: str | None = None,
         parent_dir: str | None = None,
         template_dir: str | None = None,
-        r_proj: bool = False,
+        r_project: bool = False,
         add_examples: bool = True,
     ) -> None:
         """Create a directory with a bluprint project:
@@ -79,30 +80,35 @@ class Bluprint(object):
             Bluprint template. If not specified (default), uses Bluprint
             default built-in template.
 
-        r_proj (bool, optional): Setup R library using renv to support package
-            isolation in RMarkdown notebooks.
+        r_project (bool, optional): Setup R library using renv to support
+            package isolation in RMarkdown notebooks.
 
         add_examples (bool, optional): Add example data and notebooks in the new
             project.
 
         """
         styled_print(
-            'creating Python{with_r} project {project_name} '.format(
+            'creating Python{with_r} project {project_name}'.format(
                 project_name=project_name,
-                with_r='/R' if r_proj else '',
+                with_r='/R' if r_project else '',
             ),
         )
-        check_if_project_can_be_created(project_name, parent_dir, r_proj)
-        check_python_version(python_version)
-        create_project(
-            project_name,
-            python_version,
-            parent_dir,
-            template_dir,
-            add_examples,
+        check_if_project_can_be_created(
+            project_name=project_name,
+            parent_dir=parent_dir,
+            r_project=r_project,
         )
-        if r_proj:
-            initialize_r_project(project_name, parent_dir, add_examples)
+        check_python_version(python_version)
+        create_python_project(
+            project_name=project_name,
+            python_version=python_version,
+            parent_dir=parent_dir,
+            template_dir=template_dir,
+            keep_r_files=r_project,
+            add_examples=add_examples,
+        )
+        if r_project:
+            create_r_project(project_name, parent_dir)
         styled_print(f'project `{project_name}` created.')
 
     def init(
@@ -111,10 +117,10 @@ class Bluprint(object):
         python_version: str | None = None,
         project_dir: str | None = None,
         template_dir: str | None = None,
-        r_proj: bool = False,
+        r_project: bool = False,
         add_examples: bool = True,
     ) -> None:
-        """Initialize a bluprint project in existing directory.
+        """Initialize a bluprint project in an existing directory.
 
         Same functionality as `bluprint create` but from an existing directory.
 
@@ -135,7 +141,7 @@ class Bluprint(object):
             Bluprint template. If not specified (default), uses Bluprint
             default built-in template.
 
-        r_proj (bool): Setup R library using renv to support package
+        r_project (bool): Setup R library using renv to support package
             isolation in RMarkdown notebooks.
 
         add_examples (bool, optional): Add example data and notebooks in the new
@@ -146,26 +152,26 @@ class Bluprint(object):
             ProjectExistsError: Raised if pyproject.toml exists in
                 the `project_dir`.
         """
-        if not project_dir:
-            project_dir = getcwd()
         styled_print(
-            'initializing Python{with_r} project {project_name}... '.format(
+            'initializing Python{with_r} project {project_name}'.format(
                 project_name=project_name,
-                with_r='/R' if r_proj else '',
+                with_r='/R' if r_project else '',
             ),
-            endline='',
         )
+        if not project_dir:
+            project_dir = get_current_working_dir()
         check_if_pyproject_toml_exists(project_dir)
         check_python_version(python_version)
-        initialize_project(
-            project_name,
-            python_version,
-            Path(project_dir),
-            template_dir,
-            add_examples,
+        initialize_python_project(
+            project_name=project_name,
+            python_version=python_version,
+            project_dir=Path(project_dir),
+            template_dir=template_dir,
+            keep_r_files=r_project,
+            add_examples=add_examples,
         )
-        if r_proj:
-            initialize_r_project(project_name, add_examples=add_examples)
+        if r_project:
+            initialize_r_project(project_name, project_dir)
         styled_print(f'project `{project_name}` created.')
 
     def notebook(
@@ -241,18 +247,18 @@ class Bluprint(object):
 def check_if_project_can_be_created(
     project_name: str,
     parent_dir: str | None = None,
-    r_proj: bool = False,
+    r_project: bool = False,
 ) -> None:
     check_if_project_exists(project_name, parent_dir)
     check_if_executable_is_installed('uv')
-    if r_proj:
+    if r_project:
         check_if_executable_is_installed('Rscript')
         check_if_r_package_is_installed('renv')
 
 
 def check_if_project_exists(project_name: str, parent_dir: str | None) -> None:
     if not parent_dir:
-        parent_dir = '.'
+        parent_dir = get_current_working_dir()
     if (Path(parent_dir) / project_name).is_dir():
         raise ProjectExistsError(f'{project_name} directory exists.')
 

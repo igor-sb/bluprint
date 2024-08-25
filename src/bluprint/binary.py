@@ -9,6 +9,7 @@ from bluprint.colors import progress_log
 from bluprint.create.errors import (
     RenvInitError,
     RenvInstallError,
+    RenvSnapshotError,
     UvAddError,
     UvInitError,
 )
@@ -56,10 +57,12 @@ def rcmd(rscript: str, exception: type[Error], **kwargs) -> str:
     return run(['Rscript', '-e', rscript], exception, **kwargs)
 
 
+@progress_log('initalizing renv...')
 def renv_init(project_dir: str | Path) -> str:
     return rcmd('renv::init()', RenvInitError, cwd=project_dir)
 
 
+@progress_log('installing R packages...')
 def renv_install(
     packages: str | list[str] | tuple[str, ...],
     project_dir: str | Path,
@@ -67,9 +70,14 @@ def renv_install(
     if isinstance(packages, str):
         packages = [packages]
     return rcmd(
-        'renv::install(c("{packages_str}"))'.format(
+        'renv::install(c("{packages_str}"), prompt=FALSE)'.format(
             packages_str='", "'.join(packages),
         ),
         RenvInstallError,
         cwd=project_dir,
     )
+
+
+@progress_log('creating renv snapshot...')
+def renv_create_snapshot(project_dir: str | Path) -> None:
+    rcmd('renv::snapshot()', RenvSnapshotError, cwd=project_dir)

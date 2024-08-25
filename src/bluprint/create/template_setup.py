@@ -9,16 +9,26 @@ from bluprint.binary import run
 from bluprint.create.errors import GitError
 
 
+def example_files(project_name: str) -> tuple[Path, ...]:
+    return (
+        Path('notebooks') / 'example_jupyternb.ipynb',
+        Path('notebooks') / 'example_quarto.qmd',
+        Path('notebooks') / 'example_rmarkdown.Rmd',
+        Path('data') / 'example_data.csv',
+        Path('conf') / 'config.yaml',
+        Path('conf') / 'workflows.yaml',
+        Path(project_name) / 'example.py',
+    )
+
+
 def delete_examples_from_project(
     project_name: str,
     project_dir: str | Path,
 ) -> None:
-    (Path(project_dir) / 'notebooks' / 'example_quarto.qmd').unlink()
-    (Path(project_dir) / 'notebooks' / 'example_jupyternb.ipynb').unlink()
-    (Path(project_dir) / 'data' / 'example_data.csv').unlink()
-    (Path(project_dir) / project_name / 'example.py').unlink()
-    (Path(project_dir) / 'conf' / 'workflows.yaml').unlink()
-    (Path(project_dir) / 'conf' / 'config.yaml').unlink()
+    for example_file in example_files(project_name):
+        full_example_file = Path(project_dir) / example_file
+        if full_example_file.exists():
+            full_example_file.unlink()
     open(Path(project_dir) / 'conf' / 'data.yaml', 'w').close()
 
 
@@ -28,7 +38,7 @@ def delete_r_examples_from_project(
     (Path(project_dir) / 'notebooks' / 'example_rmarkdown.Rmd').unlink()
 
 
-def delete_r_files_from_template(project_dir: str | Path) -> None:
+def delete_r_files_from_project(project_dir: str | Path) -> None:
     (Path(project_dir) / 'placeholder_name.Rproj').unlink()
     (Path(project_dir) / 'notebooks' / 'example_rmarkdown.Rmd').unlink()
 

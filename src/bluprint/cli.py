@@ -246,8 +246,8 @@ class Bluprint(object):
 
 
 def main():
-    fire.Fire(Bluprint)
+    fire.Fire(Bluprint)  # pragma: no cover
 
 
-if __name__ == '__main__':
-    main()
+if __name__ == '__main__':  # pragma: no cover
+    main()  # pragma: no cover

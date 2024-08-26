@@ -10,7 +10,6 @@ from bluprint.colors import styled_print
 from bluprint.create.py_project import (
     check_python_version,
     create_python_project,
-    get_current_working_dir,
     initialize_python_project,
 )
 from bluprint.create.r_project import create_r_project, initialize_r_project
@@ -18,6 +17,7 @@ from bluprint.index import index_dir_to_config_yaml
 from bluprint.project import (
     check_if_project_can_be_created,
     check_if_project_files_exist,
+    get_current_working_dir,
 )
 from bluprint.workflow import run_notebook, run_workflow
 
@@ -170,6 +170,7 @@ class Bluprint(object):
             template_dir=template_dir,
             keep_r_files=r_project,
             add_examples=add_examples,
+            overwrite=overwrite,
         )
         if r_project:
             initialize_r_project(project_name, project_dir)

@@ -20,19 +20,6 @@ class Style(object):
     end = '\033[0m'
 
 
-def with_logging(
-    func: Callable[..., Any],
-    logger: logging.Logger,
-    message: str,
-) -> Callable[..., Any]:
-    @functools.wraps(func)
-    def wrapper(*args: Any, **kwargs: Any) -> Any:
-        logger.info(message)
-        return func(*args, **kwargs)
-
-    return wrapper
-
-
 def style_workflow(string: str) -> str:
     return f'{Style.magenta}{Style.bold}{string}{Style.end}'
 

@@ -40,4 +40,5 @@ def test_create_pyr_project(find_files_in_dir, tmp_path):
 
 def test_check_if_r_package_is_not_installed():
     with pytest.raises(RpackageMissingError):
-        check_if_r_package_is_installed('fake_package')
+        check_if_r_package_is_installed('fake_project')
+

@@ -1,7 +1,6 @@
 """Create a bluprint project."""
 
 import os
-import shutil
 from pathlib import Path
 
 from packaging.version import Version
@@ -9,6 +8,7 @@ from packaging.version import Version
 from bluprint.binary import run, uv_add, uv_init
 from bluprint.colors import progress_log
 from bluprint.create.errors import LowPythonVersionError, PythonVersionError
+from bluprint.project import copy_template
 from bluprint.template import (
     default_template_dir,
     delete_examples_from_project,
@@ -51,6 +51,7 @@ def initialize_python_project(
     template_dir: str | None = None,
     keep_r_files: bool = False,
     add_examples: bool = True,
+    overwrite: bool = False,
 ) -> None:
     if not python_version:
         python_version = default_python_version()
@@ -60,10 +61,10 @@ def initialize_python_project(
     os.remove(Path(project_dir) / 'src' / project_name / '__init__.py')
     os.rmdir(Path(project_dir) / 'src' / project_name)
     os.rmdir(Path(project_dir) / 'src')
-    shutil.copytree(
+    copy_template(
         template_dir,
         project_dir,
-        dirs_exist_ok=True,
+        overwrite=overwrite,
     )
     os.rename(
         Path(project_dir) / 'placeholder_name',
@@ -107,7 +108,3 @@ def check_python_version(
 ) -> None:
     if python_version and (Version(python_version) < Version(MIN_PYTHON_VERSION)):
         raise LowPythonVersionError('Bluprint requires Python >= 3.11.')
-
-
-def get_current_working_dir() -> str:
-    return os.getcwd()

@@ -25,7 +25,7 @@ def create_python_project(
     parent_dir: str | None = None,
     template_dir: str | None = None,
     keep_r_files: bool = False,
-    add_examples: bool = True,
+    omit_examples: bool = False,
 ) -> None:
     if not parent_dir:
         parent_dir = '.'
@@ -37,7 +37,7 @@ def create_python_project(
         project_dir=project_dir,
         template_dir=template_dir,
         keep_r_files=keep_r_files,
-        add_examples=add_examples,
+        omit_examples=omit_examples,
     )
 
 
@@ -48,7 +48,7 @@ def initialize_python_project(
     project_dir: str | Path = '.',
     template_dir: str | None = None,
     keep_r_files: bool = False,
-    keep_examples: bool = True,
+    omit_examples: bool = False,
     overwrite: bool = False,
 ) -> None:
     if not python_version:
@@ -63,7 +63,7 @@ def initialize_python_project(
         template_dir,
         project_dir,
         project_name=project_name,
-        keep_examples=keep_examples,
+        omit_examples=omit_examples,
         keep_r_files=keep_r_files,
         overwrite=overwrite,
     )
@@ -75,7 +75,7 @@ def initialize_python_project(
         Path(project_dir) / 'pyproject.toml',
         project_name,
     )
-    if keep_examples:
+    if not omit_examples:
         replace_placeholder_name_in_file(
             Path(project_dir) / 'README.md',
             project_name,

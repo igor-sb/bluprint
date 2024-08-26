@@ -67,14 +67,12 @@ def copy_template(
     src_path: str | Path,
     dst_path: str | Path,
     project_name: str = 'placeholder_name',
-    keep_examples: bool = True,
+    omit_examples: bool = False,
     keep_r_files: bool = False,
     overwrite: str ='never',
 ) -> None:
     src_path_regex = re.escape(str(src_path))
-    project_example_files = example_files(project_name)
-    project_r_files = r_files()
-    print(example_files(project_name))
+    
     for src_root, src_dirs, src_files in os.walk(src_path):
         dst_root = re.sub(f'^{src_path_regex}', str(dst_path), src_root)
         for src_dir in src_dirs:
@@ -83,20 +81,34 @@ def copy_template(
         for src_file in src_files:
             src_file_path = Path(src_root) / src_file
             dst_file_path = Path(dst_root) / src_file
-            src_file_relative_to_project = src_file_path.relative_to(src_path)
-            if (
-                (dst_file_path.exists() and overwrite == 'always') or
-                (not dst_file_path.exists())
-            ):
-                print(src_file_relative_to_project)
-                print(src_file_relative_to_project in project_example_files)
-                # Check if file is an example if keep_examples is off
-                # Check if file is an r file if keep_r_files is off
+            src_is_example = is_example_file(
+                src_file_path,
+                src_path,
+                project_name,
+            )
+            src_is_rfile = is_r_file(src_file_path, src_path)
+            if overwrite == 'always' or not dst_file_path.exists():
                 if (
-                    keep_examples or
-                    (src_file_relative_to_project not in project_example_files)
+                    (omit_examples and src_is_example) or
+                    (not keep_r_files and src_is_rfile)
                 ):
-                    shutil.copyfile(src_file_path, dst_file_path)
+                    continue
+                shutil.copyfile(src_file_path, dst_file_path)
+
+
+def is_example_file(
+    filename: str | Path,
+    parent_dir: str | Path,
+    project_name: str,
+) -> bool:
+    file_relative_to_parent = Path(filename).relative_to(parent_dir)
+    project_example_files = example_files(project_name)
+    return file_relative_to_parent in project_example_files
+
+
+def is_r_file(filename: str | Path, parent_dir: str | Path) -> bool:
+    file_relative_to_parent = Path(filename).relative_to(parent_dir)
+    return file_relative_to_parent in r_files()
 
 
 def get_current_working_dir() -> str:

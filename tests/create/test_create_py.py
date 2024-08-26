@@ -52,7 +52,7 @@ def test_create_py_project_without_examples(find_files_in_dir, tmp_path):
     cli.Bluprint().create(
         project_name=project_name,
         parent_dir=tmp_path,
-        add_examples=False,
+        omit_examples=True,
     )
     project_dir = Path(tmp_path) / project_name
     project_files = {

@@ -34,7 +34,7 @@ class Bluprint(object):
         parent_dir: str | None = None,
         template_dir: str | None = None,
         r_project: bool = False,
-        add_examples: bool = True,
+        omit_examples: bool = False,
     ) -> None:
         """Create a directory with a bluprint project:
 
@@ -81,8 +81,8 @@ class Bluprint(object):
         r_project (bool, optional): Setup R library using renv to support
             package isolation in RMarkdown notebooks.
 
-        add_examples (bool, optional): Add example data and notebooks in the new
-            project.
+        omit_examples (bool, optional): Add example data and notebooks in the
+            new project.
 
         """
         styled_print(
@@ -103,7 +103,7 @@ class Bluprint(object):
             parent_dir=parent_dir,
             template_dir=template_dir,
             keep_r_files=r_project,
-            add_examples=add_examples,
+            omit_examples=omit_examples,
         )
         if r_project:
             create_r_project(project_name, parent_dir)
@@ -116,7 +116,7 @@ class Bluprint(object):
         project_dir: str | None = None,
         template_dir: str | None = None,
         r_project: bool = False,
-        add_examples: bool = True,
+        omit_examples: bool = False,
         overwrite: bool = False,
     ) -> None:
         """Initialize a bluprint project in an existing directory.
@@ -143,8 +143,8 @@ class Bluprint(object):
         r_project (bool): Setup R library using renv to support package
             isolation in RMarkdown notebooks.
 
-        add_examples (bool, optional): Add example data and notebooks in the new
-            project.
+        omit_examples (bool, optional): Add example data and notebooks in the
+            new project.
 
         overwrite (bool, optional): Overwrite existing files.
 
@@ -169,7 +169,7 @@ class Bluprint(object):
             project_dir=Path(project_dir),
             template_dir=template_dir,
             keep_r_files=r_project,
-            add_examples=add_examples,
+            omit_examples=omit_examples,
             overwrite=overwrite,
         )
         if r_project:

@@ -228,7 +228,7 @@ class Bluprint(object):
         self,
         input_dir: str,
         output_yaml: str,
-        skip_dot_files: bool = True,
+        include_dot_files: bool = False,
     ) -> None:
         """Index all directory files to yaml config.
 
@@ -239,10 +239,11 @@ class Bluprint(object):
         Args:
             input_dir (str): Directory to index.
             output_yaml (str): Output yaml filepath.
-            skip_dot_files (bool, optional): Skip files starting with a dot.
+            include_dot_files (bool, optional): Include hidden files starting
+                with a dot into an index.
         """
         styled_print(f'index {input_dir}/** ❯ {output_yaml}')  # noqa: RUF001
-        index_dir_to_config_yaml(input_dir, output_yaml, skip_dot_files)
+        index_dir_to_config_yaml(input_dir, output_yaml, include_dot_files)
 
 
 def main():

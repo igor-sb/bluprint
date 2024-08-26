@@ -68,6 +68,7 @@ argument.
 
 Python/R projects
 -----------------
+
 If you would like to setup a Python/R project that supports both Jupyter and
 RMarkdown notebooks use:
 
@@ -113,3 +114,24 @@ notebooks and code can load the configuration and data using {reticulate} and
 
   cfg <- bluprint_conf$load_config_yaml()
   cfg$url  # "www.google.com"
+
+Bluprint project in an existing directory
+-----------------------------------------
+
+If you already have an existing directory with data and notebooks, you can
+initialize bluprint project using:
+
+.. code-block:: bash
+
+  bluprint init myproj
+
+Check `bluprint init -h` for additional arguments. For example, iIf you want to
+skip generating the example files and overwrite existing files:
+
+.. code-block:: bash
+
+  bluprint init myproj --add_examples=False --overwrite=True
+
+.. warning::
+
+  This will overwrite *conf/data.yaml* if they already exists.

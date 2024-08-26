@@ -115,6 +115,7 @@ notebooks and code can load the configuration and data using {reticulate} and
   cfg <- bluprint_conf$load_config_yaml()
   cfg$url  # "www.google.com"
 
+
 Bluprint project in an existing directory
 -----------------------------------------
 
@@ -126,11 +127,11 @@ initialize bluprint project using:
   bluprint init myproj
 
 Check `bluprint init -h` for additional arguments. For example, if you want to
-skip generating the example files and overwrite existing files:
+skip generating the example files:
 
 .. code-block:: bash
 
-  bluprint init myproj --add_examples=False --overwrite=True
+  bluprint init myproj --omit-examples
 
 .. code-block:: none
 
@@ -144,8 +145,3 @@ skip generating the example files and overwrite existing files:
   ├── .gitignore
   ├── pyproject.toml
   └── README.md
-
-
-.. warning::
-
-  This will overwrite *conf/data.yaml* if it already exists.

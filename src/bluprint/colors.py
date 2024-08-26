@@ -1,9 +1,8 @@
 """Color styling for CLI output."""
 
 import functools
-import logging
 import sys
-from typing import Any, Callable
+from typing import Callable
 
 
 class Style(object):

@@ -21,7 +21,7 @@ from bluprint.project import (
 )
 from bluprint.workflow import run_notebook, run_workflow
 
-# sys.tracebacklimit = 0
+sys.tracebacklimit = 0
 
 
 class Bluprint(object):

@@ -69,10 +69,10 @@ def copy_template(
     project_name: str = 'placeholder_name',
     omit_examples: bool = False,
     keep_r_files: bool = False,
-    overwrite: str ='never',
+    overwrite: str = 'never',
 ) -> None:
     src_path_regex = re.escape(str(src_path))
-    
+
     for src_root, src_dirs, src_files in os.walk(src_path):
         dst_root = re.sub(f'^{src_path_regex}', str(dst_path), src_root)
         for src_dir in src_dirs:

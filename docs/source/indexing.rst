@@ -44,4 +44,4 @@ with paths listed relative to the *data/* directory.
 .. note::
 
     By default, ``bluprint index`` will omit any files starting with a dot.
-    Use ``--skip_dot_files False`` argument to index dot files as well.
+    Use ``--skip-dot-files False`` argument to index dot files as well.

@@ -3,7 +3,6 @@
 from pathlib import Path
 
 import pytest
-from importlib_resources import files
 
 from bluprint import cli
 from bluprint.create.errors import LowPythonVersionError

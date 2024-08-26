@@ -36,7 +36,7 @@ and sets up the Python scripts in the *myproj* directory accessible as
 ``from myproj.example import add_one`` in any notebook or Python script that
 uses this virtual environment and *bluprint_conf*.
 
-By default *conf/config.yaml* contains this placeholder:
+*conf/config.yaml* contains this placeholder:
 
 .. literalinclude:: ../../src/bluprint/template/conf/config.yaml
   :language: yaml
@@ -125,13 +125,27 @@ initialize bluprint project using:
 
   bluprint init myproj
 
-Check `bluprint init -h` for additional arguments. For example, iIf you want to
+Check `bluprint init -h` for additional arguments. For example, if you want to
 skip generating the example files and overwrite existing files:
 
 .. code-block:: bash
 
   bluprint init myproj --add_examples=False --overwrite=True
 
+.. code-block:: none
+
+  myproj
+  ├── .venv
+  ├── conf
+  │   └── data.yaml
+  ├── data
+  ├── notebooks
+  ├── myproj
+  ├── .gitignore
+  ├── pyproject.toml
+  └── README.md
+
+
 .. warning::
 
-  This will overwrite *conf/data.yaml* if they already exists.
+  This will overwrite *conf/data.yaml* if it already exists.

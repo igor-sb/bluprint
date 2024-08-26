@@ -11,7 +11,7 @@ from bluprint.colors import styled_print
 from bluprint.create.errors import GitError
 
 
-def example_files(project_name: str) -> tuple[Path, ...]:
+def example_files(project_name: str = 'placeholder_name') -> tuple[Path, ...]:
     return (
         Path('notebooks') / 'example_jupyternb.ipynb',
         Path('notebooks') / 'example_quarto.qmd',
@@ -20,29 +20,15 @@ def example_files(project_name: str) -> tuple[Path, ...]:
         Path('conf') / 'config.yaml',
         Path('conf') / 'workflows.yaml',
         Path(project_name) / 'example.py',
+        Path('README.md'),
     )
 
 
-def delete_examples_from_project(
-    project_name: str,
-    project_dir: str | Path,
-) -> None:
-    for example_file in example_files(project_name):
-        full_example_file = Path(project_dir) / example_file
-        if full_example_file.exists():
-            full_example_file.unlink()
-    open(Path(project_dir) / 'conf' / 'data.yaml', 'w').close()
-
-
-def delete_r_examples_from_project(
-    project_dir: str | Path,
-) -> None:
-    (Path(project_dir) / 'notebooks' / 'example_rmarkdown.Rmd').unlink()
-
-
-def delete_r_files_from_project(project_dir: str | Path) -> None:
-    (Path(project_dir) / 'placeholder_name.Rproj').unlink()
-    (Path(project_dir) / 'notebooks' / 'example_rmarkdown.Rmd').unlink()
+def r_files() -> tuple[Path, ...]:
+    return (
+        Path('placeholder_name.Rproj'),
+        Path('notebooks') / 'example_rmarkdown.Rmd',
+    )
 
 
 def replace_placeholder_name_in_file(

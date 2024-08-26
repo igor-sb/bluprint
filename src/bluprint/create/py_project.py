@@ -11,8 +11,6 @@ from bluprint.create.errors import LowPythonVersionError, PythonVersionError
 from bluprint.project import copy_template
 from bluprint.template import (
     default_template_dir,
-    delete_examples_from_project,
-    delete_r_files_from_project,
     replace_git_account_name,
     replace_placeholder_name_in_file,
     replace_placeholder_name_in_notebook,
@@ -50,7 +48,7 @@ def initialize_python_project(
     project_dir: str | Path = '.',
     template_dir: str | None = None,
     keep_r_files: bool = False,
-    add_examples: bool = True,
+    keep_examples: bool = True,
     overwrite: bool = False,
 ) -> None:
     if not python_version:
@@ -64,33 +62,33 @@ def initialize_python_project(
     copy_template(
         template_dir,
         project_dir,
+        project_name=project_name,
+        keep_examples=keep_examples,
+        keep_r_files=keep_r_files,
         overwrite=overwrite,
     )
     os.rename(
         Path(project_dir) / 'placeholder_name',
         Path(project_dir) / project_name,
     )
-    if not keep_r_files:
-        delete_r_files_from_project(project_dir)
-    replace_placeholder_name_in_file(
-        Path(project_dir) / 'README.md',
-        project_name,
-    )
     replace_placeholder_name_in_file(
         Path(project_dir) / 'pyproject.toml',
         project_name,
     )
-    replace_placeholder_name_in_file(
-        Path(project_dir) / 'notebooks' / 'example_quarto.qmd',
-        project_name,
-    )
-    replace_placeholder_name_in_notebook(
-        Path(project_dir) / 'notebooks' / 'example_jupyternb.ipynb',
-        project_name,
-    )
-    if not add_examples:
-        delete_examples_from_project(project_name, project_dir)
-    replace_git_account_name(project_dir)
+    if keep_examples:
+        replace_placeholder_name_in_file(
+            Path(project_dir) / 'README.md',
+            project_name,
+        )
+        replace_placeholder_name_in_file(
+            Path(project_dir) / 'notebooks' / 'example_quarto.qmd',
+            project_name,
+        )
+        replace_placeholder_name_in_notebook(
+            Path(project_dir) / 'notebooks' / 'example_jupyternb.ipynb',
+            project_name,
+        )
+        replace_git_account_name(project_dir)
     uv_add(['bluprint_conf', 'ipykernel', 'pandas'], project_dir)
 
 

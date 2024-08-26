@@ -9,6 +9,7 @@ from bluprint.binary import check_if_executable_is_installed
 from bluprint.colors import progress_log, styled_print
 from bluprint.create.r_project import check_if_r_package_is_installed
 from bluprint.errors import ProjectExistsError
+from bluprint.template import example_files, r_files
 
 
 @progress_log('checking if project can be created...')
@@ -65,10 +66,15 @@ def check_if_project_files_exist(
 def copy_template(
     src_path: str | Path,
     dst_path: str | Path,
-    overwrite='never',
+    project_name: str = 'placeholder_name',
+    keep_examples: bool = True,
+    keep_r_files: bool = False,
+    overwrite: str ='never',
 ) -> None:
     src_path_regex = re.escape(str(src_path))
-
+    project_example_files = example_files(project_name)
+    project_r_files = r_files()
+    print(example_files(project_name))
     for src_root, src_dirs, src_files in os.walk(src_path):
         dst_root = re.sub(f'^{src_path_regex}', str(dst_path), src_root)
         for src_dir in src_dirs:
@@ -77,11 +83,20 @@ def copy_template(
         for src_file in src_files:
             src_file_path = Path(src_root) / src_file
             dst_file_path = Path(dst_root) / src_file
+            src_file_relative_to_project = src_file_path.relative_to(src_path)
             if (
                 (dst_file_path.exists() and overwrite == 'always') or
-                not dst_file_path.exists()
+                (not dst_file_path.exists())
             ):
-                shutil.copyfile(src_file_path, dst_file_path)
+                print(src_file_relative_to_project)
+                print(src_file_relative_to_project in project_example_files)
+                # Check if file is an example if keep_examples is off
+                # Check if file is an r file if keep_r_files is off
+                if (
+                    keep_examples or
+                    (src_file_relative_to_project not in project_example_files)
+                ):
+                    shutil.copyfile(src_file_path, dst_file_path)
 
 
 def get_current_working_dir() -> str:

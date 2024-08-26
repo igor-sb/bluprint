@@ -47,28 +47,30 @@ def test_low_python_version():
 
 
 def test_create_py_project_without_examples(find_files_in_dir, tmp_path):
-    template_dir = files('bluprint').joinpath('template')
+    template_dir = default_template_dir()
+    project_name = 'placeholder_name'
     cli.Bluprint().create(
-        project_name='placeholder_name',
+        project_name=project_name,
         parent_dir=tmp_path,
         add_examples=False,
     )
-    project_dir = Path(tmp_path) / 'placeholder_name'
+    project_dir = Path(tmp_path) / project_name
     project_files = {
         file_path.relative_to(project_dir)
         for file_path in find_files_in_dir(project_dir)
     }
+    project_example_files = example_files(project_name)
+    print(project_example_files)
     template_files = {
         file_path.relative_to(template_dir)
         for file_path in find_files_in_dir(template_dir)
+        if file_path.relative_to(template_dir) not in project_example_files
     }
     template_files.update([
         Path('pyproject.toml'),
         Path('uv.lock'),
     ])
 
-    for example_file in example_files('placeholder_name'):
-        template_files.remove(example_file)
     template_files.remove(Path('placeholder_name.Rproj'))  # Python-only test
 
     venv_dir = project_dir / '.venv'

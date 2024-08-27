@@ -69,7 +69,7 @@ def copy_template(
     project_name: str = 'placeholder_name',
     omit_examples: bool = False,
     keep_r_files: bool = False,
-    overwrite: str = 'never',
+    overwrite: bool = False,
 ) -> None:
     src_path_regex = re.escape(str(src_path))
 
@@ -87,7 +87,7 @@ def copy_template(
                 project_name,
             )
             src_is_rfile = is_r_file(src_file_path, src_path)
-            if overwrite == 'always' or not dst_file_path.exists():
+            if overwrite or not dst_file_path.exists():
                 if (
                     (omit_examples and src_is_example) or
                     (not keep_r_files and src_is_rfile)
@@ -112,4 +112,4 @@ def is_r_file(filename: str | Path, parent_dir: str | Path) -> bool:
 
 
 def get_current_working_dir() -> str:
-    return os.getcwd()
+    return str(Path.cwd())

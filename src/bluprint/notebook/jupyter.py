@@ -27,7 +27,7 @@ def run_jupyter_notebook(
         {'metadata': {'path': '.'}},
     )
     exporter = NotebookExporter()
-    with open(notebook_file, 'w') as notebook:
+    with Path(notebook_file).open('w') as notebook:
         notebook.write(exporter.from_notebook_node(notebook_results[0])[0])
 
 
@@ -41,7 +41,7 @@ class ExecutorWithProgressBar(ExecutePreprocessor):
         km: KernelManager | None = None,
     ) -> tuple[NotebookNode, dict[str, Any]]:
 
-        with open(notebook_path, 'r') as notebook_handle:
+        with Path(notebook_path).open('r') as notebook_handle:
             notebook = read_notebook(notebook_handle, as_version=4)
 
         NotebookClient.__init__(self, notebook, km)

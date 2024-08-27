@@ -64,7 +64,11 @@ line-length = 80
 quote-style = "single"
 
 [tool.ruff.lint]
-select = ['D', 'F', 'I', 'S', 'RUF', 'TCH', 'TID', 'SIM']
+select = [
+	'F', 'E', 'W', 'I', 'N', 'D', 'S', 'B', 'A', 'TCH', 'TID', 'SIM',
+	'PTH'
+]
+# select = ['B', 'D', 'E', 'F', 'I', 'S', 'W', 'RUF', 'TCH', 'TID', 'SIM']
 ignore = [
 	'D100',  # Missing docstring in public module
 	'D101',  # D101 Missing docstring in public class

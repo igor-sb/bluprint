@@ -26,6 +26,7 @@ def run_workflow(
     workflow_notebooks_with_prefixes = zip(
         workflow_notebooks,
         add_graphic_prefixes(workflow_notebooks),
+        strict=True,
     )
     for notebook_file, graphical_prefix in workflow_notebooks_with_prefixes:
         run_notebook(notebook_file, notebook_dir, graphical_prefix)

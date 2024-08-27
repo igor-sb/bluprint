@@ -37,10 +37,10 @@ def replace_placeholder_name_in_file(
     placeholder='{{placeholder_name}}',
 ) -> None:
     file_lines = []
-    with open(filename, 'r') as in_file:
+    with Path(filename).open('r') as in_file:
         for line in in_file:
             file_lines.append(line.replace(placeholder, project_name))
-    with open(filename, 'w') as out_file:
+    with Path(filename).open('w') as out_file:
         for line in file_lines:
             out_file.write(line)
 
@@ -50,14 +50,14 @@ def replace_placeholder_name_in_notebook(
     project_name: str,
     placeholder='placeholder_name',
 ) -> None:
-    with open(notebook_path, 'r', encoding='utf-8') as in_notebook_file:
+    with Path(notebook_path).open('r', encoding='utf-8') as in_notebook_file:
         notebook_content = nbformat.read(in_notebook_file, as_version=4)
 
     for cell in notebook_content['cells']:
         if 'source' in cell and isinstance(cell['source'], str):
             cell['source'] = cell['source'].replace(placeholder, project_name)
 
-    with open(notebook_path, 'w', encoding='utf-8') as out_notebook_file:
+    with Path(notebook_path).open('w', encoding='utf-8') as out_notebook_file:
         nbformat.write(notebook_content, out_notebook_file)
 
 
@@ -66,7 +66,7 @@ def replace_git_account_name(
 ) -> None:
 
     readme_file = Path(project_dir) / 'README.md'
-    with open(readme_file, 'r') as readme_r:
+    with readme_file.open('r') as readme_r:
         readme_content = readme_r.read()
     try:
         git_user = run(['git', 'config', '--global', 'user.name'], GitError)
@@ -83,7 +83,7 @@ def replace_git_account_name(
             readme_content,
         )
 
-    with open(readme_file, 'w') as readme_w:
+    with readme_file.open('w') as readme_w:
         readme_w.write(readme_content)
 
 

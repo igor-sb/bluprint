@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'bluprint'
-copyright = '2023, Igor Segota'
+copyright = '2023, Igor Segota'  # noqa: A001
 author = 'Igor Segota'
 release = '0.1'
 
@@ -16,8 +16,8 @@ release = '0.1'
 
 extensions = [
     # 'sphinx.ext.githubpages',
-	# 'sphinx_copybutton',
-	'sphinx_immaterial',
+    # 'sphinx_copybutton',
+    'sphinx_immaterial',
 ]
 
 templates_path = ['_templates']
@@ -35,9 +35,9 @@ html_theme = 'sphinx_immaterial'
 
 html_theme_options = {
     # Set the repo location to get a badge with stats
-	"site_url": "https://igor-sb.github.io/bluprint/",
+    "site_url": "https://igor-sb.github.io/bluprint/",
     "repo_url": "https://github.com/igor-sb/bluprint/",
-	"repo_name": "Bluprint Github",
+    "repo_name": "Bluprint Github",
     "icon": {
         "repo": "fontawesome/brands/github",
         "edit": "material/file-edit-outline",

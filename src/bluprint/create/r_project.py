@@ -1,6 +1,5 @@
 """Create an R project for bluprint."""
 
-import os
 from pathlib import Path
 
 from bluprint.binary import rcmd, renv_create_snapshot, renv_init, renv_install
@@ -28,7 +27,7 @@ def initialize_r_project(
     renv_init(project_dir)
     renv_install(r_packages, project_dir)
     renv_create_snapshot(project_dir)
-    os.rename(
+    Path.rename(
         Path(project_dir) / 'placeholder_name.Rproj',
         Path(project_dir) / f'{project_name}.Rproj',
     )

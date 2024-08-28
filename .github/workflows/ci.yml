@@ -31,6 +31,7 @@ jobs:
     with:
       PYTHON_VERSION: ${{ needs.env_vars.outputs.PYTHON_VERSION }}
       UV_VERSION: ${{ needs.env_vars.outputs.UV_VERSION }}
+      R_VERSION: ${{ needs.env_vars.outputs.R_VERSION }}
 
   lint:
     name: Lint
@@ -47,4 +48,3 @@ jobs:
     with:
       PYTHON_VERSION: ${{ needs.env_vars.outputs.PYTHON_VERSION }}
       UV_VERSION: ${{ needs.env_vars.outputs.UV_VERSION }}
-      R_VERSION: ${{ needs.env_vars.outputs.R_VERSION }}

@@ -2,6 +2,16 @@ name: Unit tests
 
 on:
   workflow_call:
+    inputs:
+      PYTHON_VERSION:
+        required: true
+        type: string
+      UV_VERSION:
+        required: true
+        type: string
+      R_VERSION:
+        required: true
+        type: string
 
 jobs:
 

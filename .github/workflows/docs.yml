@@ -2,6 +2,13 @@ name: Docs
 
 on:
   workflow_call:
+    inputs:
+      PYTHON_VERSION:
+        required: true
+        type: string
+      UV_VERSION:
+        required: true
+        type: string
 
 permissions:
   contents: write

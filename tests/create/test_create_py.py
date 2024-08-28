@@ -59,7 +59,6 @@ def test_create_py_project_without_examples(find_files_in_dir, tmp_path):
         for file_path in find_files_in_dir(project_dir)
     }
     project_example_files = example_files(project_name)
-    print(project_example_files)
     template_files = {
         file_path.relative_to(template_dir)
         for file_path in find_files_in_dir(template_dir)

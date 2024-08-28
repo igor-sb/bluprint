@@ -3,11 +3,6 @@ name: Unit tests
 on:
   workflow_call:
 
-env:
-  PYTHON_VERSION: 3.11.2
-  R_VERSION: 4.2.2
-  UV_VERSION: 0.3.3
-
 jobs:
 
   test-pipeline:
@@ -24,13 +19,13 @@ jobs:
       - name: Install and setup Python, uv, virtual env
         uses: ./.github/actions/install-python
         with:
-          PYTHON_VERSION: ${{ env.PYTHON_VERSION }}
-          UV_VERSION: ${{ env.UV_VERSION }}
+          PYTHON_VERSION: ${{ inputs.PYTHON_VERSION }}
+          UV_VERSION: ${{ inputs.UV_VERSION }}
 
       - name: Install and setup R and packages
         uses: ./.github/actions/install-r
         with:
-          R_VERSION: ${{ env.R_VERSION }}
+          R_VERSION: ${{ inputs.R_VERSION }}
 
       - name: Debug unit tests
         run: |

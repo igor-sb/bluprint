@@ -5,6 +5,9 @@ inputs:
   PYTHON_VERSION:
     description: "Version of Python to install"
     required: true
+  UV_VERSION:
+    description: "Version of uv to install"
+    required: true
 
 runs:
   using: "composite"

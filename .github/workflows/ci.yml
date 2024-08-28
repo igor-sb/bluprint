@@ -7,13 +7,31 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  PYTHON_VERSION: 3.11.2
+  UV_VERSION: 0.3.3
+  R_VERSION: 4.2.2
 
 jobs:
 
   unit-tests:
     name: Unit tests
     uses: ./.github/workflows/unit-tests.yml
+    with:
+      PYTHON_VERSION: ${{ env.PYTHON_VERSION }}
+      UV_VERSION: ${{ env.UV_VERSION }}
 
   lint:
     name: Lint
     uses: ./.github/workflows/lint.yml
+    with:
+      PYTHON_VERSION: ${{ env.PYTHON_VERSION }}
+      UV_VERSION: ${{ env.UV_VERSION }}
+  
+  docs:
+    name: Docs
+    uses: ./.github/workflows/docs.yml
+    with:
+      PYTHON_VERSION: ${{ env.PYTHON_VERSION }}
+      UV_VERSION: ${{ env.UV_VERSION }}
+      R_VERSION: ${{ env.R_VERSION }}

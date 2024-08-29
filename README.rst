@@ -3,8 +3,8 @@
 Bluprint
 ========
 
-.. |CI| image:: https://github.com/igor-sb/bluprint/actions/workflows/ci.yml/badge.svg
-  :target: https://github.com/igor-sb/gencdna/actions
+.. image:: https://github.com/igor-sb/bluprint/actions/workflows/ci.yml/badge.svg
+  :target: https://github.com/igor-sb/bluprint/actions
 
 .. image:: https://codecov.io/gh/igor-sb/bluprint/graph/badge.svg?token=U44L2ASEIG 
  :target: https://codecov.io/gh/igor-sb/bluprint
@@ -35,7 +35,7 @@ to the *my_project/data/*:
     user:
         processed: 'user_processed.csv'
 
-This allows writing notebooks without hard-coding file paths, like this:
+Notebooks can then easily import *myproject.shared_code* and file paths:
 
 .. code:: python
 
@@ -57,26 +57,24 @@ This allows writing notebooks without hard-coding file paths, like this:
     transformed_df.to_csv(data.user.processed)
 
 
-.. note::
-
-    For a working demonstration of a shareable project see
-    https://github.com/igor-sb/bluprint-demo/.
+For a working demonstration of a shareable project see 
+https://github.com/igor-sb/bluprint-demo/.
 
 Features
 --------
 
-- Write portable notebooks by storing all file paths to yaml configs and load
-  them with `load_data_yaml() <https://igor-sb.github.io/bluprint-conf/html/reference.html#bluprint_conf.data.load_data_yaml>`_
+- Write portable notebooks by separating code from configuration - file paths are in YAML configs, loaded
+  with `load_data_yaml() <https://igor-sb.github.io/bluprint-conf/html/reference.html#bluprint_conf.data.load_data_yaml>`_
   and `load_config_yaml() <https://igor-sb.github.io/bluprint-conf/html/reference.html#bluprint_conf.config.load_config_yaml>`_
 - R/Python packages are version-locked with `renv <https://rstudio.github.io/renv/>`_
   and `uv <https://docs.astral.sh/uv/>`_
 - Import packaged code as Python modules
-- Packaged code can be shared across projects with `pip install <https://igor-sb.github.io/bluprint/prod_projects.html>`_
+- Packaged code can be shared across different projects with `pip install <https://igor-sb.github.io/bluprint/prod_projects.html>`_
 - Use both Python and R notebooks in a single project (see
   `Python/R projects </https://igor-sb.github.io/bluprint/getting_started.html#python-r-projects>`_)
 - Share entire projects by copying a project directory and running
   *uv venv && uv sync*
-- Works with common IDEs (RStudio, VSCode), notebook tools for linting (`nbqa <https://nbqa.readthedocs.io/en/latest/>`_),
+- Works with common data science IDEs (RStudio, VSCode), notebook tools for linting (`nbqa <https://nbqa.readthedocs.io/en/latest/>`_),
   notebook version control (`nbstripout <https://github.com/kynan/nbstripout>`_)
   or workflows (`Ploomber <https://github.com/ploomber/ploomber>`_)
 
@@ -89,17 +87,10 @@ Full documentation available at: https://igor-sb.github.io/bluprint/.
 Installation
 ------------
 
-Install Python 3.11.* (e.g. using `pyenv <https://github.com/pyenv/pyenv>`_)
-and `uv <https://docs.astral.sh/uv/>`_. Then run:
+Install `uv <https://docs.astral.sh/uv/>`_ and run ``uv tool install bluprint``.
 
-.. code:: shell
-
-    uv tool install bluprint
-
-.. note::
-
-    For R projects, install `renv <https://rstudio.github.io/renv/>`_ before
-    attempting to create a Bluprint project with R support.
+For R projects, `renv <https://rstudio.github.io/renv/>`_ R package is required
+for creating Bluprint projects with R support.
 
 References
 ----------

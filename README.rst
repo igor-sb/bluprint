@@ -9,6 +9,17 @@ Bluprint
 .. image:: https://codecov.io/gh/igor-sb/bluprint/graph/badge.svg?token=U44L2ASEIG 
  :target: https://codecov.io/gh/igor-sb/bluprint
 
+.. image:: https://img.shields.io/pypi/l/bluprint
+   :target: LICENSE
+   :alt: PyPI - License
+
+.. image:: https://img.shields.io/pypi/v/bluprint
+   :target: https://img.shields.io/pypi/v/bluprint
+   :alt: PyPI - Version
+
+.. image:: https://img.shields.io/pypi/pyversions/blurpint.svg
+  :target: https://pypi.python.org/pypi/bluprint
+
 **Bluprint** is a command line utility for creating data science project
 templates, allowing R and Jupyter notebooks seamless access to configuration,
 data and shared code in this type of structure::

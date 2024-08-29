@@ -14,8 +14,16 @@ dependencies = [
     "omegaconf>=2.3.0",
     "tqdm>=4.66.1",
     "bluprint-conf>=0.1.0",
-    "nbstripout>=0.6.1",
 ]
+classifiers = [
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/igor-sb/bluprint"
+Issues = "https://github.com/igor-sb/bluprint/issues"
 
 [tool.uv]
 dev-dependencies = [

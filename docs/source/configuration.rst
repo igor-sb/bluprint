@@ -77,7 +77,7 @@ could be organized in the following *conf/data.yaml*:
 Once loaded with ``load_data_yaml()`` from ``bluprint_conf``, these relative
 paths are automatically parsed into absolute paths. Paths to other files that
 are stored outside of the project directory, can be added into *data.yaml* and
-will be loaded as-is. For example:
+will be loaded as-is. You can avoid duplicating the paths too, for example:
 
 .. code-block:: yaml
 
@@ -86,7 +86,14 @@ will be loaded as-is. For example:
     preprocessed: preprocessed/user_data.csv
     final: raw/user_data.csv
   metadata: metadata.csv
-  internal_binary: /absolute/path/to/local_binary
+
+  paths:
+    binaries: /long/absolute/path/to/your/binaries
+
+  internal_binary1: ${paths.binaries}/local_binary1
+  internal_binary2: ${paths.binaries}/local_binary2
+  internal_binary3: ${paths.binaries}/local_binary3
+
   report: s3://path/to/final_report.ipynb
 
 .. _config-workflows:

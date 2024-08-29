@@ -233,7 +233,6 @@ source = { editable = "." }
 dependencies = [
     { name = "bluprint-conf" },
     { name = "fire" },
-    { name = "nbstripout" },
     { name = "notebook" },
     { name = "omegaconf" },
     { name = "tqdm" },
@@ -265,7 +264,6 @@ dev = [
 requires-dist = [
     { name = "bluprint-conf", specifier = ">=0.1.0" },
     { name = "fire", specifier = ">=0.5.0" },
-    { name = "nbstripout", specifier = ">=0.6.1" },
     { name = "notebook", specifier = ">=7.0.6" },
     { name = "omegaconf", specifier = ">=2.3.0" },
     { name = "tqdm", specifier = ">=4.66.1" },
@@ -1328,18 +1326,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/6d/fd/91545e604bc3dad7dca9ed03284086039b294c6b3d75c0d2fa45f9e9caf3/nbformat-5.10.4.tar.gz", hash = "sha256:322168b14f937a5d11362988ecac2a4952d3d8e3a2cbeb2319584631226d5b3a", size = 142749 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a9/82/0340caa499416c78e5d8f5f05947ae4bc3cba53c9f038ab6e9ed964e22f1/nbformat-5.10.4-py3-none-any.whl", hash = "sha256:3b48d6c8fbca4b299bf3982ea7db1af21580e4fec269ad087b9e81588891200b", size = 78454 },
-]
-
-[[package]]
-name = "nbstripout"
-version = "0.7.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "nbformat" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/8e/13/965aeeeec291cd7f1d7b31458946f0dabd1c74049ff6a74ab83f2ecf3c1d/nbstripout-0.7.1.tar.gz", hash = "sha256:2aad3454dc13e356f2fc94917856bc44f2bed3add77e8ba9f3a78003074bcd84", size = 25000 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/ff/20/30622f0e851416d32ce7b6d1f8a1dda779a500f57b85572ed355fd745efb/nbstripout-0.7.1-py2.py3-none-any.whl", hash = "sha256:dfb0688b42b02ff13925e583313fc009c87342ad13b79ae0329357749aa6ed0c", size = 15703 },
 ]
 
 [[package]]

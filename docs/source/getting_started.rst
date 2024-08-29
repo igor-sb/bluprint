@@ -65,12 +65,21 @@ By default, these functions load *conf/data.yaml* and *conf/config.yaml* so if
 you have (additional) configuration in other files, specify them in the first
 argument.
 
+.. note::
+
+  If you don't need to create various example files, you can create a project
+  with:
+  
+  .. code-block::
+
+    bluprint create myproject --omit-examples
+
 
 Python/R projects
 -----------------
 
-If you would like to setup a Python/R project that supports both Jupyter and
-RMarkdown notebooks use:
+Create a Bluprint project that supports both Jupyter and RMarkdown notebooks
+with:
 
 .. code-block:: bash
 
@@ -81,7 +90,6 @@ which also sets up renv and RStudio Rproj file and an example notebook:
 .. code-block:: none
 
   myproj
-  ├── .gitignore                      # Files excluded from version control
   ├── .venv                           # Project's Python virtual environment
   ├── README.md
   ├── conf                            # yaml configuration files
@@ -95,13 +103,14 @@ which also sets up renv and RStudio Rproj file and an example notebook:
   │   └── example_rmarkdown.Rmd
   ├── myproj                          # Python package of this project
   │   └── example.py
-  ├── myproj.Rproj                    # Rproj file for RStudio projects
   ├── renv                            # Project's R environment
+  ├── .gitignore                      # Files excluded from version control
+  ├── myproj.Rproj                    # Rproj file for RStudio projects
   └── pyproject.toml                  # Python package configuration
 
 Python notebooks and code still work the same as in the Python-only project. R
 notebooks and code can load the configuration and data using {reticulate} and
-{here} packages that are pre-installed to the project's renv:
+{here} packages that will be installed to the project's renv environment:
 
 .. code-block:: r
 

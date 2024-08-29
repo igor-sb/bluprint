@@ -17,8 +17,6 @@ Bluprint
    :target: https://img.shields.io/pypi/v/bluprint
    :alt: PyPI - Version
 
-.. image:: https://img.shields.io/pypi/pyversions/blurpint.svg
-  :target: https://pypi.python.org/pypi/bluprint
 
 **Bluprint** is a command line utility for creating data science project
 templates, allowing R and Jupyter notebooks seamless access to configuration,

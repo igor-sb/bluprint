@@ -137,8 +137,8 @@ Notebook workflows can be tested by specifying yaml workflow file, e.g.
 .. code-block:: bash
 
   blurpint workflow example_workflow \
-    --workflow_yaml=example_workflow \
-    --notebook_dir=notebooks
+    --workflow-yaml=example_workflow \
+    --notebook-dir=notebooks
 
 For Jupyter notebook workflows with more features, check
 `ploomber <https://docs.ploomber.io/en/latest/get-started/what-is.html>`_.

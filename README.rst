@@ -3,6 +3,12 @@
 Bluprint
 ========
 
+.. |CI| image:: https://github.com/igor-sb/bluprint/actions/workflows/ci.yml/badge.svg
+  :target: https://github.com/igor-sb/gencdna/actions
+
+.. image:: https://codecov.io/gh/igor-sb/bluprint/graph/badge.svg?token=U44L2ASEIG 
+ :target: https://codecov.io/gh/igor-sb/bluprint
+
 **Bluprint** is a command line utility for creating data science project
 templates, allowing R and Jupyter notebooks seamless access to configuration,
 data and shared code in this type of structure::

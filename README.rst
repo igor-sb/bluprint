@@ -4,6 +4,7 @@ Bluprint
 ========
 
 .. image:: https://github.com/igor-sb/bluprint/actions/workflows/ci.yml/badge.svg
+    :target: https://app.codecov.io/github/igor-sb/bluprint/commit/26cf3125a2439362de57b908f2a91f648b39dc8c
     :alt: CI
 
 .. image:: https://codecov.io/gh/igor-sb/bluprint/graph/badge.svg?token=U44L2ASEIG
@@ -13,6 +14,7 @@ Bluprint
     :target: LICENSE
 
 .. image:: https://img.shields.io/pypi/v/bluprint?color=blue
+    :target: https://pypi.org/project/bluprint/
     :alt: PyPI - Version
 
 

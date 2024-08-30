@@ -7,14 +7,14 @@ Bluprint
   :target: https://github.com/igor-sb/bluprint/actions
 
 .. image:: https://codecov.io/gh/igor-sb/bluprint/graph/badge.svg?token=U44L2ASEIG 
- :target: https://codecov.io/gh/igor-sb/bluprint
+  :target: https://codecov.io/gh/igor-sb/bluprint
 
 .. image:: https://img.shields.io/pypi/l/bluprint?color=blue
-   :target: LICENSE
-   :alt: PyPI - License
+  :target: LICENSE
+  :alt: PyPI - License
 
 .. image:: https://img.shields.io/pypi/v/bluprint?color=blue
-   :alt: PyPI - Version
+  :alt: PyPI - Version
 
 
 **Bluprint** is a command line utility for creating data science project

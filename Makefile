@@ -1,22 +1,26 @@
-PDM_RUN := pdm run
+UV_RUN := uv run
 FOLDERS= src
 PROJ= src
 NC=\033[0m # No Color
 
-.PHONY: install autolint lint lint-flake8 shell precommit pdm-precommit \
-		install-dev test report-coverage docs lint-mypy build
+.PHONY: install autolint lint lint-flake8 shell precommit uv-precommit \
+		install-dev test test-update-snapshots report-coverage docs lint-mypy \
+		build publish
 
 test:
-		${PDM_RUN} coverage erase
-		${PDM_RUN} coverage run --branch -m pytest tests ${PROJ} \
+		${UV_RUN} coverage erase
+		${UV_RUN} coverage run --branch -m pytest tests ${PROJ} \
 				--junitxml=junit/test-results.xml -v
 
+test-update-snapshots:
+		${UV_RUN} coverage run --branch -m pytest --snapshot-update tests/workflow src
+
 install: install-dev
-		pdm install
+		${UV_RUN} sync
 
 lint:
 		make autolint
-		make lint-flake8
+		make lint-ruff
 		make lint-mypy
 
 install-dev:
@@ -24,27 +28,31 @@ install-dev:
 		chmod +x .git/hooks/pre-commit
 
 autolint:
-		@${PDM_RUN} autopep8 -r -i ${FOLDERS}
-		@${PDM_RUN} unify -r -i ${FOLDERS}
-		@${PDM_RUN} isort ${FOLDERS}
+		@${UV_RUN} autopep8 -r -i ${FOLDERS}
+		@${UV_RUN} unify -r -i ${FOLDERS}
+		@${UV_RUN} isort ${FOLDERS}
 
 lint-flake8:
 		@echo "\n${BLUE}Running flake8...${NC}\n"
-		@${PDM_RUN} flake8 .
+		@${UV_RUN} flake8 .
+
+lint-ruff:
+		@echo "\n${BLUE}Running ruff...${NC}\n"
+		@${UV_RUN} ruff check
 
 lint-mypy:
 		@echo "\n${BLUE}Running mypy...${NC}\n"
-		${PDM_RUN} mypy --show-error-codes ${PROJ}
+		${UV_RUN} mypy --show-error-codes ${PROJ}
 
-precommit: pdm-precommit lint
+precommit: uv-precommit lint
 
-pdm-precommit:
-		${PDM_RUN} pre-commit run --all-files
+uv-precommit:
+		${UV_RUN} pre-commit run --all-files
 
 report-coverage:
-		${PDM_RUN} coverage report
-		${PDM_RUN} coverage html
-		${PDM_RUN} coverage xml
+		${UV_RUN} coverage report --include="src/**"
+		${UV_RUN} coverage html  --include="src/**"
+		${UV_RUN} coverage xml  --include="src/**"
 
 docs:
 	@echo "\n${BLUE}Preparing Sphinx documentation...${NC}\n"
@@ -67,4 +75,7 @@ clean:
 	rm -rf tests/__pycache__
 
 build:
-	@rm -rf build; pdm build
+	@rm -rf dist; uvx --from build pyproject-build --installer uv
+
+publish:
+	@uvx twine upload dist/*

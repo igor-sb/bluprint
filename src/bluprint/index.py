@@ -8,13 +8,13 @@ from omegaconf import DictConfig, OmegaConf
 
 def _index_files_in_dir(
     index_dir: str | PosixPath,
-    skip_dot_files: bool = True,
+    include_dot_files: bool = False,
 ) -> list[tuple[str, ...]]:
     indexed_files = []
     for root, _, files in os.walk(index_dir):
-        for file in files:  # noqa: WPS110
+        for file in files:
             file_path = Path(root) / file
-            if file.startswith('.') and skip_dot_files:
+            if file.startswith('.') and not include_dot_files:
                 continue
             indexed_files.append(
                 file_path.parts[len(Path(index_dir).parts):],
@@ -22,7 +22,7 @@ def _index_files_in_dir(
     return sorted(indexed_files)
 
 
-def _create_config_from_indexed_files(  # noqa: WPS210
+def _create_config_from_indexed_files(
     indexed_files: list[tuple[str, ...]],
 ) -> DictConfig:
     config_dotlist = []
@@ -49,9 +49,9 @@ def _create_config_from_indexed_files(  # noqa: WPS210
 def index_dir_to_config_yaml(
     input_dir: str | PosixPath,
     output_yaml: str | PosixPath,
-    skip_dot_files: bool = True,
+    include_dot_files: bool = False,
 ) -> int:
-    indexed_files = _index_files_in_dir(input_dir, skip_dot_files)
+    indexed_files = _index_files_in_dir(input_dir, include_dot_files)
     OmegaConf.save(
         _create_config_from_indexed_files(indexed_files),
         output_yaml,

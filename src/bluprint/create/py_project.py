@@ -1,100 +1,94 @@
 """Create a bluprint project."""
 
-import re
 from pathlib import Path
 
-import nbformat
-from importlib_resources import files
 from packaging.version import Version
 
-from bluprint.binary import pdm_add, pdm_init, run
-from bluprint.create.errors import (
-    GitError,
-    LowPythonVersionError,
-    PythonVersionError,
+from bluprint.binary import run, uv_add, uv_init
+from bluprint.colors import progress_log
+from bluprint.create.errors import LowPythonVersionError, PythonVersionError
+from bluprint.project import copy_template
+from bluprint.template import (
+    default_template_dir,
+    replace_git_account_name,
+    replace_placeholder_name_in_file,
+    replace_placeholder_name_in_notebook,
 )
 
 MIN_PYTHON_VERSION = '3.11'
 
 
-def create_project(
+def create_python_project(
     project_name: str,
     python_version: str | None = None,
     parent_dir: str | None = None,
     template_dir: str | None = None,
+    keep_r_files: bool = False,
+    omit_examples: bool = False,
 ) -> None:
     if not parent_dir:
         parent_dir = '.'
     project_dir = Path(parent_dir) / project_name
     project_dir.mkdir(parents=True)
-    initialize_project(project_name, python_version, project_dir, template_dir)
+    initialize_python_project(
+        project_name=project_name,
+        python_version=python_version,
+        project_dir=project_dir,
+        template_dir=template_dir,
+        keep_r_files=keep_r_files,
+        omit_examples=omit_examples,
+    )
 
 
-def initialize_project(
+@progress_log('initializing Python project', print_ok=False)
+def initialize_python_project(
     project_name: str,
     python_version: str | None = None,
     project_dir: str | Path = '.',
     template_dir: str | None = None,
+    keep_r_files: bool = False,
+    omit_examples: bool = False,
+    overwrite: bool = False,
 ) -> None:
     if not python_version:
         python_version = default_python_version()
     if not template_dir:
-        template_dir = files('bluprint').joinpath('template')
-    pdm_init(python_version, str(template_dir), str(project_dir))
-    delete_r_files_from_template(project_dir)
-    replace_placeholder_name(
-        Path(project_dir) / 'notebooks' / 'example_jupyternb.ipynb',
+        template_dir = default_template_dir()
+    uv_init(python_version, str(project_dir))
+    (Path(project_dir) / 'src' / project_name / '__init__.py').unlink()
+    Path.rmdir(Path(project_dir) / 'src' / project_name)
+    Path.rmdir(Path(project_dir) / 'src')
+    copy_template(
+        template_dir,
+        project_dir,
         project_name=project_name,
+        omit_examples=omit_examples,
+        keep_r_files=keep_r_files,
+        overwrite=overwrite,
     )
-    replace_git_account_name(project_dir)
-    pdm_add(['bluprint_conf', 'ipykernel', 'pandas'], project_dir)
-
-
-def delete_r_files_from_template(project_dir: str | Path) -> None:
-    (Path(project_dir) / 'placeholder_name.Rproj').unlink()
-    (Path(project_dir) / 'notebooks' / 'example_rmarkdown.Rmd').unlink()
-
-
-def replace_placeholder_name(
-    notebook_path: str | Path,
-    project_name: str,
-    placeholder='placeholder_name',
-) -> None:
-    with open(notebook_path, 'r', encoding='utf-8') as in_notebook_file:
-        notebook_content = nbformat.read(in_notebook_file, as_version=4)
-
-    for cell in notebook_content['cells']:
-        if 'source' in cell and isinstance(cell['source'], str):
-            cell['source'] = cell['source'].replace(placeholder, project_name)
-
-    with open(notebook_path, 'w', encoding='utf-8') as out_notebook_file:
-        nbformat.write(notebook_content, out_notebook_file)
-
-
-def replace_git_account_name(
-    project_dir: str | Path,
-) -> None:
-
-    readme_file = Path(project_dir) / 'README.md'
-    with open(readme_file, 'r') as readme_r:
-        readme_content = readme_r.read()
-    try:  # noqa: WPS229
-        git_user = run(['git', 'config', '--global', 'user.name'], GitError)
-        if git_user:
-            readme_content = readme_content.replace(
-                '{{git_account_name}}',
-                git_user.strip(),
-            )
-    except GitError:
-        # If there's no git, remove entire installation section
-        readme_content = re.sub(
-            re.compile(r'## Installation.*?(\n## |\Z)', re.DOTALL),
-            '',
-            readme_content,
+    Path.rename(
+        Path(project_dir) / 'placeholder_name',
+        Path(project_dir) / project_name,
+    )
+    replace_placeholder_name_in_file(
+        Path(project_dir) / 'pyproject.toml',
+        project_name,
+    )
+    if not omit_examples:
+        replace_placeholder_name_in_file(
+            Path(project_dir) / 'README.md',
+            project_name,
         )
-
-    with open(readme_file, 'w') as readme_w:
-        readme_w.write(readme_content)
+        replace_placeholder_name_in_file(
+            Path(project_dir) / 'notebooks' / 'example_quarto.qmd',
+            project_name,
+        )
+        replace_placeholder_name_in_notebook(
+            Path(project_dir) / 'notebooks' / 'example_jupyternb.ipynb',
+            project_name,
+        )
+        replace_git_account_name(project_dir)
+    uv_add(['bluprint_conf', 'ipykernel', 'pandas'], project_dir)
 
 
 def default_python_version(min_version: str = MIN_PYTHON_VERSION) -> str:
@@ -105,9 +99,12 @@ def default_python_version(min_version: str = MIN_PYTHON_VERSION) -> str:
     return min_version
 
 
+@progress_log('checking Python version...')
 def check_python_version(
     python_version: str | None,
 ) -> None:
-    if python_version:
-        if Version(python_version) < Version(MIN_PYTHON_VERSION):
-            raise LowPythonVersionError('Bluprint requires Python >= 3.11.')
+    if (
+        python_version and
+        (Version(python_version) < Version(MIN_PYTHON_VERSION))
+    ):
+        raise LowPythonVersionError('Bluprint requires Python >= 3.11.')

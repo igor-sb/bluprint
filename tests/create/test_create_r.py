@@ -3,24 +3,24 @@
 from pathlib import Path
 
 import pytest
-from importlib_resources import files
 
 from bluprint import cli
 from bluprint.create.errors import RpackageMissingError
 from bluprint.create.r_project import check_if_r_package_is_installed
+from bluprint.template import default_template_dir
 
 
 def test_create_pyr_project(find_files_in_dir, tmp_path):
-    template_dir = files('bluprint').joinpath('template')
-    bp = cli.Bluprint()
-    bp.create(
-        project_name='placeholder_name',
+    template_dir = default_template_dir()
+    project_name = 'placeholder_name'
+    cli.Bluprint().create(
+        project_name=project_name,
         parent_dir=tmp_path,
-        r_proj=True,
+        r_project=True,
     )
     project_files = {
-        file_path.relative_to(tmp_path / 'placeholder_name')
-        for file_path in find_files_in_dir(tmp_path / 'placeholder_name')
+        file_path.relative_to(tmp_path / project_name)
+        for file_path in find_files_in_dir(tmp_path / project_name)
     }
     template_files = {
         file_path.relative_to(template_dir)
@@ -28,16 +28,17 @@ def test_create_pyr_project(find_files_in_dir, tmp_path):
     }
     template_files.update([
         Path('pyproject.toml'),
-        Path('pdm.lock'),
+        Path('uv.lock'),
         Path('renv.lock'),
         Path('.Rprofile'),
     ])
-    venv_dir = tmp_path / 'placeholder_name' / '.venv'
+    venv_dir = tmp_path / project_name / '.venv'
     assert project_files == template_files
-    assert (tmp_path / 'placeholder_name' / 'renv').exists()
+    assert (tmp_path / project_name / 'renv').exists()
     assert (venv_dir / 'pyvenv.cfg').exists()
 
 
 def test_check_if_r_package_is_not_installed():
     with pytest.raises(RpackageMissingError):
-        check_if_r_package_is_installed('fake_package')
+        check_if_r_package_is_installed('fake_project')
+

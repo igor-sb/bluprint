@@ -4,12 +4,12 @@ Project description.
 
 ## Installation
 
-Install [PDM](https://pdm-project.org), then run:
+Install [uv](https://github.com/astral-sh/uv), then run:
 
 ```sh
-git clone https://github.com/{{git_account_name}}/placeholder_name.git
-cd placeholder_name
-pdm install
+git clone https://github.com/{{git_account_name}}/{{placeholder_name}}.git
+cd {{placeholder_name}}
+uv venv && uv sync
 ```
 
 ## Running notebooks

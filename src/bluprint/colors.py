@@ -1,9 +1,8 @@
 """Color styling for CLI output."""
 
 import functools
-import logging
 import sys
-from typing import Any, Callable
+from typing import Callable
 
 
 class Style(object):
@@ -18,19 +17,6 @@ class Style(object):
     bold = '\033[1m'
     underline = '\033[4m'
     end = '\033[0m'
-
-
-def with_logging(
-    func: Callable[..., Any],
-    logger: logging.Logger,
-    message: str,
-) -> Callable[..., Any]:
-    @functools.wraps(func)
-    def wrapper(*args: Any, **kwargs: Any) -> Any:
-        logger.info(message)
-        return func(*args, **kwargs)
-
-    return wrapper
 
 
 def style_workflow(string: str) -> str:
@@ -67,3 +53,18 @@ def styled_print(
         ),
     )
     sys.stderr.flush()
+
+
+def progress_log(log_message: str, print_ok=True) -> Callable:
+    def decorate(func: Callable) -> Callable:
+        @functools.wraps(func)
+        def print_wrapper(*args, **kwargs) -> None:
+            if print_ok:
+                styled_print(log_message, endline='')
+            else:
+                styled_print(log_message)
+            func(*args, **kwargs)
+            if print_ok:
+                styled_print(' Ok.', print_bluprint=False)
+        return print_wrapper
+    return decorate

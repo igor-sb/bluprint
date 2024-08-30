@@ -1,13 +1,17 @@
 data.yaml from existing data
 ============================
 
-In pre-existing projects, you may already have a *data* directory populated with various files and organized in different subdirectories. Instead of manually writing down all file paths in a *conf/data.yaml*, you can use:
+In pre-existing projects, you may already have a *data* directory populated with
+various files and organized in different subdirectories. Instead of manually
+writing down all file paths in a *conf/data.yaml*, you can use:
 
 .. code-block:: shell
 
     bluprint index data conf/data.yaml
 
-which recursively indexes a *data/* directory in your current path and saves the output into *conf/data.yaml*. For example, if the data directory has the following structure::
+which recursively indexes a *data/* directory in your current path and saves the
+output into *conf/data.yaml*. For example, if the data directory has the
+following structure::
 
     data
     ├── dir1
@@ -39,4 +43,5 @@ with paths listed relative to the *data/* directory.
 
 .. note::
 
-    By default, ``bluprint index`` will omit any files starting with a dot. Use ``--skip_dot_files False`` argument to index dot files as well.
+    By default, ``bluprint index`` will omit any files starting with a dot.
+    Use ``bluprint index --include-dot-files`` to include them.

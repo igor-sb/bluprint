@@ -3,17 +3,48 @@ name: CI
 on:
   push:
 
+env:
+  PYTHON_VERSION: 3.11.2
+  UV_VERSION: 0.3.3
+  R_VERSION: 4.2.2
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-
 jobs:
+
+  env_vars:
+    name: Expose env variables
+    runs-on: ubuntu-latest
+    outputs:
+      PYTHON_VERSION: ${{ env.PYTHON_VERSION }}
+      UV_VERSION: ${{ env.UV_VERSION }}
+      R_VERSION: ${{ env.R_VERSION }}
+    steps:
+      - run: echo "Exposing env vars to reusable workflows"
 
   unit-tests:
     name: Unit tests
+    needs: [env_vars]
     uses: ./.github/workflows/unit-tests.yml
+    with:
+      PYTHON_VERSION: ${{ needs.env_vars.outputs.PYTHON_VERSION }}
+      UV_VERSION: ${{ needs.env_vars.outputs.UV_VERSION }}
+      R_VERSION: ${{ needs.env_vars.outputs.R_VERSION }}
 
   lint:
     name: Lint
+    needs: [env_vars]
     uses: ./.github/workflows/lint.yml
+    with:
+      PYTHON_VERSION: ${{ needs.env_vars.outputs.PYTHON_VERSION }}
+      UV_VERSION: ${{ needs.env_vars.outputs.UV_VERSION }}
+  
+  docs:
+    name: Docs
+    needs: [env_vars]
+    uses: ./.github/workflows/docs.yml
+    with:
+      PYTHON_VERSION: ${{ needs.env_vars.outputs.PYTHON_VERSION }}
+      UV_VERSION: ${{ needs.env_vars.outputs.UV_VERSION }}

@@ -1,25 +1,24 @@
 """Command-line interface for bluprint."""
 
 import sys
-from os import getcwd
 from pathlib import Path
 
 import fire
 from bluprint_conf import load_config_yaml
 
-from bluprint.binary import check_if_executable_is_installed
 from bluprint.colors import styled_print
 from bluprint.create.py_project import (
     check_python_version,
-    create_project,
-    initialize_project,
+    create_python_project,
+    initialize_python_project,
 )
-from bluprint.create.r_project import (
-    check_if_r_package_is_installed,
-    initialize_r_project,
-)
-from bluprint.errors import ProjectExistsError
+from bluprint.create.r_project import create_r_project, initialize_r_project
 from bluprint.index import index_dir_to_config_yaml
+from bluprint.project import (
+    check_if_project_can_be_created,
+    check_if_project_files_exist,
+    get_current_working_dir,
+)
 from bluprint.workflow import run_notebook, run_workflow
 
 sys.tracebacklimit = 0
@@ -34,23 +33,32 @@ class Bluprint(object):
         python_version: str | None = None,
         parent_dir: str | None = None,
         template_dir: str | None = None,
-        r_proj: bool = False,
+        r_project: bool = False,
+        omit_examples: bool = False,
     ) -> None:
-        """Create a directory with a bluprint project.
+        """Create a directory with a bluprint project:
 
-        Creates a project directory structure:
-        - .venv/: virtual environment
-        - conf/: yaml configurations
-        - data/: tables and other data files
-        - PROJECT_NAME/: source (non-notebook) code for this project
-        - notebooks/: Jupyter notebooks
-        - pyproject.toml: project package configuration
-        - README.md: readme file
+        .
+        ├── .venv                         Project's Python virtual environment
+        ├── conf                          Yaml configuration files
+        │   ├── config.yaml                 Accessible using load_config_yaml()
+        │   ├── data.yaml                   Accessible using load_data_yaml()
+        │   └── workflow.yaml               Used by bluprint workflow
+        ├── data                          Local data (e.g. csv, png, pdf)
+        │   └── example_data.csv
+        ├── notebooks                     Jupyter/R/Quarto notebooks
+        │   ├── example_jupyternb.ipynb
+        │   └── example_quarto.qmd
+        ├── myproj                        Python package of this project
+        │   └── example.py                  Modules within myproj package
+        ├── .gitignore                    Files excluded from version control
+        ├── README.md                     Readme file describing the project
+        ├── pyproject.toml                Project configuration
+        └── uv.lock                       Locked version of Python dependencies
 
-        Also, initalizes, a python package PROJECT_NAME in editable mode. This
-        means that files within PROJECT_NAME/ are accessible in notebooks
-        as a Python package, without a need to `pip install` them each time
-        there is a change.
+        Bluprint also makes all files within PROJECT_NAME/ accessible to
+        notebooks as an editable Python package: after changing the files re-run
+        the notebook for changes to update.
 
         Args:
 
@@ -67,26 +75,39 @@ class Bluprint(object):
             directory.
 
         template_dir (str | None, optional): Path to a directory with a
-            Bluprint or PDM template. If not specified (default), uses Bluprint
+            Bluprint template. If not specified (default), uses Bluprint
             default built-in template.
 
-        r_proj (bool, optional): Setup R library using renv to support package
-            isolation in RMarkdown notebooks.
+        r_project (bool, optional): Setup R library using renv to support
+            package isolation in RMarkdown notebooks.
+
+        omit_examples (bool, optional): Add example data and notebooks in the
+            new project.
 
         """
         styled_print(
-            'creating Python{with_r} project {project_name}... '.format(
+            'creating Python{with_r} project {project_name}'.format(
                 project_name=project_name,
-                with_r='/R' if r_proj else '',
+                with_r='/R' if r_project else '',
             ),
-            endline='',
         )
-        check_if_project_can_be_created(project_name, parent_dir, r_proj)
+        check_if_project_can_be_created(
+            project_name=project_name,
+            parent_dir=parent_dir,
+            r_project=r_project,
+        )
         check_python_version(python_version)
-        create_project(project_name, python_version, parent_dir, template_dir)
-        if r_proj:
-            initialize_r_project(project_name, parent_dir)
-        styled_print('Ok', print_bluprint=False)
+        create_python_project(
+            project_name=project_name,
+            python_version=python_version,
+            parent_dir=parent_dir,
+            template_dir=template_dir,
+            keep_r_files=r_project,
+            omit_examples=omit_examples,
+        )
+        if r_project:
+            create_r_project(project_name, parent_dir)
+        styled_print(f'project `{project_name}` created.')
 
     def init(
         self,
@@ -94,9 +115,13 @@ class Bluprint(object):
         python_version: str | None = None,
         project_dir: str | None = None,
         template_dir: str | None = None,
-        r_proj: bool = False,
+        r_project: bool = False,
+        omit_examples: bool = False,
+        overwrite: bool = False,
     ) -> None:
-        """Initialize a bluprint project in existing directory.
+        """Initialize a bluprint project in an existing directory.
+
+        Same functionality as `bluprint create` but from an existing directory.
 
         Args:
 
@@ -112,37 +137,44 @@ class Bluprint(object):
             directory.
 
         template_dir (str | None, optional): Path to a directory with a
-            Bluprint or PDM template. If not specified (default), uses Bluprint
+            Bluprint template. If not specified (default), uses Bluprint
             default built-in template.
 
-        r_proj (bool): Setup R library using renv to support package
+        r_project (bool): Setup R library using renv to support package
             isolation in RMarkdown notebooks.
+
+        omit_examples (bool, optional): Add example data and notebooks in the
+            new project.
+
+        overwrite (bool, optional): Overwrite existing files.
 
         Raises:
 
             ProjectExistsError: Raised if pyproject.toml exists in
                 the `project_dir`.
         """
-        if not project_dir:
-            project_dir = getcwd()
         styled_print(
-            'initializing Python{with_r} project {project_name}... '.format(
+            'initializing Python{with_r} project {project_name}'.format(
                 project_name=project_name,
-                with_r='/R' if r_proj else '',
+                with_r='/R' if r_project else '',
             ),
-            endline='',
         )
-        check_if_pyproject_toml_exists(project_dir)
+        if not project_dir:
+            project_dir = get_current_working_dir()
+        check_if_project_files_exist(project_name, project_dir, overwrite)
         check_python_version(python_version)
-        initialize_project(
-            project_name,
-            python_version,
-            Path(project_dir),
-            template_dir,
+        initialize_python_project(
+            project_name=project_name,
+            python_version=python_version,
+            project_dir=Path(project_dir),
+            template_dir=template_dir,
+            keep_r_files=r_project,
+            omit_examples=omit_examples,
+            overwrite=overwrite,
         )
-        if r_proj:
-            initialize_r_project(project_name)
-        styled_print('Ok', print_bluprint=False)
+        if r_project:
+            initialize_r_project(project_name, project_dir)
+        styled_print(f'project `{project_name}` created.')
 
     def notebook(
         self,
@@ -180,9 +212,6 @@ class Bluprint(object):
 
         workflow_yaml (str | PosixPath, optional): Workflow YAML filename.
 
-        workflow_yaml_dir (str | PosixPath, optional): Root directory
-        containing workflow YAML.
-
         notebook_dir (str | PosixPath, optional): Root directory containing
         all the notebooks.
 
@@ -199,7 +228,7 @@ class Bluprint(object):
         self,
         input_dir: str,
         output_yaml: str,
-        skip_dot_files: bool = True,
+        include_dot_files: bool = False,
     ) -> None:
         """Index all directory files to yaml config.
 
@@ -210,42 +239,16 @@ class Bluprint(object):
         Args:
             input_dir (str): Directory to index.
             output_yaml (str): Output yaml filepath.
-            skip_dot_files (bool, optional): Skip files starting with a dot.
+            include_dot_files (bool, optional): Include hidden files starting
+                with a dot into an index.
         """
-        styled_print(f'index {input_dir}/** ❯ {output_yaml}')
-        index_dir_to_config_yaml(input_dir, output_yaml, skip_dot_files)
-
-
-def check_if_project_can_be_created(
-    project_name: str,
-    parent_dir: str | None = None,
-    r_proj: bool = False,
-) -> None:
-    check_if_project_exists(project_name, parent_dir)
-    check_if_executable_is_installed('pdm')
-    if r_proj:
-        check_if_executable_is_installed('Rscript')
-        check_if_r_package_is_installed('renv')
-
-
-def check_if_project_exists(project_name: str, parent_dir: str | None) -> None:
-    if not parent_dir:
-        parent_dir = '.'
-    if (Path(parent_dir) / project_name).is_dir():
-        raise ProjectExistsError(f'{project_name} directory exists.')
-
-
-def check_if_pyproject_toml_exists(project_dir: str) -> None:
-    if (Path(project_dir) / 'pyproject.toml').exists():
-        raise ProjectExistsError(
-            f'pyproject.toml already exists in {project_dir}: '
-            + 'cannot initialize new bluprint project',
-        )
+        styled_print(f'index {input_dir}/** ❯ {output_yaml}')  # noqa: RUF001
+        index_dir_to_config_yaml(input_dir, output_yaml, include_dot_files)
 
 
 def main():
-    fire.Fire(Bluprint)
+    fire.Fire(Bluprint)  # pragma: no cover
 
 
-if __name__ == '__main__':
-    main()
+if __name__ == '__main__':  # pragma: no cover
+    main()  # pragma: no cover

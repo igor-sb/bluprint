@@ -1,19 +1,40 @@
 name: Docs
-on: [push, pull_request, workflow_dispatch]
+
+on:
+  workflow_call:
+    inputs:
+      PYTHON_VERSION:
+        required: true
+        type: string
+      UV_VERSION:
+        required: true
+        type: string
+
 permissions:
-    contents: write
+  contents: write
+
 jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install and setup Python, uv, virtual env
+        uses: ./.github/actions/install-python
+        with:
+          PYTHON_VERSION: ${{ inputs.PYTHON_VERSION }}
+          UV_VERSION: ${{ inputs.UV_VERSION }}
+
       - name: Install dependencies
         run: |
           pip install sphinx sphinx-immaterial
+
       - name: Sphinx build
         run: |
           sphinx-build docs/source docs/build
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}

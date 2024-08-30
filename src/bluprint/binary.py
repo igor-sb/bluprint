@@ -5,11 +5,13 @@ import subprocess
 from pathlib import Path
 from typing import TypeVar
 
+from bluprint.colors import progress_log
 from bluprint.create.errors import (
-    PdmAddError,
-    PdmInitError,
     RenvInitError,
     RenvInstallError,
+    RenvSnapshotError,
+    UvAddError,
+    UvInitError,
 )
 from bluprint.errors import MissingExecutableError, StyledError
 
@@ -28,7 +30,7 @@ def run(command: list[str], exception: type[Error], **kwargs) -> str:
     return command_out.stdout.decode('utf-8')
 
 
-def pdm(
+def uv(
     command: str | list[str],
     exception: type[Error],
     cwd: str | Path,
@@ -36,36 +38,46 @@ def pdm(
 ) -> str:
     if isinstance(command, str):
         command = [command]
-    return run(['pdm', *command], exception, cwd=cwd, **kwargs)
+    return run(['uv', *command], exception, cwd=cwd, **kwargs)
 
 
-def pdm_init(python_version: str, template_dir: str, project_dir: str) -> str:
-    return pdm(
-        ['init', '--lib', '-n', '--python', python_version, template_dir],
-        PdmInitError,
+def uv_init(python_version: str, project_dir: str) -> str:
+    return uv(
+        ['init', '--no-workspace', '--no-readme', '--python', python_version],
+        UvInitError,
         cwd=project_dir,
     )
 
 
-def pdm_add(packages: list[str], project_dir: str | Path) -> str:
-    return pdm(['add', *packages], PdmAddError, cwd=project_dir)
+def uv_add(packages: list[str], project_dir: str | Path) -> str:
+    return uv(['add', *packages], UvAddError, cwd=project_dir)
 
 
 def rcmd(rscript: str, exception: type[Error], **kwargs) -> str:
     return run(['Rscript', '-e', rscript], exception, **kwargs)
 
 
+@progress_log('initalizing renv...')
 def renv_init(project_dir: str | Path) -> str:
     return rcmd('renv::init()', RenvInitError, cwd=project_dir)
 
 
-def renv_install(packages: str | list[str], project_dir: str | Path) -> str:
+@progress_log('installing R packages...')
+def renv_install(
+    packages: str | list[str] | tuple[str, ...],
+    project_dir: str | Path,
+) -> str:
     if isinstance(packages, str):
         packages = [packages]
     return rcmd(
-        'renv::install(c("{packages_str}"))'.format(
+        'renv::install(c("{packages_str}"), prompt=FALSE)'.format(
             packages_str='", "'.join(packages),
         ),
         RenvInstallError,
         cwd=project_dir,
     )
+
+
+@progress_log('creating renv snapshot...')
+def renv_create_snapshot(project_dir: str | Path) -> None:
+    rcmd('renv::snapshot()', RenvSnapshotError, cwd=project_dir)

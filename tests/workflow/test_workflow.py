@@ -16,10 +16,10 @@ def capture_stderr(func, *args, **kwargs):
     buffer = StringIO()
     original_stderr = sys.stderr
 
-    try:  # noqa: WPS501, WPS229
+    try:
         sys.stderr = buffer
         func(*args, **kwargs)
-        return buffer.getvalue()  # noqa: WPS331
+        return buffer.getvalue()
 
     finally:
         sys.stderr = original_stderr
@@ -42,7 +42,7 @@ def test_run_workflows(reference_test_log_file, snapshot):
         workflow_log,
     )
 
-    snapshot.snapshot_dir = os.path.dirname(reference_test_log_file)
+    snapshot.snapshot_dir = Path(reference_test_log_file).parent
     snapshot.assert_match(
         workflow_log,
         reference_test_log_file,
@@ -65,7 +65,7 @@ def test_run_workflow_cli(
     for pattern in (' Elapsed: [0-9:]+', r'\x1b[^m]*m', r'\r'):
         workflow_log = re.sub(pattern, '', workflow_log)
 
-    snapshot.snapshot_dir = os.path.dirname(reference_xtest_log_file)
+    snapshot.snapshot_dir = Path(reference_xtest_log_file).parent
     snapshot.assert_match(
         workflow_log,
         reference_xtest_log_file,
@@ -93,7 +93,7 @@ def test_run_rmd_workflow_cli(
         workflow_log,
     )
 
-    snapshot.snapshot_dir = os.path.dirname(reference_rtest_log_file)
+    snapshot.snapshot_dir = Path(reference_rtest_log_file).parent
     snapshot.assert_match(
         workflow_log,
         reference_rtest_log_file,

@@ -26,6 +26,7 @@ def run_workflow(
     workflow_notebooks_with_prefixes = zip(
         workflow_notebooks,
         add_graphic_prefixes(workflow_notebooks),
+        strict=True,
     )
     for notebook_file, graphical_prefix in workflow_notebooks_with_prefixes:
         run_notebook(notebook_file, notebook_dir, graphical_prefix)
@@ -56,7 +57,7 @@ def run_notebook(
                 display_prefix=graphical_prefix,
             )
         case '.qmd':
-            pass  # noqa: WPS420
+            pass
         case nb_extension:
             raise InvalidNotebookTypeError(
                 f'Invalid extension {nb_extension} in {notebook_file}',
@@ -69,7 +70,7 @@ def run_workflows(
 ):
     workflow_cfg = load_config_yaml(workflow_yaml)
     styled_print('run all workflows')
-    for workflow_name in workflow_cfg.keys():
+    for workflow_name in workflow_cfg:
         run_workflow(str(workflow_name), workflow_cfg, str(notebook_dir))
 
 

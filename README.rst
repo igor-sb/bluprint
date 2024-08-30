@@ -3,7 +3,7 @@
 Bluprint
 ========
 
-|CI_badge| | codecov_badge | |license_badge| |version_badge|
+|CI_badge| |codecov_badge| |license_badge| |version_badge|
 
 .. |CI_badge| image:: https://github.com/igor-sb/bluprint/actions/workflows/ci.yml/badge.svg
 .. |codecov_badge| image:: https://codecov.io/gh/igor-sb/bluprint/graph/badge.svg?token=U44L2ASEIG

@@ -32,6 +32,8 @@ jobs:
       PYTHON_VERSION: ${{ needs.env_vars.outputs.PYTHON_VERSION }}
       UV_VERSION: ${{ needs.env_vars.outputs.UV_VERSION }}
       R_VERSION: ${{ needs.env_vars.outputs.R_VERSION }}
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   lint:
     name: Lint

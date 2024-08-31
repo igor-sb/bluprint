@@ -3,19 +3,12 @@
 Bluprint
 ========
 
-.. image:: https://github.com/igor-sb/bluprint/actions/workflows/ci.yml/badge.svg
-  :target: https://github.com/igor-sb/bluprint/actions
+|CI_badge| |codecov_badge| |license_badge| |version_badge|
 
-.. image:: https://codecov.io/gh/igor-sb/bluprint/graph/badge.svg?token=U44L2ASEIG 
- :target: https://codecov.io/gh/igor-sb/bluprint
-
-.. image:: https://img.shields.io/pypi/l/bluprint?color=blue
-   :target: LICENSE
-   :alt: PyPI - License
-
-.. image:: https://img.shields.io/pypi/v/bluprint?color=blue
-   :alt: PyPI - Version
-
+.. |CI_badge| image:: https://github.com/igor-sb/bluprint/actions/workflows/ci.yml/badge.svg
+.. |codecov_badge| image:: https://codecov.io/gh/igor-sb/bluprint/graph/badge.svg?token=U44L2ASEIG
+.. |license_badge| image:: https://img.shields.io/pypi/l/bluprint?color=blue
+.. |version_badge| image:: https://img.shields.io/pypi/v/bluprint?color=blue
 
 **Bluprint** is a command line utility for creating data science project
 templates, allowing R and Jupyter notebooks seamless access to configuration,

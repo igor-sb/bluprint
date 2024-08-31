@@ -12,7 +12,7 @@ from bluprint.binary import (
 )
 
 
-def test_invalid_workflow():
+def test_missing_executable():
     with pytest.raises(MissingExecutableError):
         check_if_executable_is_installed('fake_executable')
 

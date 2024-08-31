@@ -1,10 +1,10 @@
 """Command-line interface for bluprint."""
 
+import importlib.metadata
 import sys
 from pathlib import Path
 
 import fire
-from bluprint_conf import load_config_yaml
 
 from bluprint.colors import styled_print
 from bluprint.create.py_project import (
@@ -19,7 +19,6 @@ from bluprint.project import (
     check_if_project_files_exist,
     get_current_working_dir,
 )
-from bluprint.workflow import run_notebook, run_workflow
 
 sys.tracebacklimit = 0
 
@@ -176,54 +175,6 @@ class Bluprint(object):
             initialize_r_project(project_name, project_dir)
         styled_print(f'project `{project_name}` created.')
 
-    def notebook(
-        self,
-        notebook_file: str | Path,
-    ) -> None:
-        """Run a single Jupyter/Rmarkdown notebook.
-
-        Args:
-            notebook_file (str | Path): Notebook filename.
-        """
-        styled_print(f'run notebook {notebook_file}')
-        run_notebook(notebook_file)
-
-    def workflow(
-        self,
-        workflow_name: str,
-        workflow_yaml: str | Path = 'conf/workflows.yaml',
-        notebook_dir: str = 'notebooks',
-    ) -> None:
-        """Run a single workflow.
-
-        Run a single workflow by its name, which a key in the workflow_yaml
-        config file. E.g. if workflow_yaml is:
-
-        test_workflow:
-          - test1.ipynb
-          - test2.ipynb
-
-        then the workflow name is `test_workflow`.
-
-        Args:
-
-        workflow_name (str): Key in the workflow_yaml config that labels a
-        workflow (a list of notebooks).
-
-        workflow_yaml (str | PosixPath, optional): Workflow YAML filename.
-
-        notebook_dir (str | PosixPath, optional): Root directory containing
-        all the notebooks.
-
-        """
-        styled_print(f'run workflow {workflow_name}')
-        cfg = load_config_yaml(workflow_yaml)
-        run_workflow(
-            workflow_name=workflow_name,
-            workflow_cfg=cfg,
-            notebook_dir=notebook_dir,
-        )
-
     def index(
         self,
         input_dir: str,
@@ -244,6 +195,12 @@ class Bluprint(object):
         """
         styled_print(f'index {input_dir}/** ❯ {output_yaml}')  # noqa: RUF001
         index_dir_to_config_yaml(input_dir, output_yaml, include_dot_files)
+
+    def version(self) -> None:
+        """Show bluprint version."""
+        styled_print('version {version}'.format(
+            version=importlib.metadata.version('bluprint'),
+        ))
 
 
 def main():

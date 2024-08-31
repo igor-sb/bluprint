@@ -23,8 +23,10 @@ from bluprint_conf import load_data_yaml
 
 data = load_data_yaml()
 
-# Print the csv data
+# Print file name
 print(data['example'])
+
+# Print file contents
 with open(data['example'], 'r') as example_file:
   for line in example_file:
     print(line.strip().replace(',', '\t'))

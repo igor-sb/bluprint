@@ -36,7 +36,6 @@ def test_init_py_project(find_files_in_dir, tmp_path):
     assert project_files == template_files
     assert (venv_dir / 'bin').exists()
     assert (venv_dir / 'lib').exists()
-    assert (venv_dir / 'share').exists()
     assert (venv_dir / 'pyvenv.cfg').exists()
 
 

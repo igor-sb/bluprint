@@ -1,6 +1,6 @@
 [project]
 name = "bluprint"
-version = "0.2.1"
+version = "0.3.0"
 description = ""
 authors = [
 	{name = "igor-sb"},
@@ -9,10 +9,7 @@ readme = "README.rst"
 license = { text = "MIT" }
 requires-python = "==3.11.*"
 dependencies = [
-    "notebook>=7.0.6",
     "fire>=0.5.0",
-    "omegaconf>=2.3.0",
-    "tqdm>=4.66.1",
     "bluprint-conf>=0.1.0",
 ]
 classifiers = [
@@ -67,6 +64,15 @@ line_length = 80
 
 [tool.ruff]
 line-length = 80
+exclude = [
+	'docs',
+	'.venv',
+	'.git',
+	'data',
+	'tmp',
+	'build',
+	'src/bluprint/template',
+]
 
 [tool.ruff.format]
 quote-style = "single"
@@ -107,15 +113,6 @@ ignore = [
 	#'WPS226',  # WPS226 Found string literal over-use: count > 3
 	#'WPS305',  # WPS305 Found `f` string
 	#'W503',  # line break before binary operator
-]
-exclude = [
-	'docs',
-	'.venv',
-	'.git',
-	'data',
-	'tmp',
-	'build',
-	'src/bluprint/template',
 ]
 
 [tool.ruff.lint.per-file-ignores]

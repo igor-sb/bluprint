@@ -43,7 +43,10 @@ def uv(
 
 def uv_init(python_version: str, project_dir: str) -> str:
     return uv(
-        ['init', '--no-workspace', '--no-readme', '--python', python_version],
+        [
+            'init', '--no-workspace', '--no-readme', '--lib', '--python',
+            python_version,
+        ],
         UvInitError,
         cwd=project_dir,
     )

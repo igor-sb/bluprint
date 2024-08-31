@@ -3,7 +3,6 @@
 import re
 from pathlib import Path
 
-import nbformat
 from importlib_resources import files
 
 from bluprint.binary import run
@@ -45,27 +44,7 @@ def replace_placeholder_name_in_file(
             out_file.write(line)
 
 
-def replace_placeholder_name_in_notebook(
-    notebook_path: str | Path,
-    project_name: str,
-    placeholder='placeholder_name',
-) -> None:
-    with Path(notebook_path).open('r', encoding='utf-8') as in_notebook_file:
-        notebook_content = nbformat.read(in_notebook_file, as_version=4)
-
-    for cell in notebook_content['cells']:
-        if 'source' in cell and isinstance(cell['source'], str):
-            cell['source'] = cell['source'].replace(placeholder, project_name)
-
-    with Path(notebook_path).open('w', encoding='utf-8') as out_notebook_file:
-        nbformat.write(notebook_content, out_notebook_file)
-
-
-def replace_git_account_name(
-    project_dir: str | Path,
-) -> None:
-
-    readme_file = Path(project_dir) / 'README.md'
+def replace_git_account_name_in_readme(readme_file: str | Path) -> None:
     with readme_file.open('r') as readme_r:
         readme_content = readme_r.read()
     try:

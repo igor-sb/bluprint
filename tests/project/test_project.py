@@ -60,7 +60,7 @@ def test_check_if_project_dir_exists():
 def test_if_project_files_exist_pyproject_toml():
     with tempfile.TemporaryDirectory() as dst_path:
         Path.mkdir(Path(dst_path) / 'test_project')
-        (Path(dst_path) / 'test_project' / 'pyproject.toml').open('w').close()
+        (Path(dst_path) / 'test_project' / 'pyproject.toml').write_text('')
         with pytest.raises(ProjectExistsError):
             check_if_project_files_exist('test_project', dst_path)
 
@@ -75,7 +75,7 @@ def test_if_project_files_exist_venv():
 def test_if_project_files_exist_readme_md():
     with tempfile.TemporaryDirectory() as dst_path:
         Path.mkdir(Path(dst_path) / 'test_project')
-        (Path(dst_path) / 'test_project' / 'README.md').open('w').close()
+        (Path(dst_path) / 'test_project' / 'README.md').write_text('')
         with pytest.raises(ProjectExistsError):
             check_if_project_files_exist('test_project', dst_path)
 
@@ -83,7 +83,7 @@ def test_if_project_files_exist_readme_md():
 def test_if_project_files_exist_pyproject_toml_overwrite():
     with tempfile.TemporaryDirectory() as dst_path:
         Path.mkdir(Path(dst_path) / 'test_project')
-        (Path(dst_path) / 'test_project' / 'pyproject.toml').open('w').close()
+        (Path(dst_path) / 'test_project' / 'pyproject.toml').write_text('')
         with pytest.raises(ProjectExistsError):
             check_if_project_files_exist(
                 project_name='test_project',
@@ -95,7 +95,7 @@ def test_if_project_files_exist_pyproject_toml_overwrite():
 def test_if_project_files_exist_readme_md_overwrite():
     with tempfile.TemporaryDirectory() as dst_path:
         Path.mkdir(Path(dst_path) / 'test_project')
-        (Path(dst_path) / 'test_project' / 'README.md').open('w').close()
+        (Path(dst_path) / 'test_project' / 'README.md').write_text('')
         assert \
             check_if_project_files_exist(
                 project_name='test_project',

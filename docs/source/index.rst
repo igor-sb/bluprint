@@ -33,3 +33,4 @@ Site Map
    :caption: Production
 
    prod_projects
+   prod_notebooks

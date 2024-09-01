@@ -31,8 +31,7 @@ Contributing code guidelines
 3. After creating a new code, ensure it passes linting and static typing checks;
    run ``make lint``.
 4. Add appropriate unit tests and ensure it passes all unit tests; run
-   ``make test``. Add ``export JUPYTER_PLATFORM_DIRS=1`` to your *.bashrc* or
-   *.zshrc* to silence a Jupyter deprecation warning.
+   ``make test``. 
 5. If you make changes to the documentation, you can build it locally using
    ``make docs``, then open *docs/build/index.html* file in your browser.
 6. If everything passes correctly, update the Bluprint version in

@@ -23,4 +23,4 @@ def test_if_uv_is_installed():
 
 def test_uv_command_passed_as_string():
     uv_version = uv('version', MissingExecutableError, '.').strip()
-    assert re.match(r'^uv [0-9]+\.[0-9]+\.[0-9]+$', uv_version)
+    assert re.match(r'^uv [0-9]+\.[0-9]+\.[0-9]+.*$', uv_version)

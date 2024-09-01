@@ -54,6 +54,7 @@ def initialize_python_project(
     if not template_dir:
         template_dir = default_template_dir()
     uv_init(python_version, str(project_dir))
+    (Path(project_dir) / 'pyproject.toml').unlink()
     (Path(project_dir) / 'src' / project_name / '__init__.py').unlink()
     Path.rmdir(Path(project_dir) / 'src' / project_name)
     Path.rmdir(Path(project_dir) / 'src')

@@ -17,11 +17,11 @@ data and shared code in this type of structure::
     my_project
     ├── conf
     │   └── data.yaml              # YAML config with data paths
-    ├── data                       # Store smaller data  
+    ├── data                       # Store smaller data
     │   ├── emailed
     │   │   └── messy.xlsx
     │   └── user_processed.csv
-    ├── notebooks                  # Notebooks 
+    ├── notebooks                  # Notebooks
     │   └── process.ipynb
     └── my_project                 # Local Python package used by my_project
         └── shared_code.py
@@ -58,7 +58,7 @@ Notebooks can then easily import *myproject.shared_code* and file paths:
     transformed_df.to_csv(data.user.processed)
 
 
-For a working demonstration of a shareable project see 
+For a working demonstration of a shareable project see
 https://github.com/igor-sb/bluprint-demo/.
 
 Features

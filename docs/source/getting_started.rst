@@ -69,7 +69,7 @@ argument.
 
   If you don't need to create various example files, you can create a project
   with:
-  
+
   .. code-block::
 
     bluprint create myproject --omit-examples

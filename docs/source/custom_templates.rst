@@ -2,48 +2,42 @@ Custom template folders
 =======================
 
 You can create custom template folders and pass them as ``--template-dir``
-argument to ``bluprint create``. Bluprint will copy the contents of this folder
-to the new project. 
+argument to ``bluprint create``. Bluprint will copy the contents of the template
+folder to the new project and also do the following:
 
-If files *README.md*, *notebooks/example_jupyter.ipynb* or
-*notebooks/example_quarto.qmd* exits, any placeholder string
-*{{placeholder_name}}* will be replaced with a project name.
+- If files *README.md*, *notebooks/example_jupyter.ipynb* or
+  *notebooks/example_quarto.qmd* exits, any placeholder string
+  *{{placeholder_name}}* will be replaced with a project name.
 
-If your *README.md* contains placeholder string *{{git_account_name}}*, it will
-be replaced by your configured git username.
-   
+- If *README.md* contains placeholder string *{{git_account_name}}*, it will
+   be replaced by git username.
+
 Template directory can contain anything. However, for Bluprint configs to work,
-it needs a "conf" folder where Yaml configs will be stored and a "data" folder
-where data will be stored, to which relative paths in *data.yaml* point to.
+it needs a folder to store yaml configs (default: *conf*) and another folder to
+store data in the project to which relative paths in *data.yaml* point to
+(default: *data*).
 
-By default *bluprint_conf* function *load_config_yaml()* will look for
-*conf/config.yaml* and *load_data_yaml()* will look for *conf/data.yaml*.
-You can override these default names with the first argument of both functions.
-Also, by default, *load_data_yaml()* will resolve relative paths relative to the
-data folder in your project directory. This can be overriden too, e.g.
-*load_data_yaml(data_dir='my_data')*.
+By default *bluprint_conf* function *load_config_yaml()* looks for
+*conf/config.yaml* and *load_data_yaml()* looks for *conf/data.yaml* in the
+project folder. You can use different names and override these defaults when
+calling *bluprint_conf* functions, for example:
 
-Example
--------
+.. code:: python
 
-If your template folder looks like this:
+	from bluprint_conf import load_config_yaml, load_data_yaml
 
-.. code::
+	conf = load_config_yaml('configs/my_main_config.yaml')
+	data = load_data_yaml('configs/my_data_config.yaml', data_dir='my_data')
 
-    .
-    ├── conf                          Yaml configuration files
-    │   ├── config.yaml                 Accessible using load_config_yaml()
-    │   ├── data.yaml                   Accessible using load_data_yaml()
-    │   └── workflow.yaml               Used by bluprint workflow
-    ├── data                          Will not overwrite existing data
-    │   └── example_data.csv          Overwrites existing file unless --omit-examples
-    ├── notebooks                     
-    │   ├── example_jupyternb.ipynb   Overwrites existing file unless --omit-examples
-    │   └── example_quarto.qmd        Overwrites existing file unless --omit-examples
-    ├── myproj                        Python package of this project
-    │   └── example.py                  Modules within myproj package
-    ├── .gitignore                    Files excluded from version control
-    ├── README.md                     Overwrites existing file unless --omit-examples
-    └── pyproject.toml                Overwrites existing file
+This loads yaml configs from `configs` folder and parses locally stored data
+from `my_data` in this project structure::
 
-The files inside folders will tbe 
+    my_project
+    ├── configs
+    │   ├── my_main_config.yaml
+    │   └── my_data_config.yaml
+    ├── my_data
+    │   └── ...
+    ├── my_project
+    │   └── ...
+    └── ...

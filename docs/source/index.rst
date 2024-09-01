@@ -19,6 +19,7 @@ Site Map
    getting_started
    configuration
    indexing
+   custom_templates
 
 .. toctree::
    :maxdepth: 1
@@ -31,5 +32,5 @@ Site Map
    :maxdepth: 1
    :caption: Production
 
-   prod_notebooks
    prod_projects
+   prod_notebooks

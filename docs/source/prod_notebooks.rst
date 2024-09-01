@@ -119,26 +119,3 @@ from commands above. For example, to run a flake8 linter:
 .. code-block:: bash
 
   uv run flake8 project_name/example.py
-
-Testing
--------
-
-Notebooks can be tested by ensuring all cells execute without an error, when ran
-in the order in which they appear. For this purpose, ``bluprint notebook`` can
-be used to run a notebook:
-
-.. code-block:: bash
-
-  bluprint notebook notebooks/example_jupyternb.ipynb
-
-Notebook workflows can be tested by specifying yaml workflow file, e.g.
-``workflow.yaml``, naming a workflow (e.g. ``example_workflow``) then running:
-
-.. code-block:: bash
-
-  blurpint workflow example_workflow \
-    --workflow-yaml=example_workflow \
-    --notebook-dir=notebooks
-
-For Jupyter notebook workflows with more features, check
-`ploomber <https://docs.ploomber.io/en/latest/get-started/what-is.html>`_.

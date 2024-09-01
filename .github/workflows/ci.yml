@@ -5,7 +5,7 @@ on:
 
 env:
   PYTHON_VERSION: 3.11.2
-  UV_VERSION: 0.3.3
+  UV_VERSION: 0.4.0
   R_VERSION: 4.2.2
 
 concurrency:
@@ -42,7 +42,7 @@ jobs:
     with:
       PYTHON_VERSION: ${{ needs.env_vars.outputs.PYTHON_VERSION }}
       UV_VERSION: ${{ needs.env_vars.outputs.UV_VERSION }}
-  
+
   docs:
     name: Docs
     needs: [env_vars]

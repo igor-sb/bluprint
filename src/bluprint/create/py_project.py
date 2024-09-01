@@ -10,9 +10,8 @@ from bluprint.create.errors import LowPythonVersionError, PythonVersionError
 from bluprint.project import copy_template
 from bluprint.template import (
     default_template_dir,
-    replace_git_account_name,
+    replace_git_account_name_in_readme,
     replace_placeholder_name_in_file,
-    replace_placeholder_name_in_notebook,
 )
 
 MIN_PYTHON_VERSION = '3.11'
@@ -75,20 +74,18 @@ def initialize_python_project(
         project_name,
     )
     if not omit_examples:
-        replace_placeholder_name_in_file(
-            Path(project_dir) / 'README.md',
-            project_name,
-        )
-        replace_placeholder_name_in_file(
-            Path(project_dir) / 'notebooks' / 'example_quarto.qmd',
-            project_name,
-        )
-        replace_placeholder_name_in_notebook(
+        readme_file = Path(project_dir) / 'README.md'
+        example_files_with_placeholder = [
+            readme_file,
             Path(project_dir) / 'notebooks' / 'example_jupyternb.ipynb',
-            project_name,
-        )
-        replace_git_account_name(project_dir)
-    uv_add(['bluprint_conf', 'ipykernel', 'pandas'], project_dir)
+            Path(project_dir) / 'notebooks' / 'example_quarto.qmd',
+        ]
+        for example_file in example_files_with_placeholder:
+            if example_file.exists():
+                replace_placeholder_name_in_file(example_file, project_name)
+        if readme_file.exists():
+            replace_git_account_name_in_readme(readme_file)
+    uv_add(['bluprint_conf'], project_dir)
 
 
 def default_python_version(min_version: str = MIN_PYTHON_VERSION) -> str:

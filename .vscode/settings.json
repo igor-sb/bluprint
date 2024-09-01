@@ -11,5 +11,12 @@
 		"titleBar.inactiveBackground": "#00c8ff"
 	},
 	"r.lsp.promptToInstall": false,
-	"editor.renderWhitespace": "all"
+	"editor.renderWhitespace": "all",
+	"[restructuredtext]": {
+		"editor.quickSuggestions": {
+			"other": "off",
+			"comments": "off",
+			"strings": "off"
+		}
+	}
 }

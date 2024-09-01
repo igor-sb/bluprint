@@ -41,8 +41,7 @@ class Bluprint(object):
         ├── .venv                         Project's Python virtual environment
         ├── conf                          Yaml configuration files
         │   ├── config.yaml                 Accessible using load_config_yaml()
-        │   ├── data.yaml                   Accessible using load_data_yaml()
-        │   └── workflow.yaml               Used by bluprint workflow
+        │   └── data.yaml                   Accessible using load_data_yaml()
         ├── data                          Local data (e.g. csv, png, pdf)
         │   └── example_data.csv
         ├── notebooks                     Jupyter/R/Quarto notebooks
@@ -208,4 +207,4 @@ def main():
 
 
 if __name__ == '__main__':  # pragma: no cover
-    main()  # pragma: no cover
+    main()

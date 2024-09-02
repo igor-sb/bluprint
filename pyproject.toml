@@ -130,6 +130,7 @@ ignore = [
 # "**/errors.py" = ["WPS202"]
 
 [tool.mypy]
+exclude = 'src/bluprint/template/*'
 [[tool.mypy.overrides]]
 module = [
 	"pandas.*",
@@ -138,3 +139,4 @@ module = [
 	"bluprint_conf.*",
 ]
 ignore_missing_imports = true
+

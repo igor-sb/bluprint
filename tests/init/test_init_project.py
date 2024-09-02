@@ -6,12 +6,12 @@ import pytest
 
 from bluprint import cli
 from bluprint.errors import ProjectExistsError
-from bluprint.template import default_template_dir, example_files
+from bluprint.template import Placeholder, default_template_dir, example_files
 
 
 def test_init_py_project(find_files_in_dir, tmp_path):
     template_dir = default_template_dir()
-    project_name = 'placeholder_name'
+    project_name = 'test_project'
     project_dir = tmp_path / project_name
     project_dir.mkdir()
     cli.Bluprint().init(
@@ -23,7 +23,10 @@ def test_init_py_project(find_files_in_dir, tmp_path):
         for file_path in find_files_in_dir(project_dir)
     }
     template_files = {
-        file_path.relative_to(template_dir)
+        Path(
+            str(file_path.relative_to(template_dir))
+            .replace(Placeholder.project_name, project_name)
+        )
         for file_path in find_files_in_dir(template_dir)
     }
     template_files.update([
@@ -41,7 +44,7 @@ def test_init_py_project(find_files_in_dir, tmp_path):
 
 def test_init_pyr_project(find_files_in_dir, tmp_path):
     template_dir = default_template_dir()
-    project_name = 'placeholder_name'
+    project_name = 'test_project'
     project_dir = tmp_path / project_name
     project_dir.mkdir()
     cli.Bluprint().init(
@@ -54,7 +57,10 @@ def test_init_pyr_project(find_files_in_dir, tmp_path):
         for file_path in find_files_in_dir(tmp_path / project_name)
     }
     template_files = {
-        file_path.relative_to(template_dir)
+        Path(
+            str(file_path.relative_to(template_dir))
+            .replace(Placeholder.project_name, project_name)
+        )
         for file_path in find_files_in_dir(template_dir)
     }
     template_files.update([
@@ -83,7 +89,7 @@ def test_init_existing_with_pyproject_toml(tmp_path):
 
 
 def test_init_existing_without_examples_with_yamls(find_files_in_dir, tmp_path):
-    project_name = 'placeholder_name'
+    project_name = 'test_project'
     project_dir = tmp_path / project_name
     project_dir.mkdir()
     (project_dir / 'data').mkdir()
@@ -101,7 +107,10 @@ def test_init_existing_without_examples_with_yamls(find_files_in_dir, tmp_path):
     template_dir = default_template_dir()
     project_example_files = example_files(project_name)
     template_files = {
-        file_path.relative_to(template_dir)
+        Path(
+            str(file_path.relative_to(template_dir))
+            .replace(Placeholder.project_name, project_name)
+        )
         for file_path in find_files_in_dir(template_dir)
         if file_path.relative_to(template_dir) not in project_example_files
     }

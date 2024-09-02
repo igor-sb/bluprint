@@ -7,12 +7,12 @@ import pytest
 
 from bluprint import cli
 from bluprint.create.errors import LowPythonVersionError
-from bluprint.template import default_template_dir, example_files
+from bluprint.template import Placeholder, default_template_dir, example_files
 
 
 def test_create_py_project(find_files_in_dir, tmp_path):
     template_dir = default_template_dir()
-    project_name = 'placeholder_name'
+    project_name = 'test_project'
     cli.Bluprint().create(
         project_name=project_name,
         parent_dir=tmp_path,
@@ -23,14 +23,17 @@ def test_create_py_project(find_files_in_dir, tmp_path):
         for file_path in find_files_in_dir(project_dir)
     }
     template_files = {
-        file_path.relative_to(template_dir)
+        Path(
+            str(file_path.relative_to(template_dir))
+            .replace(Placeholder.project_name, project_name)
+        )
         for file_path in find_files_in_dir(template_dir)
     }
     template_files.update([
         Path('pyproject.toml'),
         Path('uv.lock'),
     ])
-    template_files.remove(Path(f'{project_name}.Rproj'))  # Python-only test
+    template_files.remove(Path(f'{project_name}.Rproj'))
     template_files.remove(Path('notebooks/example_rmarkdown.Rmd'))
 
     venv_dir = project_dir / '.venv'
@@ -47,7 +50,7 @@ def test_low_python_version():
 
 def test_create_py_project_without_examples(find_files_in_dir, tmp_path):
     template_dir = default_template_dir()
-    project_name = 'placeholder_name'
+    project_name = 'test_project'
     cli.Bluprint().create(
         project_name=project_name,
         parent_dir=tmp_path,
@@ -60,7 +63,10 @@ def test_create_py_project_without_examples(find_files_in_dir, tmp_path):
     }
     project_example_files = example_files(project_name)
     template_files = {
-        file_path.relative_to(template_dir)
+        Path(
+            str(file_path.relative_to(template_dir))
+            .replace(Placeholder.project_name, project_name)
+        )
         for file_path in find_files_in_dir(template_dir)
         if file_path.relative_to(template_dir) not in project_example_files
     }
@@ -69,7 +75,7 @@ def test_create_py_project_without_examples(find_files_in_dir, tmp_path):
         Path('uv.lock'),
     ])
 
-    template_files.remove(Path('placeholder_name.Rproj'))  # Python-only test
+    template_files.remove(Path(f'{project_name}.Rproj'))  # Python-only test
 
     venv_dir = project_dir / '.venv'
     assert project_files == template_files
@@ -119,3 +125,4 @@ def test_create_py_project_custom_template(find_files_in_dir, tmp_path):
         assert (project_dir / 'readme.md').read_text().strip() == 'read me!'
         assert (project_dir / 'placeholder_name' / 'test.py').read_text() \
             == 'print("hello!")'
+        assert (project_dir / 'pyproject.toml').exists()

@@ -9,9 +9,11 @@ from bluprint.colors import progress_log
 from bluprint.create.errors import LowPythonVersionError, PythonVersionError
 from bluprint.project import copy_template
 from bluprint.template import (
+    Placeholder,
+    activate_data_conf_proj_dirs,
     default_template_dir,
     replace_git_account_name_in_readme,
-    replace_placeholder_name_in_file,
+    replace_placeholder_in_file,
 )
 
 MIN_PYTHON_VERSION = '3.11'
@@ -36,6 +38,7 @@ def create_python_project(
         template_dir=template_dir,
         keep_r_files=keep_r_files,
         omit_examples=omit_examples,
+        overwrite=True,
     )
 
 
@@ -54,7 +57,6 @@ def initialize_python_project(
     if not template_dir:
         template_dir = default_template_dir()
     uv_init(python_version, str(project_dir))
-    (Path(project_dir) / 'pyproject.toml').unlink()
     (Path(project_dir) / 'src' / project_name / '__init__.py').unlink()
     Path.rmdir(Path(project_dir) / 'src' / project_name)
     Path.rmdir(Path(project_dir) / 'src')
@@ -66,13 +68,22 @@ def initialize_python_project(
         keep_r_files=keep_r_files,
         overwrite=overwrite,
     )
-    Path.rename(
-        Path(project_dir) / 'placeholder_name',
-        Path(project_dir) / project_name,
-    )
-    replace_placeholder_name_in_file(
+    if (Path(project_dir) / Placeholder.project_name).exists():
+        Path.rename(
+            Path(project_dir) / Placeholder.project_name,
+            Path(project_dir) / project_name,
+        )
+    if not (Path(template_dir) / 'pyproject.toml').exists():
+        activate_data_conf_proj_dirs(Path(project_dir) / 'pyproject.toml')
+    replace_placeholder_in_file(
         Path(project_dir) / 'pyproject.toml',
-        project_name,
+        placeholder=Placeholder.project_name,
+        replacement=project_name,
+    )
+    replace_placeholder_in_file(
+        Path(project_dir) / 'pyproject.toml',
+        placeholder=Placeholder.python_version,
+        replacement=python_version,
     )
     if not omit_examples:
         readme_file = Path(project_dir) / 'README.md'
@@ -83,7 +94,11 @@ def initialize_python_project(
         ]
         for example_file in example_files_with_placeholder:
             if example_file.exists():
-                replace_placeholder_name_in_file(example_file, project_name)
+                replace_placeholder_in_file(
+                    example_file,
+                    placeholder=Placeholder.project_name,
+                    replacement=project_name,
+                )
         if readme_file.exists():
             replace_git_account_name_in_readme(readme_file)
     uv_add(['bluprint_conf'], project_dir)

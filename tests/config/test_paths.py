@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from bluprint.project import absolute_path_in_project
+from bluprint.config import absolute_path_in_project
 
 
 def test_absolute_path_in_project():

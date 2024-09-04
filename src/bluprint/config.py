@@ -5,14 +5,13 @@ from pathlib import Path, PurePath
 from typing import Any
 from urllib.parse import urlparse
 
+from importlib_resources import files
 from omegaconf import DictConfig, ListConfig, OmegaConf
-
-from bluprint.project import absolute_path_in_project
 
 
 def load_config_yaml(
     config_file: str | Path = 'conf/config.yaml',
-    use_package_path_for_config: bool = True,
+    use_package_path: bool = True,
 ) -> DictConfig | ListConfig:
     """Load project configuration yaml
 
@@ -22,21 +21,21 @@ def load_config_yaml(
         config_file (str | Path, optional): Relative or absolute path to the
           yaml configuration.
 
-        use_package_path_for_config (bool, optional): If this is True, then
+        use_package_path (bool, optional): If this is True, then
           relative path of `config_file` is parsed with respect to the project
           root and not with respect to the path of the calling script.
 
     Returns:
         DictConfig | ListConfig: Return value of OmegaConf.create().
     """
-    if not Path(config_file).is_absolute() and use_package_path_for_config:
+    if not Path(config_file).is_absolute() and use_package_path:
         config_file = absolute_path_in_project(config_file)
     return OmegaConf.load(config_file)
 
 
 def load_config_yamls(
     config_dir: str | Path,
-    use_package_path_for_config: bool = True,
+    use_package_path: bool = True,
 ) -> DictConfig | ListConfig:
     """Load multiple yamls into a single config
 
@@ -47,7 +46,7 @@ def load_config_yamls(
 
         config_dir (str | Path): Directory with one or more yaml files.
 
-        use_package_path_for_config (bool, optional): If this is True,
+        use_package_path (bool, optional): If this is True,
           then relative paths are parsed with respect to the project root and
           not with respect to the path of the calling script.
 
@@ -55,11 +54,11 @@ def load_config_yamls(
 
         DictConfig | ListConfig: Return value of OmegaConf.create().
     """
-    if not Path(config_dir).is_absolute() and use_package_path_for_config:
+    if not Path(config_dir).is_absolute() and use_package_path:
         config_dir = absolute_path_in_project(config_dir)
     yaml_files = find_yaml_files_in_dir(config_dir)
     configs = [
-        load_config_yaml(yaml_file, use_package_path_for_config)
+        load_config_yaml(yaml_file, use_package_path)
         for yaml_file in yaml_files
     ]
     return OmegaConf.unsafe_merge(*configs)
@@ -68,7 +67,7 @@ def load_config_yamls(
 def load_data_yaml(
     config_file: str | Path = 'conf/data.yaml',
     data_dir: str | Path = 'data',
-    use_package_path_for_config: bool = True,
+    use_package_path: bool = True,
 ) -> DictConfig | ListConfig:
     """Load data configuration yaml
 
@@ -80,14 +79,14 @@ def load_data_yaml(
           yaml configuration. Defaults to 'conf/data.yaml'.
         data_dir (str | Path, optional): Directory with local data. Defaults to
           'data'.
-        use_package_path_for_config (bool, optional): If this is True,
+        use_package_path (bool, optional): If this is True,
           then relative paths are parsed with respect to the project root and
           not with respect to the path of the calling script.
 
     Returns:
         DictConfig | ListConfig: Return value of OmegaConf.create().
     """
-    if not Path(config_file).is_absolute() and use_package_path_for_config:
+    if not Path(config_file).is_absolute() and use_package_path:
         config_file = absolute_path_in_project(config_file)
     conf = load_config_yaml(config_file)
     data_path = str(absolute_path_in_project(data_dir))
@@ -97,7 +96,7 @@ def load_data_yaml(
 def load_data_yamls(
     config_dir: str | Path,
     data_dir: str | Path = 'data',
-    use_package_path_for_config: bool = True,
+    use_package_path: bool = True,
 ) -> DictConfig | ListConfig:
     """Load multiple data yamls into a single config
 
@@ -109,18 +108,18 @@ def load_data_yamls(
 
         data_dir (str | Path, optional): Directory with local data.
 
-        use_package_path_for_config (bool, optional): If this is True, then
+        use_package_path (bool, optional): If this is True, then
           relative paths are parsed with respect to the project root and not
           with respect to the path of the calling script.
 
     Returns:
         DictConfig | ListConfig: Return value of OmegaConf.create().
     """
-    if not Path(config_dir).is_absolute() and use_package_path_for_config:
+    if not Path(config_dir).is_absolute() and use_package_path:
         config_dir = absolute_path_in_project(config_dir)
     yaml_files = find_yaml_files_in_dir(config_dir)
     configs = [
-        load_data_yaml(yaml_file, data_dir, use_package_path_for_config)
+        load_data_yaml(yaml_file, data_dir, use_package_path)
         for yaml_file in yaml_files
     ]
     return OmegaConf.unsafe_merge(*configs)
@@ -170,3 +169,20 @@ def find_yaml_files_in_dir(
                 indexed_files.append(indexed_file_with_path)
     indexed_files.sort()
     return indexed_files
+
+
+def absolute_path_in_project(path_to_file: str | Path) -> Path:
+    """Return an absolute path to a file in a Bluprint project
+
+    Args:
+        path_to_file (str | Path): Relative path to a file.
+
+    Returns:
+        Path: pathlib Path object specifying the absolute path to file.
+    """
+    dir_name = str(Path(path_to_file).parent)
+    if dir_name == '.':
+        return Path(files(path_to_file).joinpath('_').parent)
+    dir_as_module = dir_name.strip('/').replace('/', '.')
+    file_basename = Path(path_to_file).name
+    return Path(files(dir_as_module).joinpath(file_basename))

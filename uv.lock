@@ -1,5 +1,5 @@
 version = 1
-requires-python = "==3.11.*"
+requires-python = ">=3.11"
 resolution-markers = [
     "python_full_version < '3.12'",
     "python_full_version < '3.12'",
@@ -81,7 +81,7 @@ wheels = [
 
 [[package]]
 name = "bluprint"
-version = "0.3.1"
+version = "0.4.0"
 source = { editable = "." }
 dependencies = [
     { name = "fire" },

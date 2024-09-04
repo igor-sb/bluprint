@@ -1,0 +1,6 @@
+first:
+  url: "www.google.com"
+  port: 80
+second:
+  url: "www.yahoo.com"
+  port: 80

@@ -1,0 +1,5 @@
+test_data:
+  absolute: '/a/1a.bin'
+  relative_with_subdir: '1b/1b2.csv'
+  relative_simple: '1c.jpeg'
+  s3_uri: 's3://example-bucket/path/to/object'

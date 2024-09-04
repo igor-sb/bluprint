@@ -84,8 +84,9 @@ name = "bluprint"
 version = "0.3.1"
 source = { editable = "." }
 dependencies = [
-    { name = "bluprint-conf" },
     { name = "fire" },
+    { name = "importlib-resources" },
+    { name = "omegaconf" },
     { name = "packaging" },
 ]
 
@@ -112,8 +113,9 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "bluprint-conf", specifier = ">=0.1.0" },
     { name = "fire", specifier = ">=0.5.0" },
+    { name = "importlib-resources", specifier = ">=6.1.1" },
+    { name = "omegaconf", specifier = ">=2.3.0" },
     { name = "packaging", specifier = ">=24.1" },
 ]
 
@@ -136,19 +138,6 @@ dev = [
     { name = "sphinx-immaterial", specifier = ">=0.11.10" },
     { name = "types-tqdm", specifier = ">=4.66.0.5" },
     { name = "unify", specifier = ">=0.5" },
-]
-
-[[package]]
-name = "bluprint-conf"
-version = "0.1.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "importlib-resources" },
-    { name = "omegaconf" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/c7/8e/85bfc5414216a9dfea9c003811339e6341482f006108c7dd6c91aaf1a424/bluprint_conf-0.1.0.tar.gz", hash = "sha256:55ae998462f7689ce35cb296f1fd44833564d143981f5ff2fe6b72102ffba709", size = 3841 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/ef/2d/77c74f8a59b461e1a29612d24ddee5b84a4b664f6cc08e07f8b7fb648d6b/bluprint_conf-0.1.0-py3-none-any.whl", hash = "sha256:e0d44032fe44d3c400f521c76229c92d3524315b77fe5f50ead62b8def185c39", size = 2689 },
 ]
 
 [[package]]

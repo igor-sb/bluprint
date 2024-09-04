@@ -5,6 +5,8 @@ import re
 import shutil
 from pathlib import Path
 
+from importlib_resources import files
+
 from bluprint.binary import check_if_executable_is_installed
 from bluprint.colors import progress_log, styled_print
 from bluprint.create.r_project import check_if_r_package_is_installed
@@ -113,3 +115,20 @@ def is_r_file(filename: str | Path, parent_dir: str | Path) -> bool:
 
 def get_current_working_dir() -> str:
     return str(Path.cwd())
+
+
+def absolute_path_in_project(path_to_file: str | Path) -> Path:
+    """Return an absolute path to a file in a Bluprint project
+
+    Args:
+        path_to_file (str | Path): Relative path to a file.
+
+    Returns:
+        Path: pathlib Path object specifying the absolute path to file.
+    """
+    dir_name = str(Path(path_to_file).parent)
+    if dir_name == '.':
+        return Path(files(path_to_file).joinpath('_').parent)
+    dir_as_module = dir_name.strip('/').replace('/', '.')
+    file_basename = Path(path_to_file).name
+    return Path(files(dir_as_module).joinpath(file_basename))

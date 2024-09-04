@@ -101,7 +101,7 @@ def initialize_python_project(
                 )
         if readme_file.exists():
             replace_git_account_name_in_readme(readme_file)
-    uv_add(['bluprint_conf'], project_dir)
+    uv_add(['bluprint'], project_dir)
 
 
 def default_python_version(min_version: str = MIN_PYTHON_VERSION) -> str:

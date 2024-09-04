@@ -25,9 +25,5 @@ class ProjectExistsError(StyledError):
     """Raises exception when project directory exists."""
 
 
-class InvalidWorkflowError(StyledError):
-    """Raises exception when invalid workflow is specified."""
-
-
 class InvalidNotebookTypeError(StyledError):
     """Raises exception when invalid notebook type is specified."""

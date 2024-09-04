@@ -13,7 +13,7 @@ test:
 				--junitxml=junit/test-results.xml -v
 
 test-update-snapshots:
-		${UV_RUN} coverage run --branch -m pytest --snapshot-update tests/workflow src
+		${UV_RUN} coverage run --branch -m pytest --snapshot-update tests src
 
 install: install-dev
 		${UV_RUN} sync

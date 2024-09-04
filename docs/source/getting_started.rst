@@ -18,8 +18,7 @@ This creates the following directory tree:
   ├── .venv                           # Project's Python virtual environment
   ├── conf                            # Yaml configuration files
   │   ├── config.yaml                 #   Accessible using load_config_yaml()
-  │   ├── data.yaml                   #   Accessible using load_data_yaml()
-  │   └── workflow.yaml               #   Used by bluprint workflow
+  │   └── data.yaml                   #   Accessible using load_data_yaml()
   ├── data                            # Local data (e.g. csv, png, pdf)
   │   └── example_data.csv
   ├── notebooks                       # Jupyter/R/Quarto notebooks
@@ -94,8 +93,7 @@ which also sets up renv and RStudio Rproj file and an example notebook:
   ├── README.md
   ├── conf                            # yaml configuration files
   │   ├── config.yaml
-  │   ├── data.yaml
-  │   └── workflow.yaml
+  │   └── data.yaml
   ├── data                            # data such as csv, png, pdf
   │   └── example_data.csv
   ├── notebooks                       # Jupyter and RMarkdown notebooks

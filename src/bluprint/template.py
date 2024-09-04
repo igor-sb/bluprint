@@ -22,7 +22,6 @@ def example_files(project_name: str = 'placeholder_name') -> tuple[Path, ...]:
         Path('notebooks') / 'example_rmarkdown.Rmd',
         Path('data') / 'example_data.csv',
         Path('conf') / 'config.yaml',
-        Path('conf') / 'workflows.yaml',
         Path(project_name) / 'example.py',
         Path('README.md'),
     )

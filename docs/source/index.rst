@@ -34,3 +34,9 @@ Site Map
 
    prod_projects
    prod_notebooks
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Function reference
+
+   reference

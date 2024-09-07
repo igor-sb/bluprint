@@ -15,7 +15,8 @@ runs:
     - name: Install R packages
       run: |
         R_HOME=$(Rscript -e 'cat(R.home(component = "home"), fill=TRUE)')
-        R_PROFILE_SITE="$R_HOME"/etc/Rprofile.site
-        cat .github/actions/install-r/Rprofile.site | sudo tee -a $R_PROFILE_SITE
+        R_PROFILE="$R_HOME"/etc/Rprofile.site
+        R_PROFILE_USER=~/.Rprofile
+        cat .github/actions/install-r/Rprofile.site | sudo tee -a $R_PROFILE $R_PROFILE_USER
         Rscript -e 'install.packages("renv")'
       shell: bash

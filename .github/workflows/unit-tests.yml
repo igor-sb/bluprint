@@ -48,7 +48,8 @@ jobs:
           R_HOME=$(Rscript -e 'cat(R.home(component = "home"), fill=TRUE)')
           export R_PROFILE="$R_HOME"/etc/Rprofile.site
           export R_ENVIRON="$R_HOME"/etc/Renviron.site
-          echo "RENV_CONFIG_REPOS_OVERRIDE=https://packagemanager.posit.co/cran/__linux__/jammy/2024-09-07" | sudo tee -a $R_ENVIRON
+          # ecRENV_CONFIG_REPOS_OVERRIDE=https://packagemanager.posit.co/cran/__linux__/jammy/2024-09-07" | sudo tee -a $R_ENVIRON
+          Rscript -e 'Sys.setenv(RENV_CONFIG_REPOS_OVERRIDE="https://packagemanager.posit.co/cran/__linux__/jammy/2024-09-07")'
           cat $R_PROFILE
           echo "Showing RENV_CONFIG_REPOS_OVERRIDE from R"
           Rscript -e 'Sys.getenv("RENV_CONFIG_REPOS_OVERRIDE")'

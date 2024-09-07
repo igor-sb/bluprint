@@ -7,6 +7,7 @@ import pytest
 
 from bluprint import cli
 from bluprint.create.errors import LowPythonVersionError
+from bluprint.errors import InvalidProjectNameError
 from bluprint.template import Placeholder, default_template_dir, example_files
 
 
@@ -126,3 +127,13 @@ def test_create_py_project_custom_template(find_files_in_dir, tmp_path):
         assert (project_dir / 'placeholder_name' / 'test.py').read_text() \
             == 'print("hello!")'
         assert (project_dir / 'pyproject.toml').exists()
+
+
+def test_create_py_project_with_invalid_names(tmp_path):
+    project_names = ('invalid-name', '0', 'invalid_', '_invalid')
+    for project_name in project_names:
+        with pytest.raises(InvalidProjectNameError):
+            cli.Bluprint().create(
+                project_name=project_name,
+                parent_dir=tmp_path,
+            )

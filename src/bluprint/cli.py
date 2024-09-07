@@ -17,6 +17,7 @@ from bluprint.index import index_dir_to_config_yaml
 from bluprint.project import (
     check_if_project_can_be_created,
     check_if_project_files_exist,
+    check_if_project_name_is_valid,
     get_current_working_dir,
 )
 
@@ -133,6 +134,7 @@ class Bluprint(object):
                 with_r='/R' if r_project else '',
             ),
         )
+        check_if_project_name_is_valid(project_name)
         if not project_dir:
             project_dir = get_current_working_dir()
         check_if_project_files_exist(project_name, project_dir, overwrite)

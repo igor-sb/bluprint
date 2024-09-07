@@ -27,3 +27,7 @@ class ProjectExistsError(StyledError):
 
 class InvalidNotebookTypeError(StyledError):
     """Raises exception when invalid notebook type is specified."""
+
+
+class InvalidProjectNameError(StyledError):
+    """Raises exception when user provides invalid project name."""

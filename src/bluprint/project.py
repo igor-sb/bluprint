@@ -8,8 +8,18 @@ from pathlib import Path
 from bluprint.binary import check_if_executable_is_installed
 from bluprint.colors import progress_log, styled_print
 from bluprint.create.r_project import check_if_r_package_is_installed
-from bluprint.errors import ProjectExistsError
+from bluprint.errors import InvalidProjectNameError, ProjectExistsError
 from bluprint.template import example_files, r_files
+
+
+def check_if_project_name_is_valid(project_name: str) -> None:
+    if not re.match(r'^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$', project_name) and \
+            not re.match(r'^[a-zA-z]$', project_name):
+        styled_print(' error.', print_bluprint=False)
+        raise InvalidProjectNameError(
+            f'{project_name} is not a valid project name.'
+            ' Valid names: ^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$ or ^[a-zA-z]$.'
+        )
 
 
 @progress_log('checking if project can be created...')
@@ -18,6 +28,7 @@ def check_if_project_can_be_created(
     parent_dir: str | None = None,
     r_project: bool = False,
 ) -> None:
+    check_if_project_name_is_valid(project_name)
     check_if_project_dir_exists(project_name, parent_dir)
     check_if_executable_is_installed('uv')
     if r_project:

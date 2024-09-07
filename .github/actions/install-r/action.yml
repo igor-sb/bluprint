@@ -18,5 +18,11 @@ runs:
 
     - name: Install R packages
       run: |
-        Rscript -e 'install.packages(c("rmarkdown", "renv", "yaml", "reticulate"), repos="https://packagemanager.posit.co/cran/__linux__/focal/2023-12-01")'
+        echo " \
+          options(
+            repos=c(CRAN=\"https://packagemanager.posit.co/cran/__linux__/jammy/2024-09-07'), \
+            HTTPUserAgent = sprintf('R/%s R (%s)'', getRversion(), paste(getRversion(), R.version['platform'], R.version['arch'], R.version['os'])), \
+            download.file.extra = sprintf('--header \"User-Agent: R (%s)\"', paste(getRversion(), R.version['platform'], R.version['arch'], R.version['os'])) \
+        )" >> ~/.Rprofile
+        Rscript -e 'install.packages(c("reticulate")'
       shell: bash

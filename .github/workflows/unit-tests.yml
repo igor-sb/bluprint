@@ -46,13 +46,14 @@ jobs:
           export PATH=$PATH:/home/runner/.pyenv/bin
           echo "Showing Rprofile.site"
           R_HOME=$(Rscript -e 'cat(R.home(component = "home"), fill=TRUE)')
-          R_PROFILE_SITE="$R_HOME"/etc/Rprofile.site
-          cat $R_PROFILE_SITE
+          export R_PROFILE="$R_HOME"/etc/Rprofile.site
+          cat $R_PROFILE
           echo "Showing options from R"
-          Rscript -e 'options()'
+          Rscript -e 'options("repos")'
           make test
         env:
           PY_COLORS: 1
+          RENV_CONFIG_REPOS_OVERRIDE: true
 
       - name: Report
         run: |

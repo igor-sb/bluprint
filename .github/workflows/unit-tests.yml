@@ -47,7 +47,11 @@ jobs:
           echo "Showing Rprofile.site"
           R_HOME=$(Rscript -e 'cat(R.home(component = "home"), fill=TRUE)')
           export R_PROFILE="$R_HOME"/etc/Rprofile.site
+          export R_ENVIRON="$R_HOME"/etc/Renviron.site
+          echo "RENV_CONFIG_REPOS_OVERRIDE=https://packagemanager.posit.co/cran/__linux__/jammy/2024-09-07" | sudo tee -a $R_ENVIRON
           cat $R_PROFILE
+          echo "Showing RENV_CONFIG_REPOS_OVERRIDE from R"
+          Rscript -e 'Sys.getenv("RENV_CONFIG_REPOS_OVERRIDE")'
           echo "Showing options from R"
           Rscript -e 'options("repos")'
           Rscript -e 'options("HTTPUserAgent")'
@@ -55,7 +59,6 @@ jobs:
           make test
         env:
           PY_COLORS: 1
-          RENV_CONFIG_REPOS_OVERRIDE: https://packagemanager.posit.co/cran/__linux__/jammy/2024-09-07
 
       - name: Report
         run: |

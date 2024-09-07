@@ -20,7 +20,7 @@ runs:
       run: |
         echo " options(" >> ~/.Rprofile
         echo "   repos=c(CRAN=\"https://packagemanager.posit.co/cran/__linux__/jammy/2024-09-07'),"
-        echo "   HTTPUserAgent = sprintf('R/%s R (%s)'', getRversion(), paste(getRversion(), R.version['platform'], R.version['arch'], R.version['os']))," >> ~/.Rprofile
+        echo "   HTTPUserAgent = sprintf('R/%s R (%s)', getRversion(), paste(getRversion(), R.version['platform'], R.version['arch'], R.version['os']))," >> ~/.Rprofile
         echo "   download.file.extra = sprintf('--header \"User-Agent: R (%s)\"', paste(getRversion(), R.version['platform'], R.version['arch'], R.version['os']))" >> ~/.Rprofile
         echo ")" >> ~/.Rprofile
         Rscript -e 'install.packages(c("reticulate"))'

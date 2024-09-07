@@ -33,7 +33,7 @@ def create_python_project(
     project_dir = Path(parent_dir) / project_name
     project_dir.mkdir(parents=True)
     initialize_python_project(
-        project_name=project_name,
+        project_name=project_name.lower(),
         python_version=python_version,
         project_dir=project_dir,
         template_dir=template_dir,
@@ -60,8 +60,8 @@ def initialize_python_project(
     if not template_dir:
         template_dir = default_template_dir()
     uv_init(project_name, python_version, str(project_dir))
-    (Path(project_dir) / 'src' / project_name / '__init__.py').unlink()
-    Path.rmdir(Path(project_dir) / 'src' / project_name)
+    (Path(project_dir) / 'src' / project_name.lower() / '__init__.py').unlink()
+    Path.rmdir(Path(project_dir) / 'src' / project_name.lower())
     Path.rmdir(Path(project_dir) / 'src')
     copy_template(
         template_dir,

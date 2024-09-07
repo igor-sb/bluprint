@@ -1,6 +1,7 @@
 """Test creating a new Python project."""
 
 import tempfile
+import tomllib
 from pathlib import Path
 
 import pytest
@@ -137,3 +138,16 @@ def test_create_py_project_with_invalid_names(tmp_path):
                 project_name=project_name,
                 parent_dir=tmp_path,
             )
+
+
+def test_create_py_project_mixed_case(tmp_path):
+    project_name = 'aAa'
+    cli.Bluprint().create(
+        project_name=project_name,
+        parent_dir=tmp_path,
+    )
+    project_dir = Path(tmp_path) / project_name
+    with (project_dir / 'pyproject.toml').open('rb') as pyproject_toml_file:
+        pyproject_toml = tomllib.load(pyproject_toml_file)
+    assert (project_dir / 'aaa').exists()
+    assert pyproject_toml['project']['name'] == 'aaa'

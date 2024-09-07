@@ -17,6 +17,9 @@ Create a project template in a new directory *myproj* using:
   lowercase or uppercase letter or a digit and may contain letters, digits or
   underscores between the first and last characters.
 
+  Project names that contain upper case, will be converted to lowercase, except
+  for the main project directory name.
+
 
 This creates the following directory tree:
 

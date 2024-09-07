@@ -82,7 +82,7 @@ class Bluprint(object):
             omit_examples=omit_examples,
         )
         if r_project:
-            create_r_project(project_name, parent_dir)
+            create_r_project(project_name.lower(), parent_dir)
         styled_print(f'project `{project_name}` created.')
 
     def init(
@@ -135,6 +135,9 @@ class Bluprint(object):
             ),
         )
         check_if_project_name_is_valid(project_name)
+        if project_name != project_name.lower():
+            project_name = project_name.lower()
+            styled_print(' Using lowercase project name: {project_name}')
         if not project_dir:
             project_dir = get_current_working_dir()
         check_if_project_files_exist(project_name, project_dir, overwrite)

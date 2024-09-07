@@ -1,5 +1,6 @@
 """Test creating a new Python project."""
 
+import tomllib
 from pathlib import Path
 
 import pytest
@@ -129,3 +130,17 @@ def test_init_existing_without_examples_with_yamls(find_files_in_dir, tmp_path):
         assert data_yaml.read().strip() == "example: 'example_data.csv'"
     with (project_dir / 'conf' / 'conf.yaml').open() as conf_yaml:
         assert conf_yaml.read().strip() == 'mykey: "myval"'
+
+
+def test_init_py_project_mixed_case(tmp_path):
+    project_name = 'aAa'
+    project_dir = Path(tmp_path) / project_name
+    project_dir.mkdir()
+    cli.Bluprint().init(
+        project_name=project_name,
+        project_dir=project_dir,
+    )
+    with (project_dir / 'pyproject.toml').open('rb') as pyproject_toml_file:
+        pyproject_toml = tomllib.load(pyproject_toml_file)
+    assert (project_dir / 'aaa').exists()
+    assert pyproject_toml['project']['name'] == 'aaa'

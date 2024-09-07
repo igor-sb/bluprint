@@ -16,10 +16,6 @@ runs:
       run: |
         R_HOME=$(Rscript -e 'cat(R.home(component = "home"), fill=TRUE)')
         R_PROFILE_SITE="$R_HOME"/etc/Rprofile.site
-        echo " options(" | sudo tee -a $R_PROFILE_SITE
-        echo "   repos=c(CRAN=\"https://packagemanager.posit.co/cran/__linux__/jammy/2024-09-07')," | sudo tee -a $R_PROFILE_SITE
-        echo "   HTTPUserAgent = sprintf('R/%s R (%s)', getRversion(), paste(getRversion(), R.version['platform'], R.version['arch'], R.version['os']))," | sudo tee -a $R_PROFILE_SITE
-        echo "   download.file.extra = sprintf('--header \"User-Agent: R (%s)\"', paste(getRversion(), R.version['platform'], R.version['arch'], R.version['os']))" | sudo tee -a $R_PROFILE_SITE
-        echo ")" | sudo tee -a $R_PROFILE_SITE
+        cat .github/actions/install-r/Rprofile.site | sudo tee -a $R_PROFILE_SITE
         Rscript -e 'install.packages("renv")'
       shell: bash

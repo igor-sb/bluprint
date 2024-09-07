@@ -50,10 +50,12 @@ jobs:
           cat $R_PROFILE
           echo "Showing options from R"
           Rscript -e 'options("repos")'
+          Rscript -e 'options("HTTPUserAgent")'
+          Rscript -e 'options("download.file.extra")'
           make test
         env:
           PY_COLORS: 1
-          RENV_CONFIG_REPOS_OVERRIDE: true
+          RENV_CONFIG_REPOS_OVERRIDE: https://packagemanager.posit.co/cran/__linux__/jammy/2024-09-07
 
       - name: Report
         run: |

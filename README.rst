@@ -40,7 +40,7 @@ Notebooks can then easily import *myproject.shared_code* and file paths:
 
 .. code:: python
 
-    from bluprint_conf import load_data_yaml
+    from bluprint.config import load_data_yaml
 
     data = load_data_yaml()  # By default loads conf/data.yaml
 

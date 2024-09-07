@@ -44,6 +44,10 @@ jobs:
           echo "Showing path:"
           echo "$PATH"
           export PATH=$PATH:/home/runner/.pyenv/bin
+          echo "Showing options from R"
+          Rscript -e 'options("repos")'
+          Rscript -e 'options("HTTPUserAgent")'
+          Rscript -e 'options("download.file.extra")'
           make test
         env:
           PY_COLORS: 1

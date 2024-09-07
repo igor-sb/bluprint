@@ -19,7 +19,7 @@ add_one(3.14)
 Load configuration and print data:
 
 ```{python}
-from bluprint_conf import load_data_yaml
+from bluprint.config import load_data_yaml
 
 data = load_data_yaml()
 

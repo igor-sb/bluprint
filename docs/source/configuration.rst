@@ -1,8 +1,8 @@
 Project configuration
 =====================
 
-Bluprint project configuration is stored in *conf/\*.yaml* files, three of them
-having special purposes: *config.yaml*, *data.yaml* and *workflow.yaml*.
+Bluprint project configuration is stored in *conf/\*.yaml* files, two of them
+having special purposes: *config.yaml* and *data.yaml*.
 
 config.yaml
 -----------
@@ -10,7 +10,7 @@ config.yaml
 *config.yaml* is used to store any project configuration in an arbitrary yaml
 structure. This yaml file is loaded as an
 `OmegaConf dictionary <https://omegaconf.readthedocs.io/>`_ using
-``load_config_yaml()`` function from the ``bluprint_conf`` package. OmegaConf
+``load_config_yaml()`` function. OmegaConf
 dictionary behaves similar to a standard Python dictionary, but with extra
 functionality such as `variable interpolation <https://omegaconf.readthedocs.io/en/2.3_branch/usage.html#variable-interpolation>`_.
 
@@ -29,7 +29,7 @@ can be loaded in a Python script or Jupyter notebook using:
 
 .. code-block:: python
 
-    from bluprint_conf import load_config_yaml
+    from bluprint.config import load_config_yaml
 
     cfg = load_config_yaml()
 
@@ -74,7 +74,7 @@ could be organized in the following *conf/data.yaml*:
     final: raw/user_data.csv
   metadata: metadata.csv
 
-Once loaded with ``load_data_yaml()`` from ``bluprint_conf``, these relative
+Once loaded with ``load_data_yaml()``, these relative
 paths are automatically parsed into absolute paths. Paths to other files that
 are stored outside of the project directory, can be added into *data.yaml* and
 will be loaded as-is. You can avoid duplicating the paths too, for example:
@@ -97,49 +97,3 @@ will be loaded as-is. You can avoid duplicating the paths too, for example:
   report: s3://path/to/final_report.ipynb
 
 .. _config-workflows:
-
-workflow.yaml
--------------
-
-*workflow.yaml* file contains definitions of notebook workflows (a list of
-notebooks to be exexcuted in series) in this format:
-
-.. code-block:: yaml
-
-  basic_workflow:
-    - basic/preprocess.ipynb
-    - basic/postprocess.ipynb
-    - plot.Rmd
-
-  other_workflow:
-    - other/process.ipynb
-    - plot.Rmd
-
-Yaml keys are workflow names, and each element in a list contains a relative
-path to the notebook to be executed - relative to the project's *notebooks*
-directory. This example would reflect the following directory structure:
-
-.. code-block:: none
-
-  myproj
-  ├── notebooks
-  │   ├── basic
-  │   │   ├── preprocess.ipynb
-  │   │   └── postprocess.ipynb
-  │   ├── other
-  │   │   └── process.ipynb
-  │   └── plot.Rmd
-  ...
-
-Once workflows are specified in this yaml file, they can be run in a shell
-using:
-
-.. code-block:: shell
-
-    bluprint workflow basic_workflow
-
-This will run, in order:
-
-1. *myproj/notebooks/basic/preprocess.ipynb*
-2. *myproj/notebooks/basic/postprocess.ipynb*
-3. *myproj/notebooks/plot.Rmd*

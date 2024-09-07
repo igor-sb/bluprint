@@ -1,5 +1,6 @@
 """Create a bluprint project."""
 
+import re
 from pathlib import Path
 
 from packaging.version import Version
@@ -21,7 +22,7 @@ MIN_PYTHON_VERSION = '3.11'
 
 def create_python_project(
     project_name: str,
-    python_version: str | None = None,
+    python_version: str | float | None = None,
     parent_dir: str | None = None,
     template_dir: str | None = None,
     keep_r_files: bool = False,
@@ -45,7 +46,7 @@ def create_python_project(
 @progress_log('initializing Python project', print_ok=False)
 def initialize_python_project(
     project_name: str,
-    python_version: str | None = None,
+    python_version: str | float | None = None,
     project_dir: str | Path = '.',
     template_dir: str | None = None,
     keep_r_files: bool = False,
@@ -54,9 +55,11 @@ def initialize_python_project(
 ) -> None:
     if not python_version:
         python_version = default_python_version()
+    else:
+        python_version = str(python_version)
     if not template_dir:
         template_dir = default_template_dir()
-    uv_init(python_version, str(project_dir))
+    uv_init(project_name, python_version, str(project_dir))
     (Path(project_dir) / 'src' / project_name / '__init__.py').unlink()
     Path.rmdir(Path(project_dir) / 'src' / project_name)
     Path.rmdir(Path(project_dir) / 'src')
@@ -101,7 +104,7 @@ def initialize_python_project(
                 )
         if readme_file.exists():
             replace_git_account_name_in_readme(readme_file)
-    uv_add(['bluprint_conf'], project_dir)
+    uv_add(['bluprint'], project_dir)
 
 
 def default_python_version(min_version: str = MIN_PYTHON_VERSION) -> str:
@@ -114,9 +117,11 @@ def default_python_version(min_version: str = MIN_PYTHON_VERSION) -> str:
 
 @progress_log('checking Python version...')
 def check_python_version(
-    python_version: str | None,
+    python_version: str | float,
 ) -> None:
+    python_version = str(python_version)
     if (
+        re.match(r'^[0-9]', python_version) and
         python_version and
         (Version(python_version) < Version(MIN_PYTHON_VERSION))
     ):

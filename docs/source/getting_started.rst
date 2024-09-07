@@ -18,8 +18,7 @@ This creates the following directory tree:
   ├── .venv                           # Project's Python virtual environment
   ├── conf                            # Yaml configuration files
   │   ├── config.yaml                 #   Accessible using load_config_yaml()
-  │   ├── data.yaml                   #   Accessible using load_data_yaml()
-  │   └── workflow.yaml               #   Used by bluprint workflow
+  │   └── data.yaml                   #   Accessible using load_data_yaml()
   ├── data                            # Local data (e.g. csv, png, pdf)
   │   └── example_data.csv
   ├── notebooks                       # Jupyter/R/Quarto notebooks
@@ -34,7 +33,7 @@ This creates the following directory tree:
 
 and sets up the Python scripts in the *myproj* directory accessible as
 ``from myproj.example import add_one`` in any notebook or Python script that
-uses this virtual environment and *bluprint_conf*.
+uses this virtual environment and *bluprint*.
 
 *conf/config.yaml* contains this placeholder:
 
@@ -50,7 +49,7 @@ Access data from *conf/data.yaml* and general configuration from
 
 .. code-block:: python
 
-  from bluprint_conf import load_data_yaml, load_config_yaml
+  from bluprint.config import load_data_yaml, load_config_yaml
 
   cfg = load_config_yaml()
   data = load_data_yaml()
@@ -94,8 +93,7 @@ which also sets up renv and RStudio Rproj file and an example notebook:
   ├── README.md
   ├── conf                            # yaml configuration files
   │   ├── config.yaml
-  │   ├── data.yaml
-  │   └── workflow.yaml
+  │   └── data.yaml
   ├── data                            # data such as csv, png, pdf
   │   └── example_data.csv
   ├── notebooks                       # Jupyter and RMarkdown notebooks
@@ -116,12 +114,12 @@ notebooks and code can load the configuration and data using {reticulate} and
 
   library(reticulate)
   use_python(here::here('.venv/bin/python'))
-  bluprint_conf <- import('bluprint_conf')
+  bluprint <- import('bluprint.config')
 
   # Load `example_data.csv`:
-  df <- bluprint_conf$load_data_yaml()
+  df <- bluprint$load_data_yaml()
 
-  cfg <- bluprint_conf$load_config_yaml()
+  cfg <- bluprint$load_config_yaml()
   cfg$url  # "www.google.com"
 
 

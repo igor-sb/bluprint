@@ -11,7 +11,7 @@ folder to the new project and also do the following:
 
 - If *README.md* contains placeholder string *{{git_account_name}}*, it will
    be replaced by git username.
-  
+
 - If there is *pyproject.toml* file, it will replace *{{placeholder_name}}* with
   project name and *{{python_version}}* with a Python version from the CLI
   argument.
@@ -21,10 +21,10 @@ it needs a folder to store yaml configs (default: *conf*) and another folder to
 store data in the project to which relative paths in *data.yaml* point to
 (default: *data*).
 
-By default *bluprint_conf* function *load_config_yaml()* looks for
+By default  *load_config_yaml()* looks for
 *conf/config.yaml* and *load_data_yaml()* looks for *conf/data.yaml* in the
-project folder. You can use different names and override these defaults when
-calling *bluprint_conf* functions, for example this template folder::
+project folder. You can use different names and override these defaults;
+for example this template folder::
 
     my_custom_template
     ├── configs
@@ -48,7 +48,7 @@ which can then be used:
 
 .. code:: python
 
-	from bluprint_conf import load_config_yaml, load_data_yaml
+	from bluprint.config import load_config_yaml, load_data_yaml
 
 	conf = load_config_yaml('configs/my_main_config.yaml')
 	data = load_data_yaml('configs/my_data_config.yaml', data_dir='my_data')

@@ -41,11 +41,12 @@ def uv(
     return run(['uv', *command], exception, cwd=cwd, **kwargs)
 
 
-def uv_init(python_version: str, project_dir: str) -> str:
+def uv_init(project_name: str, python_version: str, project_dir: str) -> str:
     return uv(
         [
-            'init', '--no-workspace', '--no-readme', '--lib', '--python',
-            python_version,
+            'init', '--no-workspace', '--no-readme', '--lib',
+            '--python', python_version,
+            '--name', project_name,
         ],
         UvInitError,
         cwd=project_dir,

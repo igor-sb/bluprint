@@ -12,11 +12,11 @@ runs:
     - name: Install R
       uses: r-lib/actions/setup-r@v2
 
-    - name: Install Pandoc
-      run: sudo apt install pandoc
-      shell: bash
-
     - name: Install R packages
       run: |
-        Rscript -e 'install.packages(c("rmarkdown", "renv", "yaml", "reticulate"), repos="https://packagemanager.posit.co/cran/__linux__/focal/2023-12-01")'
+        R_HOME=$(Rscript -e 'cat(R.home(component = "home"), fill=TRUE)')
+        R_PROFILE="$R_HOME"/etc/Rprofile.site
+        R_PROFILE_USER=~/.Rprofile
+        cat .github/actions/install-r/Rprofile.site | sudo tee -a $R_PROFILE $R_PROFILE_USER
+        Rscript -e 'install.packages("renv")'
       shell: bash

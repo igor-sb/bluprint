@@ -24,7 +24,7 @@ def initialize_r_project(
     project_name: str,
     project_dir: str | Path = '.',
 ) -> None:
-    r_packages = ('reticulate', 'here', 'knitr', 'rmarkdown')
+    r_packages = ('reticulate', 'here')
     renv_init(project_dir)
     renv_install(r_packages, project_dir)
     renv_create_snapshot(project_dir)

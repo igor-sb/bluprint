@@ -29,7 +29,7 @@ class Bluprint(object):
     def create(
         self,
         project_name: str,
-        python_version: str | None = None,
+        python_version: str | float | None = None,
         parent_dir: str | None = None,
         template_dir: str | None = None,
         r_project: bool = False,
@@ -42,9 +42,10 @@ class Bluprint(object):
         project_name (str): Name of the project, also the name of the main
             project directory.
 
-        python_version (str | None, optional): Python version used in the
-            project's virtual environment. If None, uses the Python in PATH
-            or 3.11, whichever is greater. Must be >=3.11.
+        python_version (str | float | None, optional): Minimum Python version
+            used in the project's virtual environment. If None, uses the Python
+            in PATH or 3.11, whichever is greater. To lock the version use ==,
+            e.g. "==3.11.2".
 
         parent_dir (str | None, optional): Parent directory to create a
             PROJECT_NAME directory in. If None, use a current directory.
@@ -86,7 +87,7 @@ class Bluprint(object):
     def init(
         self,
         project_name: str,
-        python_version: str | None = None,
+        python_version: str | float | None = None,
         project_dir: str | None = None,
         template_dir: str | None = None,
         r_project: bool = False,
@@ -101,9 +102,10 @@ class Bluprint(object):
 
         project_name (str): Name of the project.
 
-        python_version (str | None, optional): Python version used in the
-            project's virtual environment. If None, uses the Python in PATH
-            or 3.11, whichever is greater. Must be >=3.11.
+        python_version (str | float | None, optional): Minimum Python version
+            used in the project's virtual environment. If None, uses the Python
+            in PATH or 3.11, whichever is greater. To lock the version use ==,
+            e.g. "==3.11.2".
 
         project_dir (str | None, optional): Project directory in which to
             initialize a new bluprint project. If None, uses current working

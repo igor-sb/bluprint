@@ -10,6 +10,14 @@ Create a project template in a new directory *myproj* using:
 
     bluprint create myproj
 
+
+.. note::
+
+  Project names should start with a lowercase or uppercase letter, end with a
+  lowercase or uppercase letter or a digit and may contain letters, digits or
+  underscores between the first and last characters.
+
+
 This creates the following directory tree:
 
 .. code-block:: none

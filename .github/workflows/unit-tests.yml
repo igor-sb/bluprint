@@ -44,6 +44,12 @@ jobs:
           echo "Showing path:"
           echo "$PATH"
           export PATH=$PATH:/home/runner/.pyenv/bin
+          echo "Showing Rprofile.site"
+          R_HOME=$(Rscript -e 'cat(R.home(component = "home"), fill=TRUE)')
+          R_PROFILE_SITE="$R_HOME"/etc/Rprofile.site
+          cat $R_PROFILE_SITE
+          echo "Showing options from R"
+          Rscript -e 'options()'
           make test
         env:
           PY_COLORS: 1

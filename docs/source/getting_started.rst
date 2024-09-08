@@ -13,12 +13,15 @@ Create a project template in a new directory *myproj* using:
 
 .. note::
 
-  Project names should start with a lowercase or uppercase letter, end with a
-  lowercase or uppercase letter or a digit and may contain letters, digits or
-  underscores between the first and last characters.
+  Since the bluprint project is implemented as a Python package, the simplest
+  and cleanest way to name a project is to use all lowercase letters, digits and
+  underscore(s), provided that the first symbol is a (lowercase) letter.
 
-  Project names that contain upper case, will be converted to lowercase, except
-  for the main project directory name.
+  However, you can specify a project name using a mix of uppercase and lowercase
+  letters, underscores and hyphens. Again, provided that the name starts with a
+  letter and ends either with a letter. The main project folder will be named
+  exactly as input, however, internal folders will have all letters lowercased and
+  hyphens converted to underscores.
 
 
 This creates the following directory tree:

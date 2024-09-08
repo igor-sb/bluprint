@@ -9,11 +9,11 @@ from bluprint.binary import check_if_executable_is_installed
 from bluprint.colors import progress_log, styled_print
 from bluprint.create.r_project import check_if_r_package_is_installed
 from bluprint.errors import InvalidProjectNameError, ProjectExistsError
-from bluprint.template import example_files, r_files
+from bluprint.template import Placeholder, example_files, r_files
 
 
 def check_if_project_name_is_valid(project_name: str) -> None:
-    if not re.match(r'^[a-zA-Z][a-zA-Z0-9_]*[a-zA-Z0-9]$', project_name) and \
+    if not re.match(r'^[a-zA-Z][a-zA-Z0-9_-]*[a-zA-Z0-9]$', project_name) and \
             not re.match(r'^[a-zA-z]$', project_name):
         styled_print(' error.', print_bluprint=False)
         raise InvalidProjectNameError(
@@ -77,7 +77,7 @@ def check_if_project_files_exist(
 def copy_template(
     src_path: str | Path,
     dst_path: str | Path,
-    project_name: str = 'placeholder_name',
+    project_name: str = Placeholder.project_name,
     omit_examples: bool = False,
     keep_r_files: bool = False,
     overwrite: bool = False,

@@ -57,6 +57,9 @@ def initialize_python_project(
         python_version = default_python_version()
     else:
         python_version = str(python_version)
+        if re.match('^[0-9]', python_version):
+            python_version = f'=={python_version}'
+
     if not template_dir:
         template_dir = default_template_dir()
     uv_init(project_name, python_version, str(project_dir))

@@ -151,3 +151,31 @@ def test_create_py_project_mixed_case(tmp_path):
         pyproject_toml = tomllib.load(pyproject_toml_file)
     assert (project_dir / 'aaa').exists()
     assert pyproject_toml['project']['name'] == 'aaa'
+
+
+def test_create_py_project_specific_python(tmp_path):
+    python_version = '3.11.2'
+    project_name = 'py3_11_2'
+    project_dir = Path(tmp_path) / project_name
+    cli.Bluprint().create(
+        project_name=project_name,
+        parent_dir=tmp_path,
+        python_version=python_version,
+    )
+    with (project_dir / 'pyproject.toml').open('rb') as pyproject_toml_file:
+        pyproject_toml = tomllib.load(pyproject_toml_file)
+    assert pyproject_toml['project']['requires-python'] == f'=={python_version}'
+
+
+def test_create_py_project_specific_python_string(tmp_path):
+    python_version = '==3.11.2'
+    project_name = 'pyeq3_11_2'
+    project_dir = Path(tmp_path) / project_name
+    cli.Bluprint().create(
+        project_name=project_name,
+        parent_dir=tmp_path,
+        python_version=python_version,
+    )
+    with (project_dir / 'pyproject.toml').open('rb') as pyproject_toml_file:
+        pyproject_toml = tomllib.load(pyproject_toml_file)
+    assert pyproject_toml['project']['requires-python'] == python_version

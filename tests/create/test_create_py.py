@@ -1,12 +1,14 @@
 """Test creating a new Python project."""
 
 import tempfile
+import tomllib
 from pathlib import Path
 
 import pytest
 
 from bluprint import cli
 from bluprint.create.errors import LowPythonVersionError
+from bluprint.errors import InvalidProjectNameError
 from bluprint.template import Placeholder, default_template_dir, example_files
 
 
@@ -126,3 +128,54 @@ def test_create_py_project_custom_template(find_files_in_dir, tmp_path):
         assert (project_dir / 'placeholder_name' / 'test.py').read_text() \
             == 'print("hello!")'
         assert (project_dir / 'pyproject.toml').exists()
+
+
+def test_create_py_project_with_invalid_names(tmp_path):
+    project_names = ('invalid-name', '0', 'invalid_', '_invalid')
+    for project_name in project_names:
+        with pytest.raises(InvalidProjectNameError):
+            cli.Bluprint().create(
+                project_name=project_name,
+                parent_dir=tmp_path,
+            )
+
+
+def test_create_py_project_mixed_case(tmp_path):
+    project_name = 'aAa'
+    cli.Bluprint().create(
+        project_name=project_name,
+        parent_dir=tmp_path,
+    )
+    project_dir = Path(tmp_path) / project_name
+    with (project_dir / 'pyproject.toml').open('rb') as pyproject_toml_file:
+        pyproject_toml = tomllib.load(pyproject_toml_file)
+    assert (project_dir / 'aaa').exists()
+    assert pyproject_toml['project']['name'] == 'aaa'
+
+
+def test_create_py_project_specific_python(tmp_path):
+    python_version = '3.11.2'
+    project_name = 'py3_11_2'
+    project_dir = Path(tmp_path) / project_name
+    cli.Bluprint().create(
+        project_name=project_name,
+        parent_dir=tmp_path,
+        python_version=python_version,
+    )
+    with (project_dir / 'pyproject.toml').open('rb') as pyproject_toml_file:
+        pyproject_toml = tomllib.load(pyproject_toml_file)
+    assert pyproject_toml['project']['requires-python'] == f'=={python_version}'
+
+
+def test_create_py_project_specific_python_string(tmp_path):
+    python_version = '==3.11.2'
+    project_name = 'pyeq3_11_2'
+    project_dir = Path(tmp_path) / project_name
+    cli.Bluprint().create(
+        project_name=project_name,
+        parent_dir=tmp_path,
+        python_version=python_version,
+    )
+    with (project_dir / 'pyproject.toml').open('rb') as pyproject_toml_file:
+        pyproject_toml = tomllib.load(pyproject_toml_file)
+    assert pyproject_toml['project']['requires-python'] == python_version

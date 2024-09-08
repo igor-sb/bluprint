@@ -131,7 +131,7 @@ def test_create_py_project_custom_template(find_files_in_dir, tmp_path):
 
 
 def test_create_py_project_with_invalid_names(tmp_path):
-    project_names = ('invalid-name', '0', 'invalid_', '_invalid')
+    project_names = ('x.y', '0', 'xx_', '_xx', '-xx', 'xx-', 'x._y')
     for project_name in project_names:
         with pytest.raises(InvalidProjectNameError):
             cli.Bluprint().create(
@@ -179,3 +179,16 @@ def test_create_py_project_specific_python_string(tmp_path):
     with (project_dir / 'pyproject.toml').open('rb') as pyproject_toml_file:
         pyproject_toml = tomllib.load(pyproject_toml_file)
     assert pyproject_toml['project']['requires-python'] == python_version
+
+
+def test_create_py_project_with_hyphens(tmp_path):
+    project_name = 'a-A_a'
+    cli.Bluprint().create(
+        project_name=project_name,
+        parent_dir=tmp_path,
+    )
+    project_dir = Path(tmp_path) / project_name
+    with (project_dir / 'pyproject.toml').open('rb') as pyproject_toml_file:
+        pyproject_toml = tomllib.load(pyproject_toml_file)
+    assert (project_dir / 'a_a_a').exists()
+    assert pyproject_toml['project']['name'] == 'a-a-a'

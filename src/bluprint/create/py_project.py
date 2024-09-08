@@ -53,27 +53,43 @@ def initialize_python_project(
     omit_examples: bool = False,
     overwrite: bool = False,
 ) -> None:
-    if not python_version:
-        python_version = default_python_version()
-    else:
-        python_version = str(python_version)
-        if re.match('^[0-9]', python_version):
-            python_version = f'=={python_version}'
-
+    python_versions = parse_or_get_default_python_version(python_version)
     if not template_dir:
         template_dir = default_template_dir()
-    uv_init(project_name, python_version, str(project_dir))
-    (Path(project_dir) / 'src' / project_name.lower() / '__init__.py').unlink()
-    Path.rmdir(Path(project_dir) / 'src' / project_name.lower())
-    Path.rmdir(Path(project_dir) / 'src')
+    pkg_project_name = project_name.replace('-', '_').lower()
+    uv_init(project_name, python_versions, str(project_dir))
+    uv_init_cleanup(project_dir, pkg_project_name)
     copy_template(
         template_dir,
         project_dir,
-        project_name=project_name,
+        project_name=pkg_project_name,
         omit_examples=omit_examples,
         keep_r_files=keep_r_files,
         overwrite=overwrite,
     )
+    replace_placeholders_in_dir(
+        project_dir=project_dir,
+        template_dir=template_dir,
+        project_name=pkg_project_name,
+        python_versions=python_versions,
+        omit_examples=omit_examples,
+    )
+    uv_add(['bluprint'], project_dir)
+
+
+def uv_init_cleanup(project_dir: str | Path, pkg_project_name: str) -> None:
+    (Path(project_dir) / 'src' / pkg_project_name / '__init__.py').unlink()
+    Path.rmdir(Path(project_dir) / 'src' / pkg_project_name)
+    Path.rmdir(Path(project_dir) / 'src')
+
+
+def replace_placeholders_in_dir(
+    project_dir: str | Path,
+    template_dir: str | Path,
+    project_name: str,
+    python_versions: str,
+    omit_examples: bool,
+) -> None:
     if (Path(project_dir) / Placeholder.project_name).exists():
         Path.rename(
             Path(project_dir) / Placeholder.project_name,
@@ -89,7 +105,7 @@ def initialize_python_project(
     replace_placeholder_in_file(
         Path(project_dir) / 'pyproject.toml',
         placeholder=Placeholder.python_version,
-        replacement=python_version,
+        replacement=python_versions,
     )
     if not omit_examples:
         readme_file = Path(project_dir) / 'README.md'
@@ -107,7 +123,6 @@ def initialize_python_project(
                 )
         if readme_file.exists():
             replace_git_account_name_in_readme(readme_file)
-    uv_add(['bluprint'], project_dir)
 
 
 def default_python_version(min_version: str = MIN_PYTHON_VERSION) -> str:
@@ -129,3 +144,15 @@ def check_python_version(
         (Version(python_version) < Version(MIN_PYTHON_VERSION))
     ):
         raise LowPythonVersionError('Bluprint requires Python >= 3.11.')
+
+
+def parse_or_get_default_python_version(
+    python_version: str | float | None,
+) -> str:
+    if not python_version:
+        python_version = default_python_version()
+    else:
+        python_version = str(python_version)
+        if re.match('^[0-9]', python_version):
+            python_version = f'=={python_version}'
+    return python_version

@@ -15,7 +15,9 @@ class Placeholder(object):
     python_version = '{{python_version}}'
 
 
-def example_files(project_name: str = 'placeholder_name') -> tuple[Path, ...]:
+def example_files(
+    project_name: str = Placeholder.project_name,
+) -> tuple[Path, ...]:
     return (
         Path('notebooks') / 'example_jupyternb.ipynb',
         Path('notebooks') / 'example_quarto.qmd',

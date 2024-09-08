@@ -131,7 +131,7 @@ def test_create_py_project_custom_template(find_files_in_dir, tmp_path):
 
 
 def test_create_py_project_with_invalid_names(tmp_path):
-    project_names = ('invalid.name', '0', 'invalid_', '_invalid')
+    project_names = ('x.y', '0', 'xx_', '_xx', '-xx', 'xx-', 'x._y')
     for project_name in project_names:
         with pytest.raises(InvalidProjectNameError):
             cli.Bluprint().create(

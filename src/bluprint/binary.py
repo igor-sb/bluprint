@@ -44,7 +44,7 @@ def uv(
 def uv_init(project_name: str, python_version: str, project_dir: str) -> str:
     return uv(
         [
-            'init', '--no-workspace', '--no-readme', '--lib',
+            'init', '--no-workspace', '--no-readme', '--lib', '--no-pin-python',
             '--python', python_version,
             '--name', project_name,
         ],

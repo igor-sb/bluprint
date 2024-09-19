@@ -88,7 +88,8 @@ Full documentation available at: https://igor-sb.github.io/bluprint/.
 Installation
 ------------
 
-Install `uv <https://docs.astral.sh/uv/>`_ and run ``uv tool install bluprint``.
+Install `uv 0.4.12<https://docs.astral.sh/uv/>`_ which is a last confirmed
+working version and run ``uv tool install bluprint``.
 
 For R projects, `renv <https://rstudio.github.io/renv/>`_ R package is required
 for creating Bluprint projects with R support.

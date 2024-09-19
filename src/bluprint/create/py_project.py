@@ -1,6 +1,7 @@
 """Create a bluprint project."""
 
 import re
+import shutil
 from pathlib import Path
 
 from packaging.version import Version
@@ -58,7 +59,7 @@ def initialize_python_project(
         template_dir = default_template_dir()
     pkg_project_name = project_name.replace('-', '_').lower()
     uv_init(project_name, python_versions, str(project_dir))
-    uv_init_cleanup(project_dir, pkg_project_name)
+    uv_init_cleanup(project_dir)
     copy_template(
         template_dir,
         project_dir,
@@ -77,10 +78,8 @@ def initialize_python_project(
     uv_add(['bluprint'], project_dir)
 
 
-def uv_init_cleanup(project_dir: str | Path, pkg_project_name: str) -> None:
-    (Path(project_dir) / 'src' / pkg_project_name / '__init__.py').unlink()
-    Path.rmdir(Path(project_dir) / 'src' / pkg_project_name)
-    Path.rmdir(Path(project_dir) / 'src')
+def uv_init_cleanup(project_dir: str | Path) -> None:
+    shutil.rmtree(Path(project_dir) / 'src')
 
 
 def replace_placeholders_in_dir(

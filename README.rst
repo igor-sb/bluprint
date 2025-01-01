@@ -10,23 +10,28 @@ Bluprint
 .. |license_badge| image:: https://img.shields.io/pypi/l/bluprint?color=blue
 .. |version_badge| image:: https://img.shields.io/pypi/v/bluprint?color=blue
 
-**Bluprint** is a command line utility for creating data science project
-templates, allowing R and Jupyter notebooks seamless access to configuration,
-data and shared code in this type of structure::
+**Bluprint** is a command line utility for creating templated data science
+projects::
 
     my_project
-    ├── conf
-    │   └── data.yaml              # YAML config with data paths
-    ├── data                       # Store smaller data
+    ├── conf                       # Project configuration
+    │   ├── config.yaml            #  Access contents with: load_data_yaml()
+    │   └── data.yaml              #  Access contents with: load_config_yaml()
+    ├── data                       # Data whose paths stored in conf/data.yaml
     │   ├── emailed
     │   │   └── messy.xlsx
     │   └── user_processed.csv
-    ├── notebooks                  # Notebooks
+    ├── notebooks                  # Notebooks which can be organized in sub-folders
     │   └── process.ipynb
-    └── my_project                 # Local Python package used by my_project
+    └── my_project                 # Access code with: import my_project.shared_code
         └── shared_code.py
 
-Configuration *conf/data.yaml* contains either absolute paths or paths relative
+where Python source code, configuration and paths to data are stored separately
+from the analyses. Notebooks in Bluprint projects have seamless access to source
+code, configuration and all the paths to files without hard-coding everything in
+notebooks or keep track where they are relative to each notebook.
+
+Configuration *conf/data.yaml* can contain full absolute paths or paths relative
 to the *my_project/data/*:
 
 .. code:: yaml
@@ -36,15 +41,16 @@ to the *my_project/data/*:
     user:
         processed: 'user_processed.csv'
 
-Notebooks can then easily import *myproject.shared_code* and file paths:
+Use `load_data_yaml()` to import the YAML file and access it using dot notation
+or as a dictionary. Shared code is accessible as a Python module:
 
 .. code:: python
 
     from bluprint.config import load_data_yaml
 
-    data = load_data_yaml()  # By default loads conf/data.yaml
+    data = load_data_yaml()  # Imports contents of conf/data.yaml
 
-    # Load data in a portable manner
+    # Load data without worrying about file paths
     import pandas as pd
     messy_df = pd.read_xlsx(data.emailed.messy)
     extras_df = pd.read_xlsx(data.remote.extras)

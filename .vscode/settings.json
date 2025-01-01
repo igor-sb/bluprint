@@ -7,8 +7,8 @@
 	"workbench.colorCustomizations": {
 		"titleBar.activeForeground": "#000",
 		"titleBar.inactiveForeground": "#000000CC",
-		"titleBar.activeBackground": "#00c8ff",
-		"titleBar.inactiveBackground": "#00c8ff"
+		"titleBar.activeBackground": "#2792f7",
+		"titleBar.inactiveBackground": "#2792f7"
 	},
 	"r.lsp.promptToInstall": false,
 	"editor.renderWhitespace": "all",

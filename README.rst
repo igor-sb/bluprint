@@ -10,8 +10,8 @@ Bluprint
 .. |license_badge| image:: https://img.shields.io/pypi/l/bluprint?color=blue
 .. |version_badge| image:: https://img.shields.io/pypi/v/bluprint?color=blue
 
-**Bluprint** is a command line utility for creating templated data science
-projects::
+**Bluprint** is a command line utility for creating data science projects
+following this template::
 
     my_project
     ├── conf                       # Project configuration
@@ -24,41 +24,56 @@ projects::
     ├── notebooks                  # Notebooks which can be organized in sub-folders
     │   └── process.ipynb
     └── my_project                 # Access code with: import my_project.shared_code
-        └── shared_code.py
+        └── data_transform.py
 
-where Python source code, configuration and paths to data are stored separately
-from the analyses. Notebooks in Bluprint projects have seamless access to source
-code, configuration and all the paths to files without hard-coding everything in
-notebooks or keep track where they are relative to each notebook.
+It follows best coding practices to separate analysis notebooks from
+paths to data, configuration and other Python code. 
 
-Configuration *conf/data.yaml* can contain full absolute paths or paths relative
-to the *my_project/data/*:
+Configuration and data paths are stored in YAML files:
 
-.. code:: yaml
++----------------------------------------+----------------------------------------+
+| conf/data.yaml                         | conf/config.yaml                       |
++----------------------------------------+----------------------------------------+
+|                                        |                                        |
+|.. code:: yaml                          |.. code:: yaml                          |
+|                                        |                                        |
+|    emailed:                            |    google:                             |
+|        messy: 'emailed/messy.xlsx'     |        url: 'www.google.com'           |
+|    user:                               |        port: 22                        |
+|        processed: 'user_processed.csv' |        description: 'Search engine'    |
+|                                        |                                        |
++----------------------------------------+----------------------------------------+
 
-    emailed:
-        messy: 'emailed/messy.xlsx'
-    user:
-        processed: 'user_processed.csv'
+and the processing code is availabe as a Python module my_project/data_transform.py:
+
+.. code:: python
+
+    def process_data(df):
+      return(
+        df
+        .assign(value=df['ValuE'] - 1)
+      )
 
 Use `load_data_yaml()` to import the YAML file and access it using dot notation
 or as a dictionary. Shared code is accessible as a Python module:
 
 .. code:: python
 
-    from bluprint.config import load_data_yaml
+    from bluprint.config import load_config_yaml, load_data_yaml
 
-    data = load_data_yaml()  # Imports contents of conf/data.yaml
+    # Access configuration from conf/config.yaml
+    config = load_config_yaml()
+    print(f'URL: {config.google.url}, port: {config.google.port}')
 
-    # Load data without worrying about file paths
+    # Access data without worrying about file paths
     import pandas as pd
+    data = load_data_yaml()
     messy_df = pd.read_xlsx(data.emailed.messy)
-    extras_df = pd.read_xlsx(data.remote.extras)
 
-    # Load shared code functions as Python modules
-    # in any notebook anywhere in this project.
+    # Bluprint defines my_project folder as a Python module accessible
+    # to any notebook anywhere in this project.
     from my_project.shared_code import transform_data
-    transformed_df = transform_data(messy_df, extras_df)
+    transformed_df = transform_data(messy_df)
 
     # Save output
     transformed_df.to_csv(data.user.processed)
@@ -103,13 +118,12 @@ for creating Bluprint projects with R support.
 References
 ----------
 
-Bluprint integrates:
-
-* `uv <https://docs.astral.sh/uv/>`_
-* `OmegaConf <https://omegaconf.readthedocs.io/>`_
-* Python's native import system `importlib <https://docs.python.org/3/library/importlib.html>`_
-* R packages `{renv} <https://rstudio.github.io/renv/>`_, `{here} <https://here.r-lib.org/>`_
-  and `{reticulate} <https://rstudio.github.io/reticulate/>`_
+Bluprint integrates `uv <https://docs.astral.sh/uv/>`_,
+`OmegaConf <https://omegaconf.readthedocs.io/>`_, Python's native import system
+`importlib <https://docs.python.org/3/library/importlib.html>`_, R packages
+`{renv} <https://rstudio.github.io/renv/>`_,
+`{here} <https://here.r-lib.org/>`_ and
+`{reticulate} <https://rstudio.github.io/reticulate/>`_.
 
 Bluprint is inspired by these resources:
 

@@ -1,0 +1,3 @@
+glob_star: '*.txt'
+glob_questionmark: 'test?.txt'
+glob_brackets: 'test_[abc].txt'

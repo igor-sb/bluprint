@@ -1,0 +1,2 @@
+regular_key: 'regular_data_path'
+interpolated_key: 'interpolated_${regular_key}'

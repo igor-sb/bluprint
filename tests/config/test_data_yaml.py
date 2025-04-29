@@ -60,3 +60,28 @@ def test_load_data_yamls():
         data_dir='tests/fixtures',
     )
     assert actual_data_cfg == expected_data_cfg
+
+
+def test_data_interpolated_variable():
+    current_dir = Path.cwd()
+    actual_data_cfg = load_data_yaml(
+        'tests/config/fixtures/interpolation.yaml',
+        data_dir='tests/fixtures',
+    )
+    expected_value = str(
+        current_dir/'tests'/'fixtures'/'interpolated_regular_data_path'
+    )
+    assert actual_data_cfg.interpolated_key == expected_value
+
+
+def test_loading_glob_patterns_unmodified():
+    expected_data_cfg = {
+        'glob_star': '*.txt',
+        'glob_questionmark': 'test?.txt',
+        'glob_brackets': 'test_[abc].txt',
+    }
+    actual_data_cfg = load_data_yaml(
+        'tests/config/fixtures/globs.yaml',
+        data_dir='tests/fixtures',
+    )
+    assert actual_data_cfg == expected_data_cfg

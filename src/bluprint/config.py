@@ -1,6 +1,7 @@
 """Code for manipulating Bluprint YAML configuration files."""
 
 import os
+import re
 from pathlib import Path, PurePath
 from typing import Any
 from urllib.parse import urlparse
@@ -125,17 +126,22 @@ def load_data_yamls(
     return OmegaConf.unsafe_merge(*configs)
 
 
+def _is_glob(value: Any) -> bool:
+    """Check if a YAML string value can be interpreted as a glob pattern."""
+    return bool(re.search(r'[*?\[\]]', str(value)))
+
+
 def add_prefix_to_nested_config(
     conf: DictConfig | ListConfig,
     prefix: str,
 ) -> DictConfig | ListConfig:
 
-    def recurse_or_add_suffix(conf_value: Any) -> Any:
-        if isinstance(conf_value, DictConfig | ListConfig):
-            return add_prefix_to_nested_config(conf_value, prefix)
-        if _is_abs_path(conf_value) or _is_uri(conf_value):
-            return conf_value
-        return str(Path(prefix) / str(conf_value))
+    def recurse_or_add_suffix(value: Any) -> Any:
+        if isinstance(value, DictConfig | ListConfig):
+            return add_prefix_to_nested_config(value, prefix)
+        if _is_abs_path(value) or _is_uri(value) or _is_glob(value):
+            return value
+        return str(Path(prefix) / str(value))
 
     if isinstance(conf, ListConfig):
         return OmegaConf.create([

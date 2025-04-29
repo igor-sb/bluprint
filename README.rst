@@ -27,7 +27,7 @@ following this template::
         └── data_transform.py
 
 It follows best coding practices to separate analysis notebooks from
-paths to data, configuration and other Python code. 
+paths to data, configuration and other Python code.
 
 Configuration and data paths are stored in YAML files:
 
